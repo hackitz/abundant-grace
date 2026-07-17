@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1e2a3f">
+<title>Abundant Grace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Dancing+Script:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f5f0e4; --cream-2:#efe8d7; --paper:#fbf8f0;
+    --navy:#1e2a3f; --navy-2:#2b3a52;
+    --green:#3f4a2e; --green-2:#556042;
+    --gold:#b08d33; --gold-soft:#c9a856;
+    --ink:#3a3a30; --ink-soft:#6a6656;
+    --line:rgba(40,50,70,.14);
+    --shadow:0 10px 30px rgba(30,32,45,.16);
+    --pathdark:#7a2230; --pathfree:#1f5646;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{font-family:'EB Garamond',Georgia,serif;color:var(--ink);
+    background:radial-gradient(1200px 800px at 50% -10%,#e9e2ce 0%,#e2dac2 55%,#d9cfb4 100%);
+    display:flex;align-items:center;justify-content:center;min-height:100dvh;padding:16px}
+  .phone{position:relative;width:390px;max-width:100%;height:min(844px,94dvh);background:var(--cream);
+    border-radius:44px;box-shadow:0 30px 70px rgba(25,28,40,.42),inset 0 0 0 10px #12131a,inset 0 0 0 12px #2c2f3a;
+    overflow:hidden;display:flex;flex-direction:column}
+  .notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#12131a;border-radius:0 0 18px 18px;z-index:60}
+  .statusbar{height:44px;flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 6px;font-size:13px;font-weight:600;color:var(--navy);z-index:30;background:var(--cream)}
+  .statusbar .icons{display:flex;gap:6px;align-items:center}
+  .statusbar svg{width:16px;height:16px}
+  .screen{flex:1;position:relative;overflow:hidden}
+  .view{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;background:var(--cream);
+    transform:translateX(100%);opacity:0;pointer-events:none;transition:transform .34s cubic-bezier(.4,0,.2,1),opacity .28s}
+  .view.active{transform:translateX(0);opacity:1;pointer-events:auto}
+  .view.behind{transform:translateX(-22%);opacity:.55}
+  .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+  .scroll::-webkit-scrollbar{width:0}
+  .appbar{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:10px 16px 12px;background:var(--cream);border-bottom:1px solid var(--line)}
+  .appbar .brand{flex:1;display:flex;align-items:center;justify-content:center;gap:9px}
+  .appbar .brand h1{margin:0;font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:2.5px;font-size:19px;color:var(--navy)}
+  .iconbtn{width:38px;height:38px;border:none;background:transparent;color:var(--navy);display:flex;align-items:center;justify-content:center;border-radius:12px;cursor:pointer}
+  .iconbtn:active{background:rgba(40,50,70,.08)}
+  .iconbtn svg{width:22px;height:22px}
+  .logo-cross{width:20px;height:24px;flex:0 0 auto}
+  .lead-line{text-align:center;font-style:italic;color:var(--ink-soft);font-size:14.5px;padding:8px 24px 6px;line-height:1.4}
+  .chips{display:flex;gap:9px;overflow-x:auto;padding:10px 16px 6px}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--paper);color:var(--navy-2);padding:7px 16px;border-radius:20px;font-size:15px;font-family:inherit;cursor:pointer;transition:.15s;white-space:nowrap}
+  .chip.active{background:var(--navy);color:#eef1f6;border-color:var(--navy)}
+  .section-title{font-family:'Cormorant Garamond',serif;color:var(--navy);font-size:19px;font-weight:600;letter-spacing:1px;padding:8px 16px 0;display:flex;align-items:center;gap:10px}
+  .section-title::before,.section-title::after{content:"";height:1px;background:var(--line);flex:1}
+  .section-title span{white-space:nowrap}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 16px 22px}
+  .card{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 6px 16px rgba(30,32,45,.16);cursor:pointer;background:#e9e3d3;transition:transform .12s}
+  .card:active{transform:scale(.975)}
+  .card .thumb{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
+  .card .strip{padding:9px 11px;background:var(--paper);border-top:1px solid var(--line)}
+  .card .strip .t{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--navy);line-height:1.15}
+  .card .strip .c{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--gold);margin-top:3px}
+  .card .fav{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:rgba(20,22,32,.42);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff}
+  .card .fav svg{width:17px;height:17px}
+  .card.faved .fav{color:#e7a2a2}
+  /* Detail */
+  .detail-imgwrap{position:relative;background:var(--navy);cursor:zoom-in}
+  .detail-imgwrap img{width:100%;display:block}
+  .detail-bar{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(180deg,rgba(18,20,30,.6),rgba(18,20,30,0));z-index:5}
+  .detail-bar .iconbtn{color:#fff}
+  .detail-bar .right{display:flex}
+  .zoomhint{position:absolute;bottom:10px;right:10px;background:rgba(20,22,32,.6);color:#fff;font-size:12px;padding:6px 12px;border-radius:20px;display:flex;align-items:center;gap:6px}
+  .zoomhint svg{width:15px;height:15px}
+  .scrollcue{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--navy);padding:14px 0 2px;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7}
+  .scrollcue svg{width:20px;height:20px;animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+  .article{padding:6px 20px 40px}
+  .art-head{text-align:center;padding:6px 0 4px}
+  .art-cat{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .art-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--navy);line-height:1.05;margin:6px 0 2px}
+  .art-sub{font-style:italic;color:var(--ink-soft);font-size:16px}
+  .divider{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gold-soft);margin:16px 0;font-size:18px}
+  .keyverse{background:var(--navy);color:#eef1f6;border-radius:14px;padding:16px 18px;text-align:center;margin:6px 0 18px}
+  .keyverse .q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.5}
+  .keyverse .r{margin-top:9px;font-size:12.5px;letter-spacing:1.5px;color:var(--gold-soft);font-weight:600}
+  .overview p{font-size:16.5px;line-height:1.62;color:#413d30;margin:0 0 14px}
+  .steps-h{font-family:'Cormorant Garamond',serif;text-align:center;color:var(--navy);font-size:20px;letter-spacing:1.5px;font-weight:600;margin:8px 0 16px;display:flex;align-items:center;justify-content:center;gap:10px}
+  .steps-h::before,.steps-h::after{content:"❧";color:var(--gold-soft);font-size:15px}
+  .step{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+  .step .badge{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:linear-gradient(150deg,var(--navy),var(--navy-2));color:#f4e9cf;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;box-shadow:0 3px 8px rgba(30,32,45,.22)}
+  .step .badge.gold{background:linear-gradient(150deg,var(--gold),#9c7a26);color:#fff}
+  .step .body{flex:1;padding-top:1px}
+  .step .body .lbl{font-family:'Cormorant Garamond',serif;font-size:17.5px;font-weight:700;color:var(--navy)}
+  .step .body p{margin:5px 0 0;font-size:15.5px;line-height:1.5;color:#4c4838}
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:4px 0 12px}
+  .path{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .path h5{margin:0;padding:11px 12px;text-align:center;font-family:'Cormorant Garamond',serif;font-size:15px;color:#fff}
+  .path.dark h5{background:var(--pathdark)}.path.free h5{background:var(--pathfree)}
+  .path ol{list-style:none;margin:0;padding:8px 10px}
+  .path li{font-size:13.5px;padding:6px 0;border-bottom:1px dashed var(--line);line-height:1.3}
+  .path li:last-child{border-bottom:none}
+  .path li b{display:block;font-size:14px}
+  .path li span{color:var(--ink-soft);font-size:12.5px}
+  .path.dark li b{color:var(--pathdark)}.path.free li b{color:var(--pathfree)}
+  .softbox{background:linear-gradient(180deg,#efe8d5,#e8e0ca);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:8px 0}
+  .softbox h4{margin:0 0 10px;text-align:center;font-family:'Cormorant Garamond',serif;letter-spacing:1.5px;color:var(--navy);font-weight:600;font-size:15px}
+  .softbox p{margin:0;font-style:italic;font-size:16px;line-height:1.6;color:#48432f;text-align:center}
+  .scrip{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+  .scrip .r{flex:0 0 92px;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--gold);text-transform:uppercase;padding-top:3px}
+  .scrip p{margin:0;font-size:15px;line-height:1.45;color:#4c4838}
+  .closing{background:var(--green);color:#eef0e2;border-radius:14px;padding:18px 20px;text-align:center;margin-top:6px}
+  .closing .q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.5}
+  .closing .r{margin-top:9px;font-size:12.5px;letter-spacing:1.5px;color:var(--gold-soft);font-weight:600}
+  /* Daily */
+  .daily-head{flex:0 0 auto;display:flex;align-items:center;background:var(--navy);padding:12px 16px;gap:8px}
+  .daily-head .info{flex:1}
+  .daily-head .lbl{color:var(--gold-soft);font-size:12px;letter-spacing:2px;font-weight:600}
+  .daily-head .sub{color:#dde3ee;font-size:13px}
+  .daily-scroll{flex:1;overflow-y:auto;padding:20px}
+  .daily-scroll::-webkit-scrollbar{width:0}
+  .devo-cat{color:var(--gold);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
+  .devo-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--navy);line-height:1.05;margin:2px 0}
+  .devo-ref{color:var(--ink-soft);font-style:italic;font-size:16px}
+  .sec-label{color:var(--gold);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;margin:18px 0 6px}
+  .sec-body{color:var(--ink);font-size:16px;line-height:1.56}
+  .journalbox{border:1px solid var(--gold);border-radius:14px;padding:16px;margin-top:14px}
+  .journalbox .sec-label{margin-top:0}
+  .related{display:flex;gap:8px;margin-top:8px}
+  .related span{flex:1;text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 4px;font-size:13px;color:var(--navy)}
+  .actionbar{flex:0 0 auto;display:flex;align-items:center;background:var(--paper);border-top:1px solid var(--line);padding:10px 12px}
+  .navbtn{background:none;border:none;font-family:inherit;font-size:13px;color:var(--navy);display:flex;align-items:center;gap:3px;cursor:pointer;padding:8px}
+  .navbtn:disabled{color:#bdb9ac;cursor:default}
+  .navbtn svg{width:18px;height:18px}
+  .completebtn{flex:1;display:flex;justify-content:center}
+  .completebtn .b{display:flex;align-items:center;gap:7px;border-radius:24px;padding:11px 18px;cursor:pointer;font-weight:600;font-size:14px;background:var(--gold);color:#221a08}
+  .completebtn .b.done{background:var(--green);color:#fff}
+  .completebtn svg{width:18px;height:18px}
+  /* Quiet Time */
+  .qt{position:absolute;inset:0;display:flex;flex-direction:column;background:linear-gradient(180deg,#243247,#151d2b)}
+  .qt .scroll{background:transparent}
+  .qt-head{text-align:center;color:#eef1f6;padding:26px 24px 6px}
+  .qt-head h2{font-family:'Cormorant Garamond',serif;letter-spacing:3px;font-size:24px;margin:8px 0 4px;font-weight:600}
+  .qt-head p{margin:0;font-style:italic;color:#c3ccda;font-size:15px}
+  .ring-wrap{display:flex;align-items:center;justify-content:center;padding:14px 0 6px;position:relative}
+  .ring{transform:rotate(-90deg)}
+  .ring-bg{fill:none;stroke:rgba(255,255,255,.12);stroke-width:10}
+  .ring-fg{fill:none;stroke:url(#g);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
+  .ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f2eeda}
+  .ring-label .time{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:600;letter-spacing:2px;line-height:1}
+  .ring-label .state{margin-top:6px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#b9c2d2}
+  .presets{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:6px 20px 2px}
+  .preset{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#e9ecf3;border-radius:18px;padding:7px 15px;font-family:inherit;font-size:14px;cursor:pointer}
+  .preset.active{background:var(--gold);border-color:var(--gold);color:#221a08;font-weight:600}
+  .slider-wrap{padding:16px 30px 4px;color:#dbe0ea}
+  .slider-wrap .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;letter-spacing:.5px}
+  input[type=range]{width:100%;-webkit-appearance:none;height:5px;border-radius:5px;background:rgba(255,255,255,.2);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold-soft);border:3px solid #eef1f6;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+  .qt-controls{display:flex;gap:12px;justify-content:center;padding:18px 24px 6px}
+  .qt-btn{border:none;font-family:inherit;font-size:16px;border-radius:26px;padding:13px 30px;cursor:pointer;display:flex;align-items:center;gap:8px}
+  .qt-btn.primary{background:var(--gold);color:#221a08;font-weight:600}
+  .qt-btn.ghost{background:rgba(255,255,255,.1);color:#e9ecf3;border:1px solid rgba(255,255,255,.2)}
+  .qt-btn svg{width:18px;height:18px}
+  .qt-verse{margin:16px 22px 8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 20px;text-align:center;color:#e9ecf3}
+  .qt-verse .lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-soft);margin-bottom:10px}
+  .qt-verse .q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.5}
+  .qt-verse .r{margin-top:10px;font-size:13px;letter-spacing:1px;color:#b9c2d2}
+  .amb-row{display:flex;align-items:center;justify-content:center;gap:10px;color:#d5dae4;font-size:14px;padding:10px 20px 4px}
+  .hymnlbl{text-align:center;color:#b9c2d2;font-size:11px;letter-spacing:.5px;padding:8px 20px 6px}
+  .hymnrow{display:flex;gap:8px;overflow-x:auto;padding:0 16px 24px}
+  .hymnrow::-webkit-scrollbar{display:none}
+  .hymn{flex:0 0 auto;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#e9ecf3;border-radius:18px;padding:8px 14px;font-family:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+  .hymn.active{background:var(--gold);border-color:var(--gold);color:#221a08;font-weight:600}
+  .toggle{position:relative;width:46px;height:26px;border-radius:26px;background:rgba(255,255,255,.18);border:none;cursor:pointer;transition:.2s}
+  .toggle.on{background:var(--gold)}
+  .toggle::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+  .toggle.on::after{left:23px}
+  .placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;color:var(--ink-soft)}
+  .placeholder svg{width:48px;height:48px;color:var(--gold-soft);margin-bottom:16px}
+  .placeholder h3{font-family:'Cormorant Garamond',serif;color:var(--navy);font-size:22px;letter-spacing:1px;margin:0 0 8px}
+  .placeholder p{margin:0;font-size:15px;max-width:250px;line-height:1.5}
+  .about{flex:1;overflow-y:auto;text-align:center;padding:28px}
+  .about img{width:120px;margin-top:14px}
+  .about h3{font-family:'Cormorant Garamond',serif;color:var(--navy);font-size:24px;letter-spacing:2px;margin:14px 0 4px}
+  .about .tag{color:var(--gold);font-style:italic;font-size:15px}
+  .about p{color:var(--ink);font-size:16px;line-height:1.55;margin-top:20px}
+  .bottomnav{flex:0 0 auto;display:flex;background:var(--paper);border-top:1px solid var(--line);padding:8px 4px calc(8px + env(safe-area-inset-bottom))}
+  .navitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:none;color:var(--ink-soft);cursor:pointer;padding:4px 0;font-family:inherit}
+  .navitem svg{width:23px;height:23px}
+  .navitem span{font-size:10px}
+  .navitem.active{color:var(--navy)}
+  .navitem.active span{font-weight:600}
+  /* Zoom overlay */
+  .zoomov{position:absolute;inset:0;background:rgba(0,0,0,.94);z-index:120;display:none;align-items:center;justify-content:center;overflow:hidden}
+  .zoomov.show{display:flex}
+  .zoomov img{max-width:none;transform-origin:center;user-select:none;-webkit-user-drag:none}
+  .zoomov .close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:22px;cursor:pointer}
+  .zoomov .hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#ccc;font-size:13px}
+  .toast{position:absolute;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#eef1f6;padding:11px 20px;border-radius:22px;font-size:14px;opacity:0;transition:.3s;z-index:130;box-shadow:var(--shadow);pointer-events:none;white-space:nowrap}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="statusbar"><span>10:30</span><span class="icons">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 12L24 9c-2.7-3-7-5-12-5z"/></svg>
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17h2v3H3zm4-4h2v7H7zm4-4h2v11h-2zm4-4h2v15h-2z"/></svg>
+    <svg viewBox="0 0 26 24" fill="currentColor"><rect x="1" y="7" width="20" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="9" width="15" height="7" rx="1.5"/><rect x="22" y="10" width="2.5" height="5" rx="1"/></svg>
+  </span></div>
+  <div class="screen" id="screen"></div>
+  <nav class="bottomnav" id="bottomnav">
+    <button class="navitem active" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Cards</span></button>
+    <button class="navitem" data-tab="daily"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v16l-4-3-4 3-4-3-3 2z"/></svg><span>Daily</span></button>
+    <button class="navitem" data-tab="quiet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3c3 3 5 5 5 8a5 5 0 0 1-10 0c0-3 2-5 5-8z"/><path d="M12 21v-3"/></svg><span>Quiet</span></button>
+    <button class="navitem" data-tab="favorites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg><span>Saved</span></button>
+    <button class="navitem" data-tab="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>About</span></button>
+  </nav>
+  <div class="zoomov" id="zoomov"><img id="zoomimg" src="" alt=""><button class="close" id="zoomclose">✕</button><div class="hint">Pinch, scroll, or double-tap to zoom</div></div>
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+/* ========= POSTCARD DATA (mirrors Android Postcards.kt) ========= */
+const cards = [
+ {id:"fear",title:"When Fear Paints Pictures",subtitle:"Renewing the Mind",cat:"Freedom",img:"images/fear-paints.png",
+  key:{q:"We take captive every thought to make it obedient to Christ.",r:"2 Corinthians 10:5"},
+  overview:["Fear has a way of painting vivid pictures of futures that have not happened. It shows you the worst outcome as if it were already true.","The freedom principle on this card is simple: Fear paints pictures. Faith paints promises. A fearful thought only gains power when you agree with it — so this is a five-step tool for catching a thought and exchanging it for God's truth."],
+  stepsTitle:"The Five Steps",steps:[["1","Stop","Stop before agreeing with the thought. A fear only takes hold when you accept it. Pause before you let it in."],["2","Test","Does this agree with God's Word? Hold the thought up against Scripture. If it contradicts His promises, it is not the truth about you."],["3","Replace","Exchange the lie for God's truth. Don't just push the fear away — replace it with what God actually says."],["4","Invite","Ask the Holy Spirit what is true. Invite God into the moment and let Him lead you into truth."],["5","Walk","Choose faith over fear. Take the next step trusting God's promise rather than fear's picture."]],
+  remember:["Fear paints pictures. Faith paints promises.","Not every thought deserves my agreement.","Jesus is renewing my mind.","I choose God's truth today."],
+  prayer:"Holy Spirit, help me recognize every lie, replace it with Your truth, and walk today in the freedom Jesus purchased for me. Amen.",
+  scriptures:[["2 Cor 10:5","We take captive every thought to make it obedient to Christ."],["Romans 12:2","Be transformed by the renewing of your mind."],["Phil 4:8","Think about what is true, noble, right, pure, lovely, and praiseworthy."]],
+  closing:{q:"You are not alone. You are being renewed.",r:"The Abundant Life Ministry"}},
+ {id:"clear",title:"CLEAR",subtitle:"A Path to Freedom",cat:"Deliverance",img:"images/clear.png",
+  key:{q:"They found the man now free of demons, sitting at Jesus' feet, dressed and thinking clearly.",r:"Mark 5:15"},
+  overview:["CLEAR is a five-step pattern for walking out of bondage and into freedom. It is drawn from the account in Mark 5 of the man Jesus delivered — afterward found sitting at Jesus' feet, dressed and thinking clearly.","Each letter is a step you take with God, moving from confession all the way to receiving the freedom Christ has already won."],
+  stepsTitle:"C · L · E · A · R",steps:[["C","Confess","Tell the truth. Take responsibility. Ask for forgiveness. Forgive yourself."],["L","Leave the Agreement","Come out of every agreement you have made with the enemy."],["E","Evict the Demon","In the name of Jesus, evict every demon and cancel its right to remain."],["A","Ask","Ask to be filled with the Holy Spirit and empowered to walk in freedom."],["R","Receive","Receive Christ's Lordship, truth, and freedom to live the abundant life."]],
+  scriptures:[["Mark 5:15","After Jesus delivered him, the man was free, sitting at Jesus' feet, dressed and thinking clearly."],["John 8:36","So if the Son sets you free, you will be free indeed."]],
+  closing:{q:"So if the Son sets you free, you will be free indeed.",r:"John 8:36"}},
+ {id:"deliverance",title:"Father God",subtitle:"A Deliverance Prayer",cat:"Deliverance",img:"images/deliverance-prayer.png",
+  key:{q:"Submit yourselves, then, to God. Resist the devil, and he will flee from you.",r:"James 4:7"},
+  overview:["This is a guided prayer that pairs with the CLEAR card — if CLEAR is the map, this is the prayer you pray. Read it aloud, filling in the blank with the specific spirit or stronghold you are renouncing.","It moves in order: taking responsibility, renouncing the agreement, receiving forgiveness, cancelling every effect, inviting God to fill that place, and declaring Jesus alone as Lord."],
+  stepsTitle:"Pray This Aloud",steps:[["1","Take responsibility","“I take responsibility for agreeing with the spirit of ______ in my life.”"],["2","Renounce","“I renounce every agreement I have made with the spirit of ______.”"],["3","Forgive","“I ask for Your forgiveness, and I forgive myself.”"],["4","Cancel every effect","“I ask You to cancel every effect of this ungodly agreement in my life.”"],["5","Be filled","“Father, please fill the place that this spirit has occupied with Your Spirit.”"],["6","Declare Jesus as Lord","“I declare that Jesus Christ alone is my Lord, and I choose to live in agreement with Him.”"]],
+  prayer:"In Jesus' name, Amen.",
+  scriptures:[["James 4:7","Submit to God. Resist the devil, and he will flee from you."],["1 John 1:9","If we confess our sins, He is faithful and just to forgive us and cleanse us."]],
+  closing:{q:"Jesus Christ alone is Lord — and I choose to live in agreement with Him.",r:"The Abundant Life Ministry"}},
+ {id:"forgiveness",title:"Forgiveness",subtitle:"The Choice That Sets Us Free",cat:"Forgiveness",img:"images/forgiveness.png",
+  key:{q:"Be kind and compassionate to one another, forgiving each other, just as in Christ God forgave you.",r:"Ephesians 4:32"},
+  overview:["Two paths branch from the same starting point — an offense. What we do next decides everything.","One path lets the offense take root and grow, all the way to destruction. The other releases it to God and leads to healing and freedom. Jesus gave us the key to forgiveness (Luke 23:34)."],
+  paths:{darkTitle:"The Path of Unforgiveness",dark:[["Offense","Someone hurts us."],["Unforgiveness","We choose not to forgive."],["Resentment","Bitterness takes root."],["Retaliation","We want to pay back."],["Anger","Emotions intensify."],["Hatred","The heart hardens."],["Violence","Destruction follows."]],darkNote:"Unforgiveness doesn't just hurt the other person — it destroys us.",
+    freeTitle:"The Path to Freedom",free:[["Offense","Someone hurts us."],["Honesty","We bring it to God."],["Surrender","We release it to Him."],["Forgiveness","We choose to forgive."],["Blessing","We bless and pray for them."],["Peace","God's peace fills our heart."],["Freedom","We walk in the abundant life."]],freeNote:"Forgiveness breaks the power of the offense and opens the door to healing."},
+  scriptures:[["Eph 4:32","Forgive each other, just as in Christ God forgave you."],["Luke 23:34","Father, forgive them, for they do not know what they are doing."]],
+  closing:{q:"Forgiveness breaks the power of the offense and opens the door to healing and freedom.",r:"Ephesians 4:32"}},
+ {id:"stirred",title:"Stirred Up!",subtitle:"Finding Peace in Your Emotions",cat:"Emotions",img:"images/stirred-up.png",
+  key:{q:"Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful.",r:"Colossians 3:15"},
+  overview:["When you feel stirred up, fired up, offended, or upset, the brain's amygdala can become hijacked. Feelings of injustice or betrayal trigger a rapid protection response before you've had time to think.","These steps walk you back from reaction to peace — and, in the process, toward understanding, compassion, and forgiveness."],
+  stepsTitle:"The Steps to Peace",steps:[["1","Breathe","Breathe, and stay curious rather than reactive."],["2","Feel","Recognize where you feel it in your body, and the emotions it stirs."],["3","Ask","When was the first time I felt like this? Pay attention to the first memory that comes, even if it doesn't make sense."],["4","Stay Curious","Allow yourself to re-experience the emotion for a moment. Let the memory and the emotion connect."],["5","Gratitude","Identify one good thing that came from this. Gratitude awakens the prefrontal cortex, releases dopamine, quiets the amygdala, and increases joy."],["6","Empathy","See the other person the way God does. Seek to understand their feelings and perspective."],["7","Compassion","Compassion opens the heart to give and receive love. It doesn't mean stepping back into an unhealthy relationship — it means becoming more like Christ: less stress, more joy, more freedom, more life."],["8","Forgive","From this place of peace, choose to forgive."]],
+  scriptures:[["Col 3:15","Let the peace of Christ rule in your hearts — and be thankful."],["Prov 4:23","Above all else, guard your heart, for everything you do flows from it."]],
+  closing:{q:"Let the peace of Christ rule in your hearts... And be thankful.",r:"Colossians 3:15"}},
+ {id:"wounded",title:"A Wounded Heart",subtitle:"Saved but Not Yet Whole",cat:"Healing",img:"images/wounded-heart.png",
+  key:{q:"He heals the brokenhearted and binds up their wounds.",r:"Psalm 147:3"},
+  overview:["You can be saved and still carry wounds that haven't healed. This card pictures a heart with the cross at its center — Jesus is Lord and Savior — yet surrounded by dark places of pain, loss, and emptiness He still wants to make whole.","The dark places marked 5, 12, 16, and WOMB represent seasons where wounds often form — even before birth, and at different ages of childhood and youth. They stand for the specific memories and hurts we may not have brought to Him yet.","Salvation makes Jesus Lord of your heart. Healing is letting Him into every cracked and darkened place, one at a time."],
+  stepsTitle:"Bringing Him the Wounds",steps:[["✚","Name the place","Ask the Holy Spirit to show you a wounded place — a season, an age, a memory that still aches.",true],["✚","Invite Him in","Invite Jesus into that specific memory. He was never absent from it, and He is not afraid of it.",true],["✚","Receive healing","Ask Him to heal the pain, fill the emptiness, and replace the lie the wound taught you with His truth.",true],["✚","Return often","Wholeness is a journey. Keep bringing Him each place until the whole heart is His.",true]],
+  prayer:"Jesus, You are Lord and Savior of my heart. Come into the places of pain, loss, and emptiness I have carried, and make them whole. Amen.",
+  scriptures:[["Psalm 147:3","He heals the brokenhearted and binds up their wounds."],["Isaiah 61:1","He has sent me to bind up the brokenhearted, to proclaim freedom for the captives."]],
+  closing:{q:"There are places of pain, loss, and emptiness that Jesus wants to heal and make whole.",r:"Psalm 147:3"}},
+ {id:"order",title:"God's Created Order",subtitle:"All Authority Is God Given",cat:"Authority",img:"images/created-order.png",
+  key:{q:"I have given you authority to overcome all the power of the enemy.",r:"Luke 10:19"},
+  overview:["This card maps God's created order of authority, from the throne of heaven down to the visible world we live in. Every rank and power exists under God's rule.","It answers a practical question: who has authority over the unseen realm of angels and demons? The answer is God — and, through Jesus, those who belong to Him."],
+  stepsTitle:"The Order of Authority",steps:[["1","God the Father","Reigns supreme over all creation, seated on the throne. All authority begins and ends with Him."],["2","Jesus Christ","Seated at the right hand of the Father, far above every power and name. (Ephesians 1:20-22; Hebrews 1:3)"],["3","Believers in Christ","Joint heirs with Christ, seated with Him in the heavenly places — sharing in His authority. (Ephesians 2:6)"],["4","The Unseen Realm","Spiritual beings exist here: angels created to worship and serve God, and demons who rebelled and seek to destroy and deceive."],["5","Authority Given by God","Jesus has given His followers authority to overcome the power of the enemy. Our struggle is spiritual. (Luke 10:19; Ephesians 6:12)"],["6","The Visible Realm","The physical world and all that is seen — where humanity, made in the image of God, lives. (Genesis 1:26-27)"],["7","Those Who Trust God","Given authority through Jesus Christ to resist the enemy and walk in His victory, empowered by His Spirit. (James 4:7)"],["8","Those Without Christ","Operate under the influence and power of the enemy, having no authority over demons and remaining subject to deception. (John 8:44)"]],
+  remember:["God reigns supreme over all creation.","Believers have authority over the unseen realm through Jesus Christ.","Humanity without Christ does not have that authority.","Every authority, rank, and power is under God's rule."],
+  scriptures:[["Luke 10:19","I have given you authority to overcome all the power of the enemy."],["Eph 2:6","God raised us up with Christ and seated us with Him in the heavenly places."],["Col 1:16","In Him all things were created, in heaven and on earth, visible and invisible."],["John 8:32","You will know the truth, and the truth will set you free."]],
+  closing:{q:"To Him be glory in all things!",r:"Romans 11:36"}},
+ {id:"sixemotions",title:"The Six Big Emotions",subtitle:"Emotions God Created for Our Good",cat:"Emotions",img:"images/six-emotions.png",
+  key:{q:"Casting all your worries on him, because he cares for you.",r:"1 Peter 5:7"},
+  overview:["These are the six emotions that can overwhelm us. But God did not give them to torment us; He created each one for our good.","Every emotion carries a purpose and a message. When we welcome, understand, and bring them to God, He turns them into doorways to healing, wisdom, and strength."],
+  stepsTitle:"The Six Emotions & Their Purpose",steps:[["1","Sadness","“I have experienced loss or unmet longing.” Sadness helps us slow down, feel our need, and reach out for comfort. Purpose: connect, mourn, and heal."],["2","Anger","“I need to protect myself or what matters; something needs to stop.” Purpose: protect, set limits, and restore justice."],["3","Fear","“I sense danger or threat.” Fear helps us recognize danger and reach out for help. Purpose: protect, discern, and seek help."],["4","Shame","“I feel overwhelmed and see no way forward.” It whispers there is no hope, and it is heavy and exhausting. Purpose: signal that we need rescue, restoration, and renewed hope."],["5","Hopeless Despair","“I feel that I no longer bring people joy,” or the deeper lie that I am not good enough or do not belong. Purpose: healthy sorrow reminds us of our true heart, and it can be healed by truth and love."],["6","Disgust","“Something feels offensive, repulsive, or morally wrong.” Purpose: reject harm and protect our physical and moral well-being."]],
+  prayer:"Father, thank You that You created my emotions for my good. When they overwhelm me, help me welcome them, understand them, and bring them to You for healing, wisdom, and strength.",
+  scriptures:[["1 Peter 5:7","Casting all your worries on him, because he cares for you."],["Psalm 62:8","Trust in him at all times. Pour out your heart before him."]],
+  closing:{q:"God created these emotions for our good. When we bring them to Him, He brings healing, wisdom, and strength.",r:"1 Peter 5:7"}},
+ {id:"trueheart",title:"The Six Big Emotions & the True Heart",subtitle:"Warning Signals, Not Identity",cat:"Emotions",img:"images/emotions-wheel.png",
+  key:{q:"You will keep whoever's mind is steadfast in perfect peace, because he trusts in you.",r:"Isaiah 26:3"},
+  overview:["Big emotions are warning signals that something needs attention, not the truth about who you are. Anger, sadness, fear, shame, despair, and disgust each point us toward a need.","They are not problems to eliminate but gifts from God. When processed well, they lead us back to the True Heart, where identity in Christ, joy, wisdom, and peace are restored."],
+  stepsTitle:"Returning to the True Heart",steps:[["♥","The True Heart","At the center is your True Heart: joy, peace, and your identity in Christ. This is who you really are, beneath every passing emotion.",true],["!","Warning Signals","Each big emotion is an arrow pointing inward, a signal that something needs your attention and care, not a verdict on your worth."],["◉","Identity Center","In Christ you can say, “I know who I am.” Your identity is settled in Him, not in how you feel today."],["♥","Joy Center","Glad-to-be-together joy. Processing emotions from a place of joy keeps you connected to God and others.",true],["⚙","Executive Center","From your True Heart you can think, plan, and make wise choices, rather than reacting from the storm."],["✚","Live From the True Heart","Listen to the warning, process from your Joy Center, and return to the True Heart, where you live from love, wisdom, and peace.",true]],
+  prayer:"Father, help me hear my emotions as warning signals, not my identity. Lead me back to the True Heart You have given me, where joy, peace, and my identity in Christ are restored.",
+  scriptures:[["Isaiah 26:3","You will keep whoever's mind is steadfast in perfect peace, because he trusts in you."],["1 Peter 5:7","Casting all your worries on him, because he cares for you."]],
+  closing:{q:"Listen to the warning. Process from your Joy Center. Return to your True Heart.",r:"Isaiah 26:3"}},
+ {id:"transformation",title:"The Journey of Transformation",subtitle:"How God Renews the Mind",cat:"Growth",img:"images/brain-journey.png",
+  key:{q:"Don't be conformed to this world, but be transformed by the renewing of your mind.",r:"Romans 12:2"},
+  overview:["God designed our brains for transformation through relationship. Information enters through a perception filter, our brain attaches meaning, and through connection we grow.","As we abide with Jesus and His people, our identity is formed, and transformation becomes the natural fruit of a life connected to Him. This card maps that journey level by level."],
+  stepsTitle:"The Five Levels",steps:[["1","Perception Filter","The sensory gateway asks, “What just happened? Does this matter? Where should I send this?” All incoming information is filtered before it is processed."],["2","Attachment","The brain quickly attaches to what feels good, bad, or scary, largely outside our conscious awareness. Feelings come before we even know the story."],["3","Attunement","“Can I share this? Will someone stay with me? Can we remain connected?” This level regulates the emotional brainstorm created by difficult experiences."],["4","Abiding","Identity is formed through abiding, with Jesus as our source of life and secure attachment, with our people for belonging, and within ourselves for character and purpose."],["5","Transformation","The natural fruit of a life connected to Him: love, peace, wisdom, character, and the fruit of the Spirit."]],
+  remember:["Abide. Connect. Become. Transform.","When our perception is renewed, our attachments heal.","As our relationships deepen, our identity becomes secure.","And our lives are transformed."],
+  prayer:"Father, You designed me for transformation through relationship with You. Renew my perception, heal my attachments, and form my identity as I abide in Jesus. Transform me by the renewing of my mind.",
+  scriptures:[["Romans 12:2","Be transformed by the renewing of your mind."],["John 15:5","I am the vine. You are the branches. Apart from me you can do nothing."]],
+  closing:{q:"Abide. Connect. Become. Transform.",r:"John 15:4-5"}},
+ {id:"maturity",title:"Maturity",subtitle:"Remaining Your Best Self",cat:"Growth",img:"images/maturity.png",
+  key:{q:"Until we all attain to a full grown man, to the measure of the stature of the fullness of Christ.",r:"Ephesians 4:13"},
+  overview:["Maturity is learning to remain your best self under increasingly difficult situations and intense emotions, living from the true heart Jesus gave you.","It is not the absence of hard feelings but the ability to stay grounded in who you are in Christ when pressure rises. Maturity is grown, not achieved overnight."],
+  stepsTitle:"Growing in Maturity",steps:[["1","Remain Your Best Self","Maturity shows most not when life is easy, but when situations grow difficult. The goal is to stay your best self even under pressure."],["2","Under Intense Emotion","Big emotions do not have to dictate your behavior. Maturity feels them, brings them to God, and still chooses to act from love."],["3","Live From the True Heart","You act not from fear or reaction, but from the true heart Jesus gave you, marked by love, wisdom, and peace."],["4","Grow Toward Christ","The aim of all growth is to become like Jesus, attaining the full measure of His character."]],
+  prayer:"Father, grow me into maturity. Help me remain my best self under pressure and intense emotion, living from the true heart Jesus gave me, until I reach the full measure of Christ.",
+  scriptures:[["Ephesians 4:13","Until we all attain to the measure of the stature of the fullness of Christ."],["James 1:4","Let endurance have its perfect work, that you may be perfect and complete, lacking in nothing."]],
+  closing:{q:"Maturity is learning to remain your best self, living from the true heart Jesus gave you.",r:"Ephesians 4:13"}}
+];
+const categories=["All","Freedom","Deliverance","Forgiveness","Emotions","Healing","Authority","Growth"];
+const quietVerses=[{q:"Be still, and know that I am God.",r:"Psalm 46:10"},{q:"Come to me, all you who are weary and burdened, and I will give you rest.",r:"Matthew 11:28"},{q:"He restores my soul... beside quiet waters.",r:"Psalm 23:2-3"},{q:"In quietness and trust is your strength.",r:"Isaiah 30:15"},{q:"Let the peace of Christ rule in your hearts.",r:"Colossians 3:15"}];
+const HYMNS=[{n:"Amazing Grace",f:"audio/hymn_amazing_grace.mp3"},{n:"Be Thou My Vision",f:"audio/hymn_be_thou_vision.mp3"},{n:"Holy, Holy, Holy",f:"audio/hymn_holy_holy_holy.mp3"},{n:"It Is Well",f:"audio/hymn_it_is_well.mp3"},{n:"Come Thou Fount",f:"audio/hymn_come_thou_fount.mp3"}];
+
+/* ========= STORAGE ========= */
+const LS=window.localStorage;
+function getSet(k){try{return new Set(JSON.parse(LS.getItem(k)||"[]"))}catch(e){return new Set()}}
+function saveSet(k,s){LS.setItem(k,JSON.stringify([...s]))}
+let favs=getSet("ag_favs");
+let devoDone=getSet("ag_devo_done");
+let devoSaved=getSet("ag_devo_saved");
+let state={tab:"home",filter:"All"};
+const screen=document.getElementById('screen');
+const toastEl=document.getElementById('toast');
+function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastEl._t);toastEl._t=setTimeout(()=>toastEl.classList.remove('show'),1900);}
+function cross(c){c=c||'#1e2a3f';return `<svg class="logo-cross" viewBox="0 0 24 30" fill="none"><path d="M12 2v26M6 9h12" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/><path d="M9 24c-2 1-5 1-6-1 2-1 5-1 6 1z" fill="#7a8a4e"/></svg>`;}
+function heart(f){return f?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg>';}
+
+/* ========= HOME (post cards) ========= */
+function renderHome(){
+  const list=cards.filter(c=>state.filter==="All"||c.cat===state.filter);
+  const v=el('view active','home');
+  v.innerHTML=`<div class="appbar"><button class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><div class="brand">${cross()}<h1>ABUNDANT GRACE</h1></div><button class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg></button></div>
+  <div class="scroll"><div class="lead-line">Tap a post card, then scroll to discover its deeper meaning.</div>
+  <div class="chips">${categories.map(c=>`<button class="chip ${c===state.filter?'active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
+  <div class="section-title"><span>${state.filter==="All"?"All Post Cards":state.filter}</span></div>
+  <div class="grid">${list.map(c=>`<div class="card ${favs.has(c.id)?'faved':''}" data-card="${c.id}"><img class="thumb" src="${c.img}" alt="${c.title}"><button class="fav" data-fav="${c.id}">${heart(favs.has(c.id))}</button><div class="strip"><div class="t">${c.title}</div><div class="c">${c.cat}</div></div></div>`).join('')}</div></div>`;
+  return v;
+}
+function renderDetail(c){
+  const v=el('view','detail');
+  let steps='';
+  if(c.steps){steps=`<h3 class="steps-h">${c.stepsTitle||'Breakdown'}</h3>`+c.steps.map(s=>`<div class="step"><div class="badge ${s[3]?'gold':''}">${s[0]}</div><div class="body"><div class="lbl">${s[1]}</div><p>${s[2]}</p></div></div>`).join('');}
+  let paths='';
+  if(c.paths){const col=(cls,title,arr)=>`<div class="path ${cls}"><h5>${title}</h5><ol>${arr.map(x=>`<li><b>${x[0]}</b><span>${x[1]}</span></li>`).join('')}</ol></div>`;
+    paths=`<h3 class="steps-h">Two Paths, One Choice</h3><div class="paths">${col('dark',c.paths.darkTitle,c.paths.dark)}${col('free',c.paths.freeTitle,c.paths.free)}</div>
+    <p class="overview" style="text-align:center;font-style:italic;color:var(--pathdark);margin:-4px 0 4px;font-size:14.5px">${c.paths.darkNote}</p>
+    <p class="overview" style="text-align:center;font-style:italic;color:var(--pathfree);margin:0 0 14px;font-size:14.5px">${c.paths.freeNote}</p>`;}
+  const remember=c.remember?`<div class="softbox"><h4>REMEMBER</h4><p>${c.remember.join('<br>')}</p></div>`:'';
+  const prayer=c.prayer?`<div class="softbox"><h4>PRAYER</h4><p>${c.prayer}</p></div>`:'';
+  const scrip=c.scriptures?`<h3 class="steps-h">Key Scriptures</h3>${c.scriptures.map(s=>`<div class="scrip"><div class="r">${s[0]}</div><p>${s[1]}</p></div>`).join('')}`:'';
+  const closing=c.closing?`<div class="closing"><div class="q">“${c.closing.q}”</div><div class="r">${c.closing.r}</div></div>`:'';
+  v.innerHTML=`<div class="scroll" style="background:var(--cream)">
+    <div class="detail-imgwrap" data-zoom="${c.img}">
+      <div class="detail-bar"><button class="iconbtn" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="right"><button class="iconbtn" data-fav="${c.id}">${heart(favs.has(c.id))}</button></div></div>
+      <img src="${c.img}" alt="${c.title}">
+      <div class="zoomhint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3M11 8v6M8 11h6"/></svg>Tap to zoom</div>
+    </div>
+    <div class="scrollcue">Keep scrolling <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+    <div class="article">
+      <div class="art-head"><div class="art-cat">${c.cat}</div><div class="art-title">${c.title}</div><div class="art-sub">${c.subtitle}</div></div>
+      <div class="divider">${cross('#c9a856')}</div>
+      <div class="keyverse"><div class="q">“${c.key.q}”</div><div class="r">${c.key.r}</div></div>
+      <div class="overview">${c.overview.map(p=>`<p>${p}</p>`).join('')}</div>
+      ${paths}${steps}${remember}${prayer}${scrip}${closing}
+    </div></div>`;
+  return v;
+}
+
+/* ========= DAILY DEVOTIONAL ========= */
+let devos=null, devoDay=parseInt(LS.getItem("ag_devo_day")||"1");
+function renderDaily(){
+  const v=el('view','daily');
+  if(devos===null){
+    v.innerHTML=`<div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v16l-4-3-4 3-4-3-3 2z"/></svg><h3>Loading devotionals…</h3><p id="devoerr">One moment.</p></div>`;
+    loadDevos();
+    return v;
+  }
+  const total=devos.length;
+  if(devoDay>total)devoDay=total; if(devoDay<1)devoDay=1;
+  const d=devos.find(x=>x.day===devoDay)||devos[0];
+  const done=devoDone.has(String(d.day)), saved=devoSaved.has(String(d.day));
+  v.innerHTML=`
+   <div class="daily-head"><div class="info"><div class="lbl">DAILY DEVOTIONAL</div><div class="sub">Day ${d.day} of ${total} · ${devoDone.size} completed</div></div>
+     <button class="iconbtn" data-dsave style="color:#eef1f6">${saved?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>'}</button>
+     <button class="iconbtn" data-dshare style="color:#eef1f6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8 11l8-4M8 13l8 4"/></svg></button>
+   </div>
+   <div class="daily-scroll">
+     <div class="devo-cat">DAY ${d.day} · ${d.theme.toUpperCase()}</div>
+     <div class="devo-title">${d.title}</div>
+     <div class="devo-ref">${d.verse_reference}</div>
+     <div class="keyverse" style="margin-top:16px"><div class="q">“${d.verse_text}”</div><div class="r">${d.verse_reference.toUpperCase()}</div></div>
+     <div class="sec-label">Reflection</div><div class="sec-body">${d.reflection}</div>
+     <div class="sec-label">Today's Application</div><div class="sec-body">${d.application}</div>
+     <div class="softbox"><h4>PRAYER</h4><p>${d.prayer}</p></div>
+     <div class="journalbox"><div class="sec-label">Journal Prompt</div><div class="sec-body">${d.journal_prompt}</div></div>
+     <div class="sec-label">Related Scripture</div><div class="related">${d.related_verses.map(r=>`<span>${r}</span>`).join('')}</div>
+   </div>
+   <div class="actionbar">
+     <button class="navbtn" data-dprev ${d.day<=1?'disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>Prev</button>
+     <div class="completebtn"><div class="b ${done?'done':''}" data-dcomplete><svg viewBox="0 0 24 24" fill="${done?'currentColor':'none'}" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/>${done?'<path d="M8 12l3 3 5-6" stroke="#fff" fill="none"/>':''}</svg>${done?'Completed':'Mark Complete'}</div></div>
+     <button class="navbtn" data-dnext ${d.day>=total?'disabled':''}>Next<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button>
+   </div>`;
+  return v;
+}
+function loadDevos(){
+  fetch('devotionals.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(data=>{devos=data;if(state.tab==='daily')show('daily');})
+    .catch(()=>{const e=document.getElementById('devoerr');if(e)e.textContent="Devotionals need to be served (host the folder or use a local server).";});
+}
+
+/* ========= QUIET TIME ========= */
+let qt={minutes:15,remaining:15*60,running:false,timerId:null,ambient:false,hymn:0,audio:null,actx:null,verse:quietVerses[0]};
+function renderQuiet(){
+  qt.verse=quietVerses[Math.floor(Math.random()*quietVerses.length)];
+  const v=el('view','quiet');
+  v.innerHTML=`<div class="qt"><div class="scroll">
+    <div class="qt-head"><div style="color:var(--gold-soft);font-size:24px">✝</div><h2>QUIET TIME</h2><p>Set aside time to be still with God.</p></div>
+    <div class="ring-wrap"><svg class="ring" width="230" height="230" viewBox="0 0 230 230"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6c56b"/><stop offset="1" stop-color="#b08d33"/></linearGradient></defs><circle class="ring-bg" cx="115" cy="115" r="104"/><circle class="ring-fg" id="ringfg" cx="115" cy="115" r="104" stroke-dasharray="653.45" stroke-dashoffset="0"/></svg><div class="ring-label"><div class="time" id="qtTime">15:00</div><div class="state" id="qtState">Ready</div></div></div>
+    <div class="presets" id="presets">${[5,10,15,30,45,60].map(m=>`<button class="preset ${m===15?'active':''}" data-min="${m}">${m} min</button>`).join('')}</div>
+    <div class="slider-wrap"><div class="row"><span>Custom length</span><span id="sliderVal">15 min</span></div><input type="range" id="qtSlider" min="1" max="60" value="15"></div>
+    <div class="qt-controls"><button class="qt-btn primary" id="qtStart"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span>Begin</span></button><button class="qt-btn ghost" id="qtReset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 1 2.3 5.6"/><path d="M4 20v-5h5"/></svg>Reset</button></div>
+    <div class="qt-verse"><div class="lbl">Reflect On</div><div class="q">“${qt.verse.q}”</div><div class="r">${qt.verse.r}</div></div>
+    <div class="amb-row"><span>Background hymn</span><button class="toggle ${qt.ambient?'on':''}" id="qtAmb"></button></div>
+    <div class="hymnlbl">Public-domain hymns · instrumental</div>
+    <div class="hymnrow" id="hymnrow">${HYMNS.map((h,i)=>`<button class="hymn ${i===qt.hymn?'active':''}" data-hymn="${i}">${h.n}</button>`).join('')}</div>
+  </div></div>`;
+  return v;
+}
+const RING_C=2*Math.PI*104;
+function fmt(s){const m=Math.floor(s/60),x=s%60;return `${m}:${x<10?'0':''}${x}`;}
+function updateRing(){const t=document.getElementById('qtTime');if(!t)return;t.textContent=fmt(qt.remaining);const f=qt.remaining/(qt.minutes*60);const fg=document.getElementById('ringfg');if(fg)fg.setAttribute('stroke-dashoffset',(RING_C*(1-f)).toFixed(1));}
+function setMin(m){qt.minutes=m;qt.remaining=m*60;const sl=document.getElementById('qtSlider');if(sl)sl.value=m;const sv=document.getElementById('sliderVal');if(sv)sv.textContent=m+' min';document.querySelectorAll('#presets .preset').forEach(b=>b.classList.toggle('active',+b.dataset.min===m));updateRing();}
+function tickQt(){qt.remaining--;if(qt.remaining<=0){qt.remaining=0;updateRing();finishQt();return;}updateRing();}
+function startQt(){if(qt.running){qt.running=false;clearInterval(qt.timerId);setQtBtn('Resume',true);setState('Paused');stopHymn();return;}if(qt.remaining<=0)qt.remaining=qt.minutes*60;qt.running=true;qt.timerId=setInterval(tickQt,1000);setQtBtn('Pause',false);setState('Be still…');if(qt.ambient)playHymn();}
+function setQtBtn(l,play){const b=document.getElementById('qtStart');if(!b)return;b.innerHTML=(play?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>':'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>')+'<span>'+l+'</span>';}
+function setState(s){const e=document.getElementById('qtState');if(e)e.textContent=s;}
+function resetQt(){qt.running=false;clearInterval(qt.timerId);qt.remaining=qt.minutes*60;updateRing();setQtBtn('Begin',true);setState('Ready');stopHymn();}
+function finishQt(){qt.running=false;clearInterval(qt.timerId);setQtBtn('Begin',true);setState('Complete');stopHymn();chime();toast('Your quiet time is complete. 🕊');}
+function playHymn(){stopHymn();qt.audio=new Audio(HYMNS[qt.hymn].f);qt.audio.loop=true;qt.audio.volume=0.4;qt.audio.play().catch(()=>{});}
+function stopHymn(){if(qt.audio){try{qt.audio.pause()}catch(e){}qt.audio=null;}}
+function ensureCtx(){if(!qt.actx)qt.actx=new (window.AudioContext||window.webkitAudioContext)();if(qt.actx.state==='suspended')qt.actx.resume();return qt.actx;}
+function chime(){const ctx=ensureCtx(),now=ctx.currentTime;[523.25,659.25,783.99].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;const t=now+i*0.5;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.25,t+0.05);g.gain.exponentialRampToValueAtTime(0.0001,t+2.2);o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+2.3);});}
+
+/* ========= FAVORITES / ABOUT ========= */
+function renderFavorites(){
+  const list=cards.filter(c=>favs.has(c.id));
+  const v=el('view','favorites');
+  v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>FAVORITES</h1></div></div>
+   <div class="scroll">${list.length?`<div class="grid" style="padding-top:16px">${list.map(c=>`<div class="card faved" data-card="${c.id}"><img class="thumb" src="${c.img}" alt="${c.title}"><button class="fav" data-fav="${c.id}">${heart(true)}</button><div class="strip"><div class="t">${c.title}</div><div class="c">${c.cat}</div></div></div>`).join('')}</div>`:`<div class="placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg><h3>No favorites yet</h3><p>Tap the heart on any post card to save it here.</p></div>`}</div>`;
+  return v;
+}
+function renderAbout(){
+  const v=el('view','about');
+  v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>ABOUT</h1></div></div>
+   <div class="about"><svg width="96" height="96" viewBox="0 0 96 96"><rect x="4" y="4" width="88" height="88" rx="21" fill="#1e2a3f"/><path d="M56 22v52M40 38h32" stroke="#c9a856" stroke-width="9" stroke-linecap="round"/><path d="M40 74c-7 4-16 3-20-3 6-3 15-3 20 3z" fill="#7a8a4e"/></svg>
+   <h3>ABUNDANT GRACE</h3><div class="tag">Be encouraged. Be strengthened. Be renewed.</div>
+   <p>Abundant Grace shares Scripture-rooted post cards from The Abundant Life Ministry. Tap any card to open it and scroll for its deeper meaning, read a 365-day devotional, and use Quiet Time to be still with God.</p>
+   <p style="font-style:italic;color:var(--ink-soft);font-size:14px">Renewing minds. Transforming lives.</p></div>`;
+  return v;
+}
+
+/* ========= ROUTER ========= */
+function el(cls,view){const d=document.createElement('div');d.className=cls;d.dataset.view=view;return d;}
+function show(tab){
+  if(state.tab==='quiet'&&tab!=='quiet')stopHymn();
+  state.tab=tab;screen.innerHTML='';
+  let v;
+  if(tab==='home')v=renderHome();
+  else if(tab==='daily')v=renderDaily();
+  else if(tab==='quiet')v=renderQuiet();
+  else if(tab==='favorites')v=renderFavorites();
+  else v=renderAbout();
+  screen.appendChild(v);requestAnimationFrame(()=>v.classList.add('active'));
+  document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active',n.dataset.tab===tab));
+  if(tab==='quiet')setMin(qt.minutes);
+}
+function openDetail(id){const c=cards.find(x=>x.id===id);if(!c)return;const cur=screen.querySelector('.view');if(cur)cur.classList.add('behind');const d=renderDetail(c);screen.appendChild(d);requestAnimationFrame(()=>d.classList.add('active'));}
+function closeDetail(){const d=screen.querySelector('[data-view="detail"]');const base=screen.querySelector('.view:not([data-view="detail"])');if(d){d.classList.remove('active');setTimeout(()=>d.remove(),340);}if(base)base.classList.remove('behind');}
+
+/* ========= ZOOM OVERLAY ========= */
+const zoomov=document.getElementById('zoomov'),zoomimg=document.getElementById('zoomimg');
+let zs=1,zx=0,zy=0,zbaseW=0,zbaseH=0;
+function openZoom(src){zoomimg.src=src;zs=1;zx=0;zy=0;zoomov.classList.add('show');zoomimg.onload=()=>{const ph=document.querySelector('.phone').getBoundingClientRect();const r=zoomimg.naturalWidth/zoomimg.naturalHeight;let w=ph.width*0.96,h=w/r;if(h>ph.height*0.9){h=ph.height*0.9;w=h*r;}zbaseW=w;zbaseH=h;applyZoom();};}
+function applyZoom(){zoomimg.style.width=zbaseW+'px';zoomimg.style.height=zbaseH+'px';zoomimg.style.transform=`translate(${zx}px,${zy}px) scale(${zs})`;}
+document.getElementById('zoomclose').onclick=()=>zoomov.classList.remove('show');
+zoomov.addEventListener('dblclick',()=>{zs=zs>1?1:2.4;if(zs===1){zx=0;zy=0;}applyZoom();});
+zoomov.addEventListener('wheel',e=>{e.preventDefault();zs=Math.min(5,Math.max(1,zs*(e.deltaY<0?1.12:0.9)));if(zs===1){zx=0;zy=0;}applyZoom();},{passive:false});
+let zdrag=false,zpx=0,zpy=0;
+zoomov.addEventListener('pointerdown',e=>{if(zs<=1)return;zdrag=true;zpx=e.clientX-zx;zpy=e.clientY-zy;});
+zoomov.addEventListener('pointermove',e=>{if(!zdrag)return;zx=e.clientX-zpx;zy=e.clientY-zpy;applyZoom();});
+zoomov.addEventListener('pointerup',()=>zdrag=false);
+let ztd=0,zpd=0;
+zoomov.addEventListener('touchmove',e=>{if(e.touches.length===2){e.preventDefault();const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(zpd)zs=Math.min(5,Math.max(1,zs*(d/zpd)));zpd=d;applyZoom();}},{passive:false});
+zoomov.addEventListener('touchend',()=>{zpd=0;if(zs===1){zx=0;zy=0;applyZoom();}});
+
+/* ========= EVENTS ========= */
+document.getElementById('bottomnav').addEventListener('click',e=>{const b=e.target.closest('.navitem');if(b)show(b.dataset.tab);});
+screen.addEventListener('click',e=>{
+  const fav=e.target.closest('[data-fav]');if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);return;}
+  const back=e.target.closest('[data-back]');if(back){closeDetail();return;}
+  const zoom=e.target.closest('[data-zoom]');if(zoom){openZoom(zoom.dataset.zoom);return;}
+  const chip=e.target.closest('[data-cat]');if(chip){state.filter=chip.dataset.cat;show('home');return;}
+  const card=e.target.closest('[data-card]');if(card){openDetail(card.dataset.card);return;}
+  // daily
+  if(e.target.closest('[data-dprev]')){if(devoDay>1){devoDay--;LS.setItem('ag_devo_day',devoDay);show('daily');}return;}
+  if(e.target.closest('[data-dnext]')){if(devos&&devoDay<devos.length){devoDay++;LS.setItem('ag_devo_day',devoDay);show('daily');}return;}
+  if(e.target.closest('[data-dcomplete]')){const k=String(devoDay);if(devoDone.has(k))devoDone.delete(k);else devoDone.add(k);saveSet('ag_devo_done',devoDone);show('daily');return;}
+  if(e.target.closest('[data-dsave]')){const k=String(devoDay);if(devoSaved.has(k)){devoSaved.delete(k);toast('Removed');}else{devoSaved.add(k);toast('Saved ♥');}saveSet('ag_devo_saved',devoSaved);show('daily');return;}
+  if(e.target.closest('[data-dshare]')){shareDevo();return;}
+  // quiet
+  const pre=e.target.closest('[data-min]');if(pre){if(qt.running)resetQt();setMin(+pre.dataset.min);return;}
+  if(e.target.closest('#qtStart')){startQt();return;}
+  if(e.target.closest('#qtReset')){resetQt();return;}
+  if(e.target.closest('#qtAmb')){qt.ambient=!qt.ambient;document.getElementById('qtAmb').classList.toggle('on',qt.ambient);if(qt.ambient&&qt.running)playHymn();else stopHymn();return;}
+  const hy=e.target.closest('[data-hymn]');if(hy){qt.hymn=+hy.dataset.hymn;document.querySelectorAll('#hymnrow .hymn').forEach(b=>b.classList.toggle('active',+b.dataset.hymn===qt.hymn));if(!qt.ambient){qt.ambient=true;document.getElementById('qtAmb').classList.add('on');}if(qt.running&&qt.ambient)playHymn();return;}
+});
+screen.addEventListener('input',e=>{if(e.target.id==='qtSlider'){if(qt.running)resetQt();setMin(+e.target.value);}});
+function toggleFav(id){if(favs.has(id)){favs.delete(id);toast('Removed from favorites');}else{favs.add(id);toast('Saved to favorites ♥');}saveSet('ag_favs',favs);
+  const d=screen.querySelector('[data-view="detail"]');
+  if(d){d.querySelectorAll('[data-fav="'+id+'"]').forEach(b=>b.innerHTML=heart(favs.has(id)));const c=screen.querySelector('.view:not([data-view="detail"]) [data-card="'+id+'"]');if(c)c.classList.toggle('faved',favs.has(id));}
+  else show(state.tab);}
+function shareDevo(){const d=devos.find(x=>x.day===devoDay);if(!d)return;const txt=`Day ${d.day}: ${d.title}\n“${d.verse_text}” — ${d.verse_reference}\n\n${d.reflection}\n\n— from Abundant Grace`;
+  if(navigator.share){navigator.share({title:`Abundant Grace — Day ${d.day}`,text:txt}).catch(()=>{});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt);toast('Copied to clipboard');}else toast('Share not supported');}
+
+show('home');
+</script>
+</body>
+</html>
