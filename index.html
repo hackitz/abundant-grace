@@ -131,11 +131,19 @@
   .joybox textarea{width:100%;margin-top:8px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;
     background:transparent;font-family:inherit;font-size:15.5px;line-height:1.5;color:var(--ink);resize:vertical}
   .joybox textarea:focus{outline:none;border-color:var(--gold-soft)}
-  .joyadd{width:100%;margin-top:10px;padding:13px;border:none;border-radius:12px;background:var(--gold);color:#fff;
+  .joyrow{display:flex;gap:10px;align-items:stretch;margin-top:10px}
+  .joymic{flex:0 0 52px;border:1px solid var(--gold-soft);border-radius:12px;background:var(--cream-2);
+    color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+  .joymic svg{width:24px;height:24px}
+  .joymic.listening{background:var(--gold);color:#fff;border-color:var(--gold);animation:joypulse 1.3s ease-in-out infinite}
+  @keyframes joypulse{0%,100%{box-shadow:0 0 0 0 rgba(176,141,51,.45)}50%{box-shadow:0 0 0 8px rgba(176,141,51,0)}}
+  .joyadd{flex:1;padding:13px;border:none;border-radius:12px;background:var(--gold);color:#fff;
     font-family:inherit;font-size:13px;letter-spacing:1.4px;font-weight:600;cursor:pointer}
   .joyadd:disabled{background:#ddd6c4;color:var(--ink-soft);cursor:default}
-  .joynote{text-align:center;font-style:italic;color:var(--ink-soft);font-size:12px;margin-top:9px}
-  .joysec{margin:22px 0 10px;font-size:12px;letter-spacing:1.6px;font-weight:600;color:var(--navy)}
+  .joynote{text-align:center;font-style:italic;color:var(--ink-soft);font-size:12px;margin-top:9px;line-height:1.45;min-height:17px}
+  .joysecrow{display:flex;align-items:center;margin:22px 0 10px}
+  .joysec{flex:1;font-size:12px;letter-spacing:1.6px;font-weight:600;color:var(--navy)}
+  .joyexp{border:none;background:transparent;color:var(--gold);font-family:inherit;font-size:13px;cursor:pointer;padding:4px}
   .joyentry{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
   .je-head{display:flex;align-items:center}
   .je-head .d{flex:1;color:var(--gold);font-size:12px;letter-spacing:.6px}
@@ -561,6 +569,70 @@ function joyAdd(text){const t=text.trim();if(!t)return;const l=joyLoad();const n
   l.unshift({id:now,text:t,created:now});joySave(l);}
 function joyRemove(id){joySave(joyLoad().filter(e=>e.id!==id));}
 function joyDays(){return new Set(joyLoad().map(e=>new Date(e.created).toDateString())).size;}
+
+/* Dictation, handed to the browser's own speech recognition where available. */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let joyRec=null,joyListening=false;
+function joyMicSupported(){return !!SR;}
+function joySetMic(on){
+  joyListening=on;
+  const b=document.getElementById('joymic');
+  if(b){b.classList.toggle('listening',on);b.setAttribute('aria-label',on?'Stop listening':'Speak your entry');}
+  const n=document.getElementById('joynote');
+  if(n&&on)n.textContent='Listening… speak now.';
+}
+function joyDictate(){
+  if(!SR){const n=document.getElementById('joynote');if(n)n.textContent='This browser cannot listen, so please type your entry instead.';return;}
+  if(joyListening){try{joyRec.stop()}catch(e){}return;}
+  try{
+    joyRec=new SR();
+    joyRec.lang=navigator.language||'en-US';
+    joyRec.interimResults=false;
+    joyRec.continuous=false;
+    joyRec.onresult=ev=>{
+      const said=[...ev.results].map(r=>r[0].transcript).join(' ').trim();
+      const t=document.getElementById('joydraft');
+      if(t&&said){t.value=t.value.trim()?t.value.trim()+' '+said:said;
+        const b=document.getElementById('joyaddbtn');if(b)b.disabled=!t.value.trim();}
+    };
+    joyRec.onerror=ev=>{joySetMic(false);
+      const n=document.getElementById('joynote');
+      if(n)n.textContent=(ev.error==='not-allowed'||ev.error==='service-not-allowed')
+        ?'Microphone access was blocked. You can allow it in your browser settings, or type instead.'
+        :'Could not hear that. Please try again, or type your entry.';};
+    joyRec.onend=()=>{joySetMic(false);
+      const n=document.getElementById('joynote');
+      if(n&&n.textContent==='Listening… speak now.')n.textContent=joyNoteDefault();};
+    joyRec.start();joySetMic(true);
+  }catch(e){joySetMic(false);}
+}
+function joyNoteDefault(){
+  return joyMicSupported()
+    ? 'Tap the microphone to speak your entry instead of typing.'
+    : 'This browser cannot listen, so please type your entry.';
+}
+
+/* Export the whole journal as a text file. */
+function joyExport(){
+  const list=joyLoad();
+  if(!list.length){toast('Write something first');return;}
+  const days=joyDays();
+  let out='MY JOY JOURNAL\nAbundant Grace · The Abundant Life Ministry\n';
+  out+='Exported '+new Date().toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'})+'\n\n';
+  out+='"'+JOY.verse.q+'"  — '+JOY.verse.r+'\n\n';
+  out+='------------------------------------------\n\n';
+  list.slice().sort((a,b)=>a.created-b.created).forEach(e=>{
+    out+=joyDate(e.created)+' · '+joyTime(e.created)+'\n'+e.text+'\n\n';});
+  out+='------------------------------------------\n';
+  out+=list.length+' '+(list.length===1?'moment':'moments')+' across '+days+' '+(days===1?'day':'days')+' of noticing.\n';
+  const stamp=new Date().toISOString().slice(0,10);
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([out],{type:'text/plain'}));
+  a.download='joy-journal-'+stamp+'.txt';
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
+  toast('Journal exported');
+}
 function joyDate(ms){return new Date(ms).toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
 function joyTime(ms){return new Date(ms).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});}
 function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -602,7 +674,7 @@ function renderJoy(){
   const sub=list.length
     ? `${list.length} ${list.length===1?'moment':'moments'} · ${days} ${days===1?'day':'days'} of noticing`
     : 'Moments that remind you God is near.';
-  const entries=list.length? `<div class="joysec">LOOKING BACK</div>`+list.map(e=>`
+  const entries=list.length? `<div class="joysecrow"><span class="joysec">LOOKING BACK</span><button class="joyexp" data-jexport>Export &rsaquo;</button></div>`+list.map(e=>`
       <div class="joyentry"><div class="je-head"><span class="d">${joyDate(e.created)}</span><span class="t">${joyTime(e.created)}</span></div>
       <p>${esc(e.text)}</p><button class="je-rm" data-jrm="${e.id}">Remove</button></div>`).join('')
     : `<div class="joyempty"><div class="m">&#10022;</div><h4>Your journal is empty for now.</h4>
@@ -615,8 +687,13 @@ function renderJoy(){
     <div class="joybox">
       <div class="joyprompt">${joyPrompt}</div>
       <textarea id="joydraft" rows="3" placeholder="Write it here…"></textarea>
-      <button class="joyadd" id="joyaddbtn" disabled>ADD TO MY JOY JOURNAL</button>
-      <div class="joynote">Voice notes are coming in a future update.</div>
+      <div class="joyrow">
+        <button class="joymic" id="joymic" aria-label="Speak your entry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5"/></svg>
+        </button>
+        <button class="joyadd" id="joyaddbtn" disabled>ADD TO MY JOY JOURNAL</button>
+      </div>
+      <div class="joynote" id="joynote"></div>
     </div>
     ${entries}
   </div>`;
@@ -792,6 +869,7 @@ function show(tab){
   screen.appendChild(v);requestAnimationFrame(()=>v.classList.add('active'));
   document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active',n.dataset.tab===tab));
   if(tab==='quiet')setMin(qt.minutes);
+  if(tab==='joy'){const n=document.getElementById('joynote');if(n)n.textContent=joyNoteDefault();}
 }
 /* The topmost stacked view - detail can open above home OR above a feeling screen. */
 function topView(exclude){const sel=exclude?`.view:not([data-view="${exclude}"])`:'.view';const all=[...screen.querySelectorAll(sel)];return all[all.length-1];}
@@ -822,7 +900,9 @@ screen.addEventListener('click',e=>{
   const feel=e.target.closest('[data-feel]');if(feel){openFeeling(feel.dataset.feel);return;}
   if(e.target.closest('[data-jopen]')){openJoyCard();return;}
   if(e.target.closest('[data-jclose]')){closeJoyCard();return;}
-  if(e.target.closest('#joyaddbtn')){const t=document.getElementById('joydraft');if(t&&t.value.trim()){joyAdd(t.value);toast('Added to your Joy Journal ✦');show('joy');}return;}
+  if(e.target.closest('#joymic')){joyDictate();return;}
+  if(e.target.closest('[data-jexport]')){joyExport();return;}
+  if(e.target.closest('#joyaddbtn')){const t=document.getElementById('joydraft');if(t&&t.value.trim()){if(joyListening){try{joyRec.stop()}catch(err){}}joyAdd(t.value);toast('Added to your Joy Journal ✦');show('joy');}return;}
   const jrm=e.target.closest('[data-jrm]');if(jrm){joyRemove(+jrm.dataset.jrm);show('joy');return;}
   if(e.target.closest('[data-fback]')){closeFeeling();return;}
   const ab=e.target.closest('[data-fabide]');
