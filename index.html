@@ -201,12 +201,7 @@
 </head>
 <body>
 <div class="phone">
-  <div class="notch"></div>
-  <div class="statusbar"><span>10:30</span><span class="icons">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 2.7 6 0 9l12 12L24 9c-2.7-3-7-5-12-5z"/></svg>
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17h2v3H3zm4-4h2v7H7zm4-4h2v11h-2zm4-4h2v15h-2z"/></svg>
-    <svg viewBox="0 0 26 24" fill="currentColor"><rect x="1" y="7" width="20" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="9" width="15" height="7" rx="1.5"/><rect x="22" y="10" width="2.5" height="5" rx="1"/></svg>
-  </span></div>
+  <div style="height:22px;flex:0 0 auto;background:var(--cream)"></div>
   <div class="screen" id="screen"></div>
   <nav class="bottomnav" id="bottomnav">
     <button class="navitem active" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Cards</span></button>
@@ -321,7 +316,7 @@ function heart(f){return f?'<svg viewBox="0 0 24 24" fill="currentColor"><path d
 function renderHome(){
   const list=cards.filter(c=>state.filter==="All"||c.cat===state.filter);
   const v=el('view active','home');
-  v.innerHTML=`<div class="appbar"><button class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><div class="brand">${cross()}<h1>ABUNDANT GRACE</h1></div><button class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg></button></div>
+  v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>ABUNDANT GRACE</h1></div></div>
   <div class="scroll"><div class="lead-line">Tap a post card, then scroll to discover its deeper meaning.</div>
   <div class="chips">${categories.map(c=>`<button class="chip ${c===state.filter?'active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
   <div class="section-title"><span>${state.filter==="All"?"All Post Cards":state.filter}</span></div>
