@@ -46,6 +46,57 @@
   .iconbtn svg{width:22px;height:22px}
   .logo-cross{width:20px;height:24px;flex:0 0 auto}
   .lead-line{text-align:center;font-style:italic;color:var(--ink-soft);font-size:14.5px;padding:8px 24px 6px;line-height:1.4}
+
+  /* ---- How are you feeling? ---- */
+  .feelstrip{margin:10px 16px 4px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 0 15px}
+  .feelstrip h4{margin:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--navy)}
+  .feelstrip p{margin:3px 14px 0;text-align:center;font-style:italic;color:var(--ink-soft);font-size:13px}
+  .feelrow{display:flex;gap:10px;overflow-x:auto;padding:12px 14px 2px;scrollbar-width:none}
+  .feelrow::-webkit-scrollbar{display:none}
+  .feel{flex:0 0 auto;border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 2px;font-family:inherit}
+  .feel .dot{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;transition:transform .15s}
+  .feel:active .dot{transform:scale(.92)}
+  .feel .nm{font-size:12.5px;color:var(--ink)}
+  .feelhead{flex:0 0 auto;padding:14px 20px 22px;color:#fff}
+  .feelback{border:none;background:transparent;color:rgba(255,255,255,.85);font-family:inherit;font-size:15px;padding:6px 10px 6px 0;cursor:pointer}
+  .feelhead .lbl{margin-top:8px;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.72)}
+  .feelhead .nm{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;letter-spacing:1px;line-height:1.15;margin-top:2px}
+  .feelhead .msg{margin-top:9px;font-style:italic;font-size:16px;line-height:1.5;color:rgba(255,255,255,.94)}
+  .feelscroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 18px 30px;background:var(--cream)}
+  .feelscroll::-webkit-scrollbar{width:0}
+  .feelbox{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .feelbox.soft{background:linear-gradient(180deg,#efe8d5,#e8e0ca)}
+  .feelbox h4{margin:0 0 9px;font-size:12px;letter-spacing:1.4px;color:var(--navy);font-weight:600}
+  .feelbox p{margin:0 0 10px;font-size:16px;line-height:1.6;color:var(--ink)}
+  .feelbox p:last-child{margin-bottom:0}
+  .purpose{border-left:3px solid;padding-left:12px;margin-top:12px}
+  .purpose .p-l{font-size:11px;letter-spacing:1.4px;font-weight:600}
+  .purpose .p-b{font-size:15px;line-height:1.4;color:var(--ink)}
+  .feel-h{text-align:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;
+    color:var(--navy);letter-spacing:1px;margin:22px 0 10px}
+  .feel-h::before{content:'\276E  ';color:var(--gold);font-size:13px}
+  .feel-h::after{content:'  \276F';color:var(--gold);font-size:13px}
+  .feelcard{background:var(--paper);border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow)}
+  .feelcard img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;display:block}
+  .feelcard .fc-body{padding:13px 14px}
+  .feelcard .t{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--navy)}
+  .feelcard .s{font-size:13px;color:var(--gold);margin-top:2px}
+  .feelcard .go{font-size:13px;color:var(--ink-soft);margin-top:7px}
+  .feelbox .fb-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--navy);margin-top:3px}
+  .feelbox .fb-verse{font-style:italic;font-size:15px;line-height:1.5;margin-top:9px;color:var(--ink)}
+  .feelbox .fb-ref{font-size:12px;color:var(--gold);margin:4px 0 11px}
+  .abidebtn{display:block;width:100%;margin-top:20px;border:none;border-radius:14px;background:var(--navy);
+    color:#fff;padding:15px;cursor:pointer;font-family:inherit}
+  .abidebtn b{display:block;font-size:14px;letter-spacing:1.6px}
+  .abidebtn span{display:block;font-size:13px;color:rgba(255,255,255,.72);margin-top:3px}
+  .alsorow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+  .alsorow::-webkit-scrollbar{display:none}
+  .alsocard{flex:0 0 140px;background:var(--paper);border-radius:12px;overflow:hidden;cursor:pointer}
+  .alsocard img{width:100%;aspect-ratio:1;object-fit:cover;object-position:top;display:block}
+  .alsocard .t{padding:8px;font-size:13px;line-height:1.3;color:var(--navy)}
+  .feelfoot{text-align:center;font-style:italic;color:var(--ink-soft);font-size:14px;line-height:1.55;margin-top:26px}
+  .feelfoot span{display:block;font-style:normal;color:var(--gold);font-size:12px;letter-spacing:1px;margin-top:6px}
   .chips{display:flex;gap:9px;overflow-x:auto;padding:10px 16px 6px}
   .chips::-webkit-scrollbar{display:none}
   .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--paper);color:var(--navy-2);padding:7px 16px;border-radius:20px;font-size:15px;font-family:inherit;cursor:pointer;transition:.15s;white-space:nowrap}
@@ -314,6 +365,52 @@ const categories=["All","Freedom","Deliverance","Forgiveness","Emotions","Healin
 const quietVerses=[{q:"Be still, and know that I am God.",r:"Psalm 46:10"},{q:"Come to me, all you who are weary and burdened, and I will give you rest.",r:"Matthew 11:28"},{q:"He restores my soul... beside quiet waters.",r:"Psalm 23:2-3"},{q:"In quietness and trust is your strength.",r:"Isaiah 30:15"},{q:"Let the peace of Christ rule in your hearts.",r:"Colossians 3:15"}];
 const HYMNS=[{n:"Amazing Grace",f:"audio/hymn_amazing_grace.mp3"},{n:"Be Thou My Vision",f:"audio/hymn_be_thou_vision.mp3"},{n:"Holy, Holy, Holy",f:"audio/hymn_holy_holy_holy.mp3"},{n:"It Is Well",f:"audio/hymn_it_is_well.mp3"},{n:"Come Thou Fount",f:"audio/hymn_come_thou_fount.mp3"}];
 
+/* The six emotions, worded exactly as the ministry's Six Big Emotions card teaches them. */
+const EMOTIONS=[
+ {id:"sadness",name:"Sadness",short:"Sadness",color:"#3A6294",
+  message:"I have experienced loss or unmet longing.",
+  helps:"Sadness helps us slow down, feel our need, and reach out for comfort and connection.",
+  purpose:"Connect, mourn, and heal.",
+  card:"wounded",also:["pause","breathing"],tags:["comfort","hope","presence","rest"],hymn:3,
+  verse:{q:"The Lord is close to the brokenhearted and saves those who are crushed in spirit.",r:"Psalm 34:18"},
+  prayer:"Father, You are close to the brokenhearted. I bring You this loss and this longing. Slow me down, meet me in the ache, and let me feel Your comfort rather than carry this alone. Amen."},
+ {id:"anger",name:"Anger",short:"Anger",color:"#B94A3A",
+  message:"I need to protect myself or what matters; something needs to stop.",
+  helps:"Anger helps us set limits, protect what matters, and stand up for what is right.",
+  purpose:"Protect, set limits, and restore justice.",
+  card:"stirred",also:["pause","forgiveness","breathing"],tags:["peace","humility","patience","forgiveness"],hymn:1,
+  verse:{q:"In your anger do not sin. Do not let the sun go down while you are still angry.",r:"Ephesians 4:26"},
+  prayer:"Lord, You see what has stirred me up. Show me what this anger is protecting and what truly needs to stop. Keep me from sinning in it, and let me act from my true heart rather than my wounded one. Amen."},
+ {id:"fear",name:"Fear",short:"Fear",color:"#2F8074",
+  message:"I sense danger or threat.",
+  helps:"Fear helps us recognize danger and reach out for help. It grows our discernment, trust, and dependence on God and others.",
+  purpose:"Protect, discern, and seek help.",
+  card:"fear",also:["breathing","pause"],tags:["courage","trust","strength","peace"],hymn:1,
+  verse:{q:"When I am afraid, I put my trust in you.",r:"Psalm 56:3"},
+  prayer:"Father, fear is painting pictures of a future that has not happened. Help me test every thought against Your Word, replace each lie with Your truth, and walk today trusting Your promise instead of fear's picture. Amen."},
+ {id:"shame",name:"Shame",short:"Shame",color:"#B07D2E",
+  message:"I feel overwhelmed and see no way forward.",
+  helps:"This emotion whispers that there is no hope and no way out. It is heavy and exhausting.",
+  purpose:"Signal that we need rescue, restoration, and renewed hope.",
+  card:"forgiveness",also:["trueheart","pause","clear"],tags:["grace","identity","forgiveness","salvation"],hymn:0,
+  verse:{q:"Those who look to him are radiant; their faces are never covered with shame.",r:"Psalm 34:5"},
+  prayer:"Jesus, this weight tells me there is no way out. You are my rescue. Lift what I was never meant to carry, restore what has been worn down, and give me hope again. Amen."},
+ {id:"despair",name:"Hopeless Despair",short:"Despair",color:"#6F53A0",
+  message:"I feel that I no longer bring people joy.",
+  helps:"Beneath it runs the painful belief that I am not good enough, or that I do not belong. Healthy sorrow reminds us of our true heart and who it is like us to be.",
+  purpose:"Remind us of our true heart. It can be healed by truth and love.",
+  card:"trueheart",also:["wounded","pause","transformation"],tags:["hope","endurance","perseverance","presence"],hymn:4,
+  verse:{q:"Why, my soul, are you downcast? Put your hope in God, for I will yet praise him.",r:"Psalm 42:11"},
+  prayer:"Lord, I have believed that I am not enough and do not belong. Speak Your truth over that belief. Remind me of the true heart You gave me, and heal this place with Your love. Amen."},
+ {id:"disgust",name:"Disgust",short:"Disgust",color:"#4A7C3F",
+  message:"Something feels offensive, repulsive, or morally wrong.",
+  helps:"Disgust helps us reject what is harmful, toxic, or contrary to our values.",
+  purpose:"Reject harm and protect our physical and moral well-being.",
+  card:"clear",also:["order","pause"],tags:["freedom","obedience","word","holiness","purity"],hymn:2,
+  verse:{q:"Create in me a pure heart, O God, and renew a steadfast spirit within me.",r:"Psalm 51:10"},
+  prayer:"Father, something in me recoils at what I have seen. Give me wisdom to know what is truly harmful, courage to turn from it, and a clean heart that loves what You love. Amen."}
+];
+
 /* ========= STORAGE ========= */
 const LS=window.localStorage;
 function getSet(k){try{return new Set(JSON.parse(LS.getItem(k)||"[]"))}catch(e){return new Set()}}
@@ -334,6 +431,11 @@ function renderHome(){
   const v=el('view active','home');
   v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>ABUNDANT GRACE</h1></div></div>
   <div class="scroll"><div class="lead-line">Tap a post card, then scroll to discover its deeper meaning.</div>
+  <div class="feelstrip">
+    <h4>How are you feeling?</h4>
+    <p>Every emotion God gave you has a purpose. Tap one.</p>
+    <div class="feelrow">${EMOTIONS.map(e=>`<button class="feel" data-feel="${e.id}"><span class="dot" style="background:${e.color}">${e.name[0]}</span><span class="nm">${e.short}</span></button>`).join('')}</div>
+  </div>
   <div class="chips">${categories.map(c=>`<button class="chip ${c===state.filter?'active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
   <div class="section-title"><span>${state.filter==="All"?"All Post Cards":state.filter}</span></div>
   <div class="grid">${list.map(c=>`<div class="card ${favs.has(c.id)?'faved':''}" data-card="${c.id}"><img class="thumb" src="${c.img}" alt="${c.title}"><button class="fav" data-fav="${c.id}">${heart(favs.has(c.id))}</button><div class="strip"><div class="t">${c.title}</div><div class="c">${c.cat}</div></div></div>`).join('')}</div></div>`;
@@ -368,6 +470,68 @@ function renderDetail(c){
       ${paths}${steps}${remember}${prayer}${scrip}${closing}
     </div></div>`;
   return v;
+}
+
+/* ========= HOW ARE YOU FEELING ========= */
+/* Rotates the devotional so the same feeling twice in a week is not the same reading. */
+function devotionalForEmotion(e){
+  if(!devos)return null;
+  const pool=devos.filter(d=>(d.tags||[]).some(t=>e.tags.includes(t))).sort((a,b)=>a.day-b.day);
+  if(!pool.length)return null;
+  const key='ag_feel_'+e.id;
+  const n=parseInt(LS.getItem(key)||'0');
+  LS.setItem(key,n+1);
+  return pool[n%pool.length];
+}
+function renderFeeling(e){
+  const v=el('view','feeling');
+  const c=cards.find(x=>x.id===e.card);
+  const d=devotionalForEmotion(e);
+  const also=e.also.map(id=>cards.find(x=>x.id===id)).filter(Boolean);
+  const cardBlock=c?`<div class="feel-h">Sit With This Card</div>
+    <div class="feelcard" data-card="${c.id}"><img src="${c.img}" alt="${c.title}">
+      <div class="fc-body"><div class="t">${c.title}</div><div class="s">${c.subtitle}</div><div class="go">Tap to read it in full &rsaquo;</div></div></div>`:'';
+  const devoBlock=d?`<div class="feel-h">A Devotional For Today</div>
+    <div class="feelbox"><div class="devo-cat">${d.theme.toUpperCase()}</div>
+      <div class="fb-title">${d.title}</div>
+      <div class="fb-verse">“${d.verse_text}”</div><div class="fb-ref">${d.verse_reference}</div>
+      <p>${d.reflection}</p><p>${d.application}</p></div>`
+   :`<div class="feel-h">A Devotional For Today</div><div class="feelbox"><p style="color:var(--ink-soft)">Loading a devotional for you…</p></div>`;
+  v.innerHTML=`
+   <div class="feelhead" style="background:${e.color}">
+     <button class="feelback" data-fback>&lsaquo;&nbsp; Back</button>
+     <div class="lbl">YOU ARE FEELING</div>
+     <div class="nm">${e.name.toUpperCase()}</div>
+     <div class="msg">“${e.message}”</div>
+   </div>
+   <div class="feelscroll">
+     <div class="feelbox soft"><h4>GOD CREATED THIS FOR YOUR GOOD</h4>
+       <p>${e.helps}</p>
+       <div class="purpose" style="border-color:${e.color}"><div class="p-l" style="color:${e.color}">PURPOSE</div><div class="p-b">${e.purpose}</div></div>
+     </div>
+     <div class="keyverse" style="margin-top:16px"><div class="q">“${e.verse.q}”</div><div class="r">${e.verse.r.toUpperCase()}</div></div>
+     ${cardBlock}
+     ${devoBlock}
+     <div class="feel-h">A Prayer</div>
+     <div class="feelbox soft"><p style="font-style:italic">${e.prayer}</p></div>
+     <button class="abidebtn" data-fabide="${e.id}"><b>BE STILL WITH THIS</b><span>Open Abide in Him</span></button>
+     ${also.length?`<div class="feel-h">Also Helpful</div><div class="alsorow">${also.map(a=>`<div class="alsocard" data-card="${a.id}"><img src="${a.img}" alt="${a.title}"><div class="t">${a.title}</div></div>`).join('')}</div>`:''}
+     <div class="feelfoot">God created these emotions for our good. When we bring them to Him, He brings healing, wisdom, and strength.<span>1 Peter 5:7</span></div>
+   </div>`;
+  return v;
+}
+function openFeeling(id){
+  const e=EMOTIONS.find(x=>x.id===id);if(!e)return;
+  const cur=screen.querySelector('.view');if(cur)cur.classList.add('behind');
+  const f=renderFeeling(e);screen.appendChild(f);requestAnimationFrame(()=>f.classList.add('active'));
+  // Devotionals load lazily; refresh this screen once they arrive.
+  if(!devos){loadDevos(()=>{const open=screen.querySelector('[data-view="feeling"]');if(open){open.remove();const f2=renderFeeling(e);f2.classList.add('active');screen.appendChild(f2);}});}
+}
+function closeFeeling(){
+  const f=screen.querySelector('[data-view="feeling"]');
+  const base=screen.querySelector('.view:not([data-view="feeling"])');
+  if(f){f.classList.remove('active');setTimeout(()=>f.remove(),340);}
+  if(base)base.classList.remove('behind');
 }
 
 /* ========= DAILY DEVOTIONAL ========= */
@@ -406,8 +570,8 @@ function renderDaily(){
    </div>`;
   return v;
 }
-function loadDevos(){
-  fetch('devotionals.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(data=>{devos=data;if(state.tab==='daily')show('daily');})
+function loadDevos(then){
+  fetch('devotionals.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(data=>{devos=data;if(then)then();if(state.tab==='daily'&&!then)show('daily');})
     .catch(()=>{const e=document.getElementById('devoerr');if(e)e.textContent="Devotionals need to be served (host the folder or use a local server).";});
 }
 
@@ -477,8 +641,10 @@ function show(tab){
   document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active',n.dataset.tab===tab));
   if(tab==='quiet')setMin(qt.minutes);
 }
-function openDetail(id){const c=cards.find(x=>x.id===id);if(!c)return;const cur=screen.querySelector('.view');if(cur)cur.classList.add('behind');const d=renderDetail(c);screen.appendChild(d);requestAnimationFrame(()=>d.classList.add('active'));}
-function closeDetail(){const d=screen.querySelector('[data-view="detail"]');const base=screen.querySelector('.view:not([data-view="detail"])');if(d){d.classList.remove('active');setTimeout(()=>d.remove(),340);}if(base)base.classList.remove('behind');}
+/* The topmost stacked view - detail can open above home OR above a feeling screen. */
+function topView(exclude){const sel=exclude?`.view:not([data-view="${exclude}"])`:'.view';const all=[...screen.querySelectorAll(sel)];return all[all.length-1];}
+function openDetail(id){const c=cards.find(x=>x.id===id);if(!c)return;const cur=topView();if(cur)cur.classList.add('behind');const d=renderDetail(c);screen.appendChild(d);requestAnimationFrame(()=>d.classList.add('active'));}
+function closeDetail(){const d=screen.querySelector('[data-view="detail"]');const base=topView('detail');if(d){d.classList.remove('active');setTimeout(()=>d.remove(),340);}if(base)base.classList.remove('behind');}
 
 /* ========= ZOOM OVERLAY ========= */
 const zoomov=document.getElementById('zoomov'),zoomimg=document.getElementById('zoomimg');
@@ -501,6 +667,12 @@ document.getElementById('bottomnav').addEventListener('click',e=>{const b=e.targ
 screen.addEventListener('click',e=>{
   const fav=e.target.closest('[data-fav]');if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);return;}
   const back=e.target.closest('[data-back]');if(back){closeDetail();return;}
+  const feel=e.target.closest('[data-feel]');if(feel){openFeeling(feel.dataset.feel);return;}
+  if(e.target.closest('[data-fback]')){closeFeeling();return;}
+  const ab=e.target.closest('[data-fabide]');
+  if(ab){const em=EMOTIONS.find(x=>x.id===ab.dataset.fabide);
+    if(em&&em.hymn>=0&&em.hymn<HYMNS.length){qt.hymn=em.hymn;qt.ambient=true;}
+    closeFeeling();show('quiet');return;}
   const zoom=e.target.closest('[data-zoom]');if(zoom){openZoom(zoom.dataset.zoom);return;}
   const chip=e.target.closest('[data-cat]');if(chip){state.filter=chip.dataset.cat;show('home');return;}
   const card=e.target.closest('[data-card]');if(card){openDetail(card.dataset.card);return;}
