@@ -13,16 +13,38 @@
     --cream:#f5f0e4; --cream-2:#efe8d7; --paper:#fbf8f0;
     --navy:#1e2a3f; --navy-2:#2b3a52;
     --green:#3f4a2e; --green-2:#556042;
-    --gold:#b08d33; --gold-soft:#c9a856;
+    --gold:#96762a; --gold-soft:#c9a856;
     --ink:#3a3a30; --ink-soft:#6a6656;
     --line:rgba(40,50,70,.14);
     --shadow:0 10px 30px rgba(30,32,45,.16);
     --pathdark:#7a2230; --pathfree:#1f5646;
+    --rail:#ddd6c4; --on-dark:var(--on-dark); --on-dark-soft:var(--on-dark-soft);
+    --quiet-top:var(--quiet-top); --quiet-bottom:var(--quiet-bottom);
+  }
+  [data-theme="rose"]{
+    --cream:#f8f1ee; --cream-2:#f0e2df; --paper:#fdf9f7;
+    --navy:#43293a; --navy-2:#57384b;
+    --green:#5e6b4a; --green-2:#6d7a58;
+    --gold:#a05f68; --gold-soft:#c98f95;
+    --ink:#3f353a; --ink-soft:#6f6167;
+    --line:rgba(67,41,58,.16);
+    --rail:#e3d2ce; --on-dark:#f3eaec; --on-dark-soft:#cbb3bc;
+    --quiet-top:#3a2531; --quiet-bottom:#241620;
+  }
+  [data-theme="slate"]{
+    --cream:#eff0ec; --cream-2:#e2e5e0; --paper:#f9faf7;
+    --navy:#232a2e; --navy-2:#333c41;
+    --green:#46523a; --green-2:#55614a;
+    --gold:#7d6e45; --gold-soft:#a5946a;
+    --ink:#333839; --ink-soft:#61686a;
+    --line:rgba(35,42,46,.15);
+    --rail:#d5d8d3; --on-dark:#edefec; --on-dark-soft:#b6bdb8;
+    --quiet-top:#262d31; --quiet-bottom:#14181b;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;height:100%}
   body{font-family:'EB Garamond',Georgia,serif;color:var(--ink);
-    background:radial-gradient(1200px 800px at 50% -10%,#e9e2ce 0%,#e2dac2 55%,#d9cfb4 100%);
+    background:var(--cream-2);
     display:flex;align-items:center;justify-content:center;min-height:100dvh;padding:16px}
   .phone{position:relative;width:390px;max-width:100%;height:min(844px,94dvh);background:var(--cream);
     border-radius:44px;box-shadow:0 30px 70px rgba(25,28,40,.42),inset 0 0 0 10px #12131a,inset 0 0 0 12px #2c2f3a;
@@ -66,7 +88,7 @@
   .feelscroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 18px 30px;background:var(--cream)}
   .feelscroll::-webkit-scrollbar{width:0}
   .feelbox{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
-  .feelbox.soft{background:linear-gradient(180deg,#efe8d5,#e8e0ca)}
+  .feelbox.soft{background:linear-gradient(180deg,var(--cream-2),var(--cream-2))}
   .feelbox h4{margin:0 0 9px;font-size:12px;letter-spacing:1.4px;color:var(--navy);font-weight:600}
   .feelbox p{margin:0 0 10px;font-size:16px;line-height:1.6;color:var(--ink)}
   .feelbox p:last-child{margin-bottom:0}
@@ -116,7 +138,7 @@
   .joymark{text-align:center;color:var(--gold);font-size:22px;margin-top:8px}
   .joytitle{margin:4px 0 0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;color:var(--navy)}
   .joydef{font-size:17px;line-height:1.65;color:var(--ink);margin:16px 0 0}
-  .joyheart{margin-top:20px;background:var(--navy);color:#f3ecd9;border-radius:16px;padding:20px;
+  .joyheart{margin-top:20px;background:var(--navy);color:var(--on-dark);border-radius:16px;padding:20px;
     font-style:italic;font-size:17px;line-height:1.65;text-align:center}
   .joylist{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:6px 0}
   .joyitem{display:flex;gap:11px;padding:9px 18px}
@@ -144,7 +166,7 @@
   @keyframes joypulse{0%,100%{box-shadow:0 0 0 0 rgba(176,141,51,.45)}50%{box-shadow:0 0 0 8px rgba(176,141,51,0)}}
   .joyadd{flex:1;padding:13px;border:none;border-radius:12px;background:var(--gold);color:#fff;
     font-family:inherit;font-size:13px;letter-spacing:1.4px;font-weight:600;cursor:pointer}
-  .joyadd:disabled{background:#ddd6c4;color:var(--ink-soft);cursor:default}
+  .joyadd:disabled{background:var(--rail);color:var(--ink-soft);cursor:default}
   .joynote{text-align:center;font-style:italic;color:var(--ink-soft);font-size:12px;margin-top:9px;line-height:1.45;min-height:17px}
   .joysecrow{display:flex;align-items:center;margin:22px 0 10px}
   .joysec{flex:1;font-size:12px;letter-spacing:1.6px;font-weight:600;color:var(--navy)}
@@ -168,6 +190,86 @@
     font-family:inherit;font-size:12px;letter-spacing:1.2px;font-weight:600;cursor:pointer;text-align:center}
   .bkpbtn.ghost{background:var(--cream);color:var(--gold);border:1px solid var(--gold);line-height:1.15}
   .bkpnote{margin-top:10px;font-size:13px;line-height:1.45;color:var(--ink-soft)}
+  .progbox{background:var(--cream-2);border:1px solid var(--line);border-radius:16px;padding:15px 16px;margin-bottom:18px}
+  .pb-top{display:flex;align-items:center;gap:7px;font-size:15px;font-weight:600;color:var(--navy)}
+  .pb-top span{color:var(--gold);font-size:15px}
+  .pb-rail{margin-top:12px;height:8px;border-radius:4px;background:var(--rail);overflow:hidden}
+  .pb-fill{height:8px;border-radius:4px;background:var(--gold);transition:width .4s}
+  .pb-foot{display:flex;justify-content:space-between;margin-top:8px;font-size:13px;color:var(--ink-soft)}
+  .reflstart{margin-top:12px;border:none;background:transparent;color:var(--gold);font-family:inherit;
+    font-size:14px;font-weight:600;cursor:pointer;padding:4px 0}
+  .reflwrap{margin-top:12px}
+  .reflwrap textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;
+    font-family:inherit;font-size:15.5px;line-height:1.5;color:var(--ink);resize:vertical}
+  .reflwrap textarea:focus{outline:none;border-color:var(--gold)}
+  .reflsaved{margin-top:12px;background:var(--cream-2);border-radius:12px;padding:13px 14px}
+  .rs-h{font-size:11px;letter-spacing:1.2px;color:var(--gold)}
+  .reflsaved p{margin:7px 0 0;font-size:16px;line-height:1.55;color:var(--ink);white-space:pre-wrap}
+  .rs-row{display:flex;gap:16px;margin-top:10px}
+  .rs-btn{border:none;background:transparent;color:var(--gold);font-family:inherit;font-size:13px;cursor:pointer;padding:4px 0}
+  .rs-btn.ghost{color:var(--ink-soft)}
+  .reflsec{margin:22px 0 10px}
+  .reflsub{font-style:italic;color:var(--ink-soft);font-size:13px;margin-top:2px}
+  .reflcard{background:var(--cream-2);border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:12px;cursor:pointer}
+  .rc-h{display:flex;justify-content:space-between;align-items:center}
+  .rc-h span:first-child{font-size:11px;letter-spacing:1.2px;font-weight:600;color:var(--navy)}
+  .rc-h span:last-child{font-size:12px;color:var(--ink-soft)}
+  .reflcard p{margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--ink);white-space:pre-wrap;
+    display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  .rc-go{margin-top:9px;font-size:12px;color:var(--gold)}
+  .themerow{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:12px;cursor:pointer;
+    background:transparent;border:1px solid var(--line);border-radius:12px;font-family:inherit;text-align:left}
+  .themerow.on{background:var(--paper);border-color:var(--gold)}
+  .themerow .sw{display:flex;gap:5px;flex:0 0 auto}
+  .themerow .sw i{width:22px;height:22px;border-radius:50%;border:1px solid var(--line)}
+  .themerow .tl{flex:1;display:flex;flex-direction:column}
+  .themerow .tl b{font-size:16px;font-weight:600;color:var(--navy)}
+  .themerow .tl em{font-size:12px;font-style:normal;color:var(--ink-soft)}
+  .themerow .tick{color:var(--gold);font-size:18px;font-weight:700}
+  .prayerentry{display:flex;align-items:center;gap:10px;margin:14px auto 0;padding:12px 16px;cursor:pointer;
+    background:rgba(255,255,255,.08);border:1px solid var(--gold-soft);border-radius:14px;font-family:inherit;text-align:left}
+  .pe-x{color:var(--gold-soft);font-size:16px}
+  .pe-t{display:flex;flex-direction:column}
+  .pe-t b{font-size:12px;letter-spacing:1.4px;font-weight:600;color:var(--on-dark)}
+  .pe-t em{font-size:12px;font-style:normal;color:var(--on-dark-soft)}
+  .pe-go{color:var(--gold-soft);font-size:18px}
+  .pr-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 22px 34px;
+    background:linear-gradient(180deg,var(--quiet-top),var(--quiet-bottom))}
+  .pr-wrap::-webkit-scrollbar{width:0}
+  .pr-top{display:flex;justify-content:space-between;align-items:center}
+  .pr-leave{border:none;background:transparent;color:var(--on-dark-soft);font-family:inherit;font-size:14px;cursor:pointer;padding:6px 2px}
+  .pr-mid{text-align:center;padding-top:22px}
+  .pr-mark{color:var(--gold-soft);font-size:26px}
+  .pr-wrap h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--on-dark);margin:10px 0 0}
+  .pr-sub{color:var(--gold-soft);font-style:italic;font-size:15px;margin-top:4px}
+  .pr-open{color:var(--on-dark-soft);font-size:16px;line-height:1.65;margin:20px 0 0}
+  .pr-note{margin-top:20px;padding:16px;border-radius:16px;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);color:var(--on-dark-soft);font-size:14px;line-height:1.6;text-align:left}
+  .pr-btn{display:block;width:100%;margin-top:24px;padding:16px;border:none;border-radius:14px;background:var(--gold);
+    color:#fff;font-family:inherit;font-size:14px;letter-spacing:1.6px;font-weight:600;cursor:pointer}
+  .pr-btn.off{background:rgba(255,255,255,.13);color:rgba(255,255,255,.4);cursor:default}
+  .pr-btn b{display:block;font-size:13px;letter-spacing:1.4px}
+  .pr-btn span{display:block;font-size:12px;color:rgba(255,255,255,.8);margin-top:3px;letter-spacing:0}
+  .pr-back{display:block;width:100%;margin-top:14px;border:none;background:transparent;
+    color:var(--on-dark-soft);font-family:inherit;font-size:13px;cursor:pointer;padding:4px}
+  .pr-back:disabled{cursor:default}
+  .pr-dots{display:flex;justify-content:center;gap:6px;margin:6px 0 18px}
+  .pr-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2)}
+  .pr-dots i.on{width:8px;height:8px;background:var(--gold-soft)}
+  .pr-badge{width:54px;height:54px;margin:0 auto;border-radius:50%;background:var(--gold);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600}
+  .pr-t{text-align:center}
+  .pr-b{color:var(--on-dark-soft);font-size:16px;line-height:1.65;margin:14px 0 0}
+  .pr-in{width:100%;margin-top:16px;padding:12px 14px;border-radius:12px;background:transparent;
+    border:1px solid rgba(255,255,255,.25);color:var(--on-dark);font-family:inherit;font-size:16px}
+  .pr-in:focus{outline:none;border-color:var(--gold-soft)}
+  .pr-priv{margin-top:8px;font-size:12px;line-height:1.5;font-style:italic;color:rgba(255,255,255,.6)}
+  .pr-pray{margin-top:18px;padding:18px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2)}
+  .pr-lbl{color:var(--gold-soft);font-size:11px;letter-spacing:1.6px;font-weight:600}
+  .pr-pray p{margin:10px 0 0;color:var(--on-dark);font-size:18px;line-height:1.62;font-style:italic}
+  .pr-ask{margin-top:18px;text-align:center;color:var(--gold-soft);font-style:italic;font-size:15px;line-height:1.5}
+  .pr-verse{margin-top:18px;text-align:center;color:var(--on-dark-soft);font-style:italic;font-size:15px;line-height:1.6}
+  .pr-verse span{display:block;font-style:normal;color:var(--gold-soft);font-size:11px;letter-spacing:1.4px;margin-top:6px}
   .joysrc{display:inline-block;margin-top:7px;padding:3px 9px;border-radius:20px;background:var(--cream-2);
     color:var(--ink-soft);font-size:10px;letter-spacing:1.2px}
   .savorbox{border-color:var(--gold-soft)}
@@ -180,7 +282,7 @@
   .chips{display:flex;gap:9px;overflow-x:auto;padding:10px 16px 6px}
   .chips::-webkit-scrollbar{display:none}
   .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--paper);color:var(--navy-2);padding:7px 16px;border-radius:20px;font-size:15px;font-family:inherit;cursor:pointer;transition:.15s;white-space:nowrap}
-  .chip.active{background:var(--navy);color:#eef1f6;border-color:var(--navy)}
+  .chip.active{background:var(--navy);color:var(--on-dark);border-color:var(--navy)}
   .section-title{font-family:'Cormorant Garamond',serif;color:var(--navy);font-size:19px;font-weight:600;letter-spacing:1px;padding:8px 16px 0;display:flex;align-items:center;gap:10px}
   .section-title::before,.section-title::after{content:"";height:1px;background:var(--line);flex:1}
   .section-title span{white-space:nowrap}
@@ -211,18 +313,18 @@
   .art-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--navy);line-height:1.05;margin:6px 0 2px}
   .art-sub{font-style:italic;color:var(--ink-soft);font-size:16px}
   .divider{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gold-soft);margin:16px 0;font-size:18px}
-  .keyverse{background:var(--navy);color:#eef1f6;border-radius:14px;padding:16px 18px;text-align:center;margin:6px 0 18px}
+  .keyverse{background:var(--navy);color:var(--on-dark);border-radius:14px;padding:16px 18px;text-align:center;margin:6px 0 18px}
   .keyverse .q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.5}
   .keyverse .r{margin-top:9px;font-size:12.5px;letter-spacing:1.5px;color:var(--gold-soft);font-weight:600}
-  .overview p{font-size:16.5px;line-height:1.62;color:#413d30;margin:0 0 14px}
+  .overview p{font-size:16.5px;line-height:1.62;color:var(--ink);margin:0 0 14px}
   .steps-h{font-family:'Cormorant Garamond',serif;text-align:center;color:var(--navy);font-size:20px;letter-spacing:1.5px;font-weight:600;margin:8px 0 16px;display:flex;align-items:center;justify-content:center;gap:10px}
   .steps-h::before,.steps-h::after{content:"❧";color:var(--gold-soft);font-size:15px}
   .step{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
-  .step .badge{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:linear-gradient(150deg,var(--navy),var(--navy-2));color:#f4e9cf;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;box-shadow:0 3px 8px rgba(30,32,45,.22)}
-  .step .badge.gold{background:linear-gradient(150deg,var(--gold),#9c7a26);color:#fff}
+  .step .badge{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:linear-gradient(150deg,var(--navy),var(--navy-2));color:var(--cream-2);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;box-shadow:0 3px 8px rgba(30,32,45,.22)}
+  .step .badge.gold{background:linear-gradient(150deg,var(--gold),var(--gold));color:#fff}
   .step .body{flex:1;padding-top:1px}
   .step .body .lbl{font-family:'Cormorant Garamond',serif;font-size:17.5px;font-weight:700;color:var(--navy)}
-  .step .body p{margin:5px 0 0;font-size:15.5px;line-height:1.5;color:#4c4838}
+  .step .body p{margin:5px 0 0;font-size:15.5px;line-height:1.5;color:var(--ink)}
   .paths{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:4px 0 12px}
   .path{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
   .path h5{margin:0;padding:11px 12px;text-align:center;font-family:'Cormorant Garamond',serif;font-size:15px;color:#fff}
@@ -233,20 +335,20 @@
   .path li b{display:block;font-size:14px}
   .path li span{color:var(--ink-soft);font-size:12.5px}
   .path.dark li b{color:var(--pathdark)}.path.free li b{color:var(--pathfree)}
-  .softbox{background:linear-gradient(180deg,#efe8d5,#e8e0ca);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:8px 0}
+  .softbox{background:linear-gradient(180deg,var(--cream-2),var(--cream-2));border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:8px 0}
   .softbox h4{margin:0 0 10px;text-align:center;font-family:'Cormorant Garamond',serif;letter-spacing:1.5px;color:var(--navy);font-weight:600;font-size:15px}
-  .softbox p{margin:0;font-style:italic;font-size:16px;line-height:1.6;color:#48432f;text-align:center}
+  .softbox p{margin:0;font-style:italic;font-size:16px;line-height:1.6;color:var(--ink);text-align:center}
   .scrip{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
   .scrip .r{flex:0 0 92px;font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--gold);text-transform:uppercase;padding-top:3px}
-  .scrip p{margin:0;font-size:15px;line-height:1.45;color:#4c4838}
-  .closing{background:var(--green);color:#eef0e2;border-radius:14px;padding:18px 20px;text-align:center;margin-top:6px}
+  .scrip p{margin:0;font-size:15px;line-height:1.45;color:var(--ink)}
+  .closing{background:var(--green);color:var(--on-dark);border-radius:14px;padding:18px 20px;text-align:center;margin-top:6px}
   .closing .q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.5}
   .closing .r{margin-top:9px;font-size:12.5px;letter-spacing:1.5px;color:var(--gold-soft);font-weight:600}
   /* Daily */
   .daily-head{flex:0 0 auto;display:flex;align-items:center;background:var(--navy);padding:12px 16px;gap:8px}
   .daily-head .info{flex:1}
   .daily-head .lbl{color:var(--gold-soft);font-size:12px;letter-spacing:2px;font-weight:600}
-  .daily-head .sub{color:#dde3ee;font-size:13px}
+  .daily-head .sub{color:var(--on-dark-soft);font-size:13px}
   .daily-scroll{flex:1;overflow-y:auto;padding:20px}
   .daily-scroll::-webkit-scrollbar{width:0}
   .devo-cat{color:var(--gold);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
@@ -260,46 +362,46 @@
   .related span{flex:1;text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 4px;font-size:13px;color:var(--navy)}
   .actionbar{flex:0 0 auto;display:flex;align-items:center;background:var(--paper);border-top:1px solid var(--line);padding:10px 12px}
   .navbtn{background:none;border:none;font-family:inherit;font-size:13px;color:var(--navy);display:flex;align-items:center;gap:3px;cursor:pointer;padding:8px}
-  .navbtn:disabled{color:#bdb9ac;cursor:default}
+  .navbtn:disabled{color:var(--rail);cursor:default}
   .navbtn svg{width:18px;height:18px}
   .completebtn{flex:1;display:flex;justify-content:center}
   .completebtn .b{display:flex;align-items:center;gap:7px;border-radius:24px;padding:11px 18px;cursor:pointer;font-weight:600;font-size:14px;background:var(--gold);color:#221a08}
   .completebtn .b.done{background:var(--green);color:#fff}
   .completebtn svg{width:18px;height:18px}
   /* Quiet Time */
-  .qt{position:absolute;inset:0;display:flex;flex-direction:column;background:linear-gradient(180deg,#243247,#151d2b)}
+  .qt{position:absolute;inset:0;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--quiet-top),var(--quiet-bottom))}
   .qt .scroll{background:transparent}
-  .qt-head{text-align:center;color:#eef1f6;padding:26px 24px 6px}
+  .qt-head{text-align:center;color:var(--on-dark);padding:26px 24px 6px}
   .qt-head h2{font-family:'Cormorant Garamond',serif;letter-spacing:3px;font-size:24px;margin:8px 0 4px;font-weight:600}
-  .qt-head p{margin:0;font-style:italic;color:#c3ccda;font-size:15px}
+  .qt-head p{margin:0;font-style:italic;color:var(--on-dark-soft);font-size:15px}
   .ring-wrap{display:flex;align-items:center;justify-content:center;padding:14px 0 6px;position:relative}
   .ring{transform:rotate(-90deg)}
   .ring-bg{fill:none;stroke:rgba(255,255,255,.12);stroke-width:10}
   .ring-fg{fill:none;stroke:url(#g);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
-  .ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f2eeda}
+  .ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--on-dark)}
   .ring-label .time{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:600;letter-spacing:2px;line-height:1}
-  .ring-label .state{margin-top:6px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#b9c2d2}
+  .ring-label .state{margin-top:6px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--on-dark-soft)}
   .presets{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:6px 20px 2px}
-  .preset{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#e9ecf3;border-radius:18px;padding:7px 15px;font-family:inherit;font-size:14px;cursor:pointer}
+  .preset{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--on-dark);border-radius:18px;padding:7px 15px;font-family:inherit;font-size:14px;cursor:pointer}
   .preset.active{background:var(--gold);border-color:var(--gold);color:#221a08;font-weight:600}
-  .slider-wrap{padding:16px 30px 4px;color:#dbe0ea}
+  .slider-wrap{padding:16px 30px 4px;color:var(--on-dark-soft)}
   .slider-wrap .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;letter-spacing:.5px}
   input[type=range]{width:100%;-webkit-appearance:none;height:5px;border-radius:5px;background:rgba(255,255,255,.2);outline:none}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold-soft);border:3px solid #eef1f6;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold-soft);border:3px solid var(--on-dark);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.3)}
   .qt-controls{display:flex;gap:12px;justify-content:center;padding:18px 24px 6px}
   .qt-btn{border:none;font-family:inherit;font-size:16px;border-radius:26px;padding:13px 30px;cursor:pointer;display:flex;align-items:center;gap:8px}
   .qt-btn.primary{background:var(--gold);color:#221a08;font-weight:600}
-  .qt-btn.ghost{background:rgba(255,255,255,.1);color:#e9ecf3;border:1px solid rgba(255,255,255,.2)}
+  .qt-btn.ghost{background:rgba(255,255,255,.1);color:var(--on-dark);border:1px solid rgba(255,255,255,.2)}
   .qt-btn svg{width:18px;height:18px}
-  .qt-verse{margin:16px 22px 8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 20px;text-align:center;color:#e9ecf3}
+  .qt-verse{margin:16px 22px 8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 20px;text-align:center;color:var(--on-dark)}
   .qt-verse .lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-soft);margin-bottom:10px}
   .qt-verse .q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.5}
-  .qt-verse .r{margin-top:10px;font-size:13px;letter-spacing:1px;color:#b9c2d2}
-  .amb-row{display:flex;align-items:center;justify-content:center;gap:10px;color:#d5dae4;font-size:14px;padding:10px 20px 4px}
-  .hymnlbl{text-align:center;color:#b9c2d2;font-size:11px;letter-spacing:.5px;padding:8px 20px 6px}
+  .qt-verse .r{margin-top:10px;font-size:13px;letter-spacing:1px;color:var(--on-dark-soft)}
+  .amb-row{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--on-dark-soft);font-size:14px;padding:10px 20px 4px}
+  .hymnlbl{text-align:center;color:var(--on-dark-soft);font-size:11px;letter-spacing:.5px;padding:8px 20px 6px}
   .hymnrow{display:flex;gap:8px;overflow-x:auto;padding:0 16px 24px}
   .hymnrow::-webkit-scrollbar{display:none}
-  .hymn{flex:0 0 auto;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#e9ecf3;border-radius:18px;padding:8px 14px;font-family:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+  .hymn{flex:0 0 auto;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:var(--on-dark);border-radius:18px;padding:8px 14px;font-family:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
   .hymn.active{background:var(--gold);border-color:var(--gold);color:#221a08;font-weight:600}
   .toggle{position:relative;width:46px;height:26px;border-radius:26px;background:rgba(255,255,255,.18);border:none;cursor:pointer;transition:.2s}
   .toggle.on{background:var(--gold)}
@@ -326,7 +428,7 @@
   .zoomov img{max-width:none;transform-origin:center;user-select:none;-webkit-user-drag:none}
   .zoomov .close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:22px;cursor:pointer}
   .zoomov .hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#ccc;font-size:13px}
-  .toast{position:absolute;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#eef1f6;padding:11px 20px;border-radius:22px;font-size:14px;opacity:0;transition:.3s;z-index:130;box-shadow:var(--shadow);pointer-events:none;white-space:nowrap}
+  .toast{position:absolute;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:var(--on-dark);padding:11px 20px;border-radius:22px;font-size:14px;opacity:0;transition:.3s;z-index:130;box-shadow:var(--shadow);pointer-events:none;white-space:nowrap}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
@@ -340,7 +442,7 @@
     <button class="navitem" data-tab="quiet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3c3 3 5 5 5 8a5 5 0 0 1-10 0c0-3 2-5 5-8z"/><path d="M12 21v-3"/></svg><span>Abide</span></button>
     <button class="navitem" data-tab="joy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l1.9 5.3L19 10l-5.1 1.7L12 17l-1.9-5.3L5 10l5.1-1.7z"/><path d="M18 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg><span>Joy</span></button>
     <button class="navitem" data-tab="favorites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg><span>Saved</span></button>
-    <button class="navitem" data-tab="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>About</span></button>
+    <button class="navitem" data-tab="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Settings</span></button>
   </nav>
   <div class="zoomov" id="zoomov"><img id="zoomimg" src="" alt=""><button class="close" id="zoomclose">✕</button><div class="hint">Pinch, scroll, or double-tap to zoom</div></div>
   <div class="toast" id="toast"></div>
@@ -558,6 +660,21 @@ let favs=getSet("ag_favs");
 let devoDone=getSet("ag_devo_done");
 let devoSaved=getSet("ag_devo_saved");
 let state={tab:"home",filter:"All"};
+
+/* Three hues of the same app. Classic is the default so nothing changes for
+   anyone who never opens Settings. */
+const THEMES=[
+ {id:'classic',label:'Classic',note:'Cream, navy and gold',sw:['#f5f0e4','#1e2a3f','#96762a']},
+ {id:'rose',label:'Rose',note:'Blush, plum and dusty rose',sw:['#f8f1ee','#43293a','#a05f68']},
+ {id:'slate',label:'Slate',note:'Stone, charcoal and bronze',sw:['#eff0ec','#232a2e','#7d6e45']}
+];
+function themeId(){return LS.getItem('ag_theme')||'classic';}
+function themeApply(id){
+  const t=THEMES.find(x=>x.id===id)?id:'classic';
+  if(t==='classic')document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme',t);
+  lsWrite('ag_theme',t);
+}
 const screen=document.getElementById('screen');
 const toastEl=document.getElementById('toast');
 function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastEl._t);toastEl._t=setTimeout(()=>toastEl.classList.remove('show'),1900);}
@@ -603,7 +720,7 @@ function renderDetail(c){
   v.innerHTML=`<div class="scroll" style="background:var(--cream)">
     <div class="detail-imgwrap" data-zoom="${c.img}">
       <div class="detail-bar"><button class="iconbtn" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <div class="right"><button class="iconbtn" data-fav="${c.id}">${heart(favs.has(c.id))}</button></div></div>
+      <div class="right"><button class="iconbtn" data-cshare="${c.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8 11l8-4M8 13l8 4"/></svg></button><button class="iconbtn" data-fav="${c.id}">${heart(favs.has(c.id))}</button></div></div>
       <img src="${c.img}" alt="${c.title}">
       <div class="zoomhint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3M11 8v6M8 11h6"/></svg>Tap to zoom</div>
     </div>
@@ -655,6 +772,197 @@ function joyAdd(text,source){const t=text.trim();if(!t)return false;const l=joyL
 function joyRemove(id){joySave(joyLoad().filter(e=>e.id!==id));}
 function joyDays(){return new Set(joyLoad().map(e=>new Date(e.created).toDateString())).size;}
 
+/* ========= GUIDED PRAYER SESSION =========
+   The CLEAR card as the map, the Father God prayer as the words.
+   What the person names lives in this variable for the length of the session
+   and is NEVER written to storage, backed up or exported. */
+const PRAYER={
+ title:"A Prayer For Freedom",
+ subtitle:"Walking the CLEAR path with God",
+ opening:"Find somewhere you will not be interrupted. You can stop at any point, and you can come back to this as often as you need.",
+ pastoral:"This is prayer, not a substitute for walking with someone who knows you. If something painful surfaces here, please tell a trusted friend, your pastor, or someone at the ministry. You were never meant to carry it alone.",
+ steps:[
+  {k:"\u2726",t:"Before You Begin",
+   b:"Sit somewhere quiet. Let your breathing slow. You are not here to perform or to get it right — you are here to meet with a Father who already loves you.\n\nBreathe in slowly for a count of 3, hold for 5, and breathe out for 7. Do that a few times until your body settles.",
+   p:"Father, I come to You. Quiet my heart, and show me what You want to touch today.",
+   v:{q:"They found the man now free of demons, sitting at Jesus' feet, dressed and thinking clearly.",r:"Mark 5:15"}},
+  {k:"?",t:"Name It",
+   b:"The deliverance prayer has one blank in it, and only you can fill it.\n\nAsk the Holy Spirit what He is putting His finger on. It may be a word like fear, shame, rejection, anger, lust, control, or unbelief. Do not strain for it — if nothing comes, sit quietly a moment longer.",
+   a:"What is the Holy Spirit showing you?",naming:true},
+  {k:"C",t:"Confess",
+   b:"Tell the truth. Take responsibility. Ask for forgiveness. Forgive yourself.\n\nThis is not grovelling. It is agreeing with God about what is true, which is the ground every other step stands on.",
+   p:"Father, I take responsibility for agreeing with the spirit of [BLANK] in my life. I ask for Your forgiveness, and I forgive myself.",
+   a:"Is there anything else you need to say honestly to Him?"},
+  {k:"L",t:"Leave the Agreement",
+   b:"Come out of every agreement you have made with the enemy.\n\nAn agreement is a place where you believed a lie and lived as if it were true. Renouncing it is you withdrawing your consent.",
+   p:"I renounce every agreement I have made with the spirit of [BLANK]. I break that agreement now, in the name of Jesus.",
+   a:"What lie were you believing when you agreed with it?"},
+  {k:"E",t:"Evict",
+   b:"In the name of Jesus, evict every demon and cancel its right to remain.\n\nYou are not shouting at darkness in your own strength. You are standing on what Jesus has already won, and the authority is His.",
+   p:"In the name of Jesus Christ, I evict the spirit of [BLANK]. I cancel every right it has claimed, and I ask You to cancel every effect of this ungodly agreement in my life.",
+   v:{q:"Submit yourselves, then, to God. Resist the devil, and he will flee from you.",r:"James 4:7"}},
+  {k:"A",t:"Ask",
+   b:"Ask to be filled with the Holy Spirit and empowered to walk in freedom.\n\nAn empty place does not stay empty. Having evicted, now invite.",
+   p:"Father, please fill the place that this spirit has occupied with Your Spirit. Fill me, and empower me to walk in freedom.",
+   a:"Stay here a moment. What do you sense Him filling that place with?"},
+  {k:"R",t:"Receive",
+   b:"Receive Christ's Lordship, truth, and freedom to live the abundant life.\n\nFreedom is not something you achieve at the end of this. It is something Christ has already won and is handing to you now.",
+   p:"I declare that Jesus Christ alone is my Lord, and I choose to live in agreement with Him. I receive His truth, His Lordship, and the freedom He has won for me. In Jesus' name, Amen.",
+   a:"What is He saying is true about you now?"},
+  {k:"\u2726",t:"Rest In It",
+   b:"You have prayed. Now let it settle.\n\nFreedom often feels quiet rather than dramatic. If nothing shifted today, that is not failure — some things are healed in layers, and you can return to this as many times as you need.",
+   p:"Thank You, Father, for meeting me here. Amen.",
+   v:{q:"Submit yourselves, then, to God. Resist the devil, and he will flee from you.",r:"James 4:7"}}
+ ]
+};
+let pr={i:0,named:'',started:false,done:false,music:true,audio:null};
+function prFill(t){return (t||'').replace('[BLANK]', pr.named.trim()||'\u2026');}
+function prMusic(on){
+  if(pr.audio){pr.audio.pause();pr.audio=null;}
+  if(on){pr.audio=new Audio('audio/hymn_be_thou_vision.mp3');pr.audio.loop=true;pr.audio.volume=0.32;
+    pr.audio.play().catch(()=>{});}
+}
+function prStop(){pr.music=false;prMusic(false);}
+function renderPrayer(){
+  const v=el('view','prayer');
+  let body;
+  if(!pr.started){
+    body=`<div class="pr-mid">
+      <div class="pr-mark">&#10013;</div>
+      <h2>${PRAYER.title}</h2><div class="pr-sub">${PRAYER.subtitle}</div>
+      <p class="pr-open">${PRAYER.opening}</p>
+      <div class="pr-note">${PRAYER.pastoral}</div>
+      <button class="pr-btn" data-prbegin>BEGIN</button></div>`;
+  }else if(pr.done){
+    body=`<div class="pr-mid">
+      <div class="pr-mark">&#10022;</div><h2>Amen.</h2>
+      <p class="pr-open">What you named is already gone from this screen. What God did with it is not.</p>
+      <div class="pr-note">${PRAYER.pastoral}</div>
+      <button class="pr-btn" data-prjournal><b>WRITE WHAT HE SHOWED YOU</b><span>In your own words, in your journal</span></button>
+      <button class="pr-leave" data-prclose style="margin-top:16px">Close</button></div>`;
+  }else{
+    const st=PRAYER.steps[pr.i],last=pr.i>=PRAYER.steps.length-1;
+    const canGo=!st.naming||pr.named.trim();
+    body=`<div class="pr-dots">${PRAYER.steps.map((_,n)=>`<i class="${n<=pr.i?'on':''}"></i>`).join('')}</div>
+      <div class="pr-badge">${st.k}</div>
+      <h2 class="pr-t">${st.t}</h2>
+      <p class="pr-b">${esc(st.b).replace(/\n/g,'<br>')}</p>
+      ${st.naming?`<input id="prname" class="pr-in" value="${esc(pr.named)}" placeholder="fear, shame, anger&hellip;">
+        <div class="pr-priv">This stays on this screen only. It is never saved, never backed up, and gone when you leave.</div>`:''}
+      ${st.p?`<div class="pr-pray"><div class="pr-lbl">PRAY THIS ALOUD</div><p>${esc(prFill(st.p))}</p></div>`:''}
+      ${st.a?`<div class="pr-ask">${st.a}</div>`:''}
+      ${st.v?`<div class="pr-verse">&ldquo;${st.v.q}&rdquo;<span>${st.v.r.toUpperCase()}</span></div>`:''}
+      <button class="pr-btn ${canGo?'':'off'}" data-prnext ${canGo?'':'disabled'}>${last?'AMEN':'CONTINUE'}</button>
+      <button class="pr-back" data-prback ${pr.i?'':'disabled'}>${pr.i?'Back a step':'Take as long as you need.'}</button>`;
+  }
+  v.innerHTML=`<div class="pr-wrap">
+    <div class="pr-top"><button class="pr-leave" data-prclose>Leave</button>
+    ${pr.started&&!pr.done?`<button class="pr-leave" data-prmusic>${pr.music?'Music on':'Music off'}</button>`:''}</div>
+    ${body}</div>`;
+  return v;
+}
+function openPrayer(){
+  pr={i:0,named:'',started:false,done:false,music:true,audio:null};
+  const cur=topView();if(cur)cur.classList.add('behind');
+  const p=renderPrayer();screen.appendChild(p);requestAnimationFrame(()=>p.classList.add('active'));
+}
+function refreshPrayer(){
+  const old=screen.querySelector('[data-view="prayer"]');
+  if(!old)return;
+  const n=renderPrayer();n.classList.add('active');old.replaceWith(n);
+}
+function closePrayer(){
+  prStop();
+  pr.named='';
+  const p=screen.querySelector('[data-view="prayer"]');
+  const base=topView('prayer');
+  if(p){p.classList.remove('active');setTimeout(()=>p.remove(),340);}
+  if(base)base.classList.remove('behind');
+}
+
+/* ========= SHARE AS IMAGE =========
+   Draws the verse as a 1080x1350 graphic in the app's palette. Same layout
+   maths as the Android renderer, so both platforms produce the same card. */
+function shareCanvas(verse,reference,eyebrow,title){
+  const W=1080,H=1350,cx=W/2;
+  const cs=getComputedStyle(document.documentElement),v=n=>cs.getPropertyValue(n).trim();
+  const CREAM=v('--cream'),PAPER=v('--paper'),NAVY=v('--navy'),
+        GOLD=v('--gold'),GOLDS=v('--gold-soft'),INKS=v('--ink-soft');
+  const cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  const x=cv.getContext('2d');
+  x.fillStyle=CREAM;x.fillRect(0,0,W,H);
+  // paper panel
+  const r=28,i=46;
+  x.beginPath();x.moveTo(i+r,i);x.arcTo(W-i,i,W-i,H-i,r);x.arcTo(W-i,H-i,i,H-i,r);
+  x.arcTo(i,H-i,i,i,r);x.arcTo(i,i,W-i,i,r);x.closePath();
+  x.fillStyle=PAPER;x.fill();x.strokeStyle=GOLDS;x.lineWidth=3;x.stroke();
+  // cross
+  x.strokeStyle=GOLD;x.lineWidth=9;x.lineCap='round';
+  x.beginPath();x.moveTo(cx,108);x.lineTo(cx,196);x.moveTo(cx-30,136);x.lineTo(cx+30,136);x.stroke();
+  const serif="'Cormorant Garamond',Georgia,serif";
+  const track=(txt,font,fill,y,sp)=>{
+    x.font=font;x.fillStyle=fill;x.textAlign='left';
+    const w=[...txt].reduce((a,ch)=>a+x.measureText(ch).width+sp,0)-sp;
+    let px=cx-w/2;
+    for(const ch of txt){x.fillText(ch,px,y);px+=x.measureText(ch).width+sp;}
+  };
+  track('ABUNDANT GRACE','600 34px '+serif,NAVY,268,7.5);
+  if(eyebrow)track(eyebrow.toUpperCase(),'400 26px '+serif,GOLD,318,4.7);
+  // verse block, centred as a whole
+  const TOP=380,BOT=1130,textw=W-260;
+  const wrap=(t,size)=>{
+    x.font='italic 400 '+size+'px '+serif;
+    const out=[];let cur='';
+    for(const w of t.split(' ')){
+      const trial=cur?cur+' '+w:w;
+      if(x.measureText(trial).width<=textw)cur=trial;else{if(cur)out.push(cur);cur=w;}
+    }
+    if(cur)out.push(cur);return out;
+  };
+  const extra=34+46+(title?56:0);
+  let size=68,lines=[],vh=0;
+  while(size>30){
+    lines=wrap('“'+verse+'”',size);vh=size*1.42*lines.length;
+    if(vh+extra<=BOT-TOP)break;
+    size-=2;
+  }
+  let y=TOP+((BOT-TOP)-(vh+extra))/2;
+  x.font='italic 400 '+size+'px '+serif;x.fillStyle=NAVY;x.textAlign='center';
+  const lh=size*1.42;
+  lines.forEach((ln,n)=>x.fillText(ln,cx,y+n*lh+size));
+  y+=vh+34;
+  x.strokeStyle=GOLDS;x.lineWidth=2;
+  x.beginPath();x.moveTo(cx-44,y);x.lineTo(cx+44,y);x.stroke();
+  y+=46;
+  track(reference.toUpperCase(),'600 34px '+serif,GOLD,y,4.8);
+  if(title){y+=56;x.font='italic 400 34px '+serif;x.fillStyle=NAVY;x.textAlign='center';
+    let t=title;while(t.length&&x.measureText(t).width>W-300)t=t.slice(0,-1);
+    x.fillText(t===title?t:t+'…',cx,y);}
+  x.font='italic 400 28px '+serif;x.fillStyle=INKS;x.textAlign='center';
+  x.fillText('The Abundant Life Ministry',cx,H-108);
+  return cv;
+}
+function shareImage(verse,reference,eyebrow,title,caption){
+  const go=()=>{
+    const cv=shareCanvas(verse,reference,eyebrow,title);
+    cv.toBlob(b=>{
+      if(!b)return toast('Could not create the image');
+      const file=new File([b],'abundant-grace.png',{type:'image/png'});
+      if(navigator.canShare&&navigator.canShare({files:[file]})){
+        navigator.share({files:[file],text:caption||''}).catch(()=>{});
+      }else{
+        const a=document.createElement('a');
+        a.href=URL.createObjectURL(b);a.download='abundant-grace.png';
+        document.body.appendChild(a);a.click();
+        setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
+        toast('Image saved');
+      }
+    },'image/png');
+  };
+  // Wait for the web fonts, or the canvas draws in a fallback face.
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go);else go();
+}
+
 /* ========= BACKUP & RESTORE =========
    Everything a person builds up lives in this browser only, so this moves it
    to a new phone. Restoring MERGES: it never deletes what is already here. */
@@ -666,10 +974,13 @@ function backupBuild(){
     exportedLabel:new Date().toLocaleString(),
     favorites:[...getSet('ag_favs')],
     joyEntries:joyLoad(),
+    theme:themeId(),
+    reflections:reflLoad(),
     devotionals:{
       lastDay:parseInt(LS.getItem('ag_devo_day')||'1'),
       completed:[...getSet('ag_devo_done')],
-      saved:[...getSet('ag_devo_saved')]
+      saved:[...getSet('ag_devo_saved')],
+      activeDates:[...getSet('ag_devo_dates')]
     }
   };
 }
@@ -690,7 +1001,7 @@ function backupRestore(file){
     let d;
     try{d=JSON.parse(r.result)}catch(e){return backupNote('That does not look like an Abundant Grace backup.');}
     if(!d||(!d.joyEntries&&!d.favorites))return backupNote('That does not look like an Abundant Grace backup.');
-    let favAdded=0,entAdded=0,devMerged=0;
+    let favAdded=0,entAdded=0,devMerged=0,reflAdded=0;
     if(Array.isArray(d.favorites)){
       const cur=getSet('ag_favs');const before=cur.size;
       d.favorites.forEach(x=>cur.add(x));
@@ -704,19 +1015,31 @@ function backupRestore(file){
       if(cur.length!==before){entAdded=cur.length-before;
         joySave(cur.sort((a,b)=>b.created-a.created));}
     }
+    if(d.theme&&!LS.getItem('ag_theme'))themeApply(d.theme);
+    if(d.reflections&&typeof d.reflections==='object'){
+      const mine=reflLoad();
+      Object.keys(d.reflections).forEach(k=>{
+        const inc=d.reflections[k];if(!inc||!inc.text)return;
+        const cur=mine[k];
+        // The more recently edited side wins, so a restore never discards newer work.
+        if(!cur||(inc.updated||0)>(cur.updated||0)){mine[k]=inc;reflAdded++;}
+      });
+      if(reflAdded)reflSave(mine);
+    }
     if(d.devotionals){
-      [['completed','ag_devo_done'],['saved','ag_devo_saved']].forEach(([k,key])=>{
+      [['completed','ag_devo_done'],['saved','ag_devo_saved'],['activeDates','ag_devo_dates']].forEach(([k,key])=>{
         if(!Array.isArray(d.devotionals[k]))return;
         const cur=getSet(key);const before=cur.size;
         d.devotionals[k].forEach(x=>cur.add(String(x)));
         if(cur.size!==before){devMerged+=cur.size-before;saveSet(key,cur);
-          if(key==='ag_devo_done')devoDone=cur;else devoSaved=cur;}
+          if(key==='ag_devo_done')devoDone=cur;else if(key==='ag_devo_saved')devoSaved=cur;else devoDates=cur;}
       });
       const inDay=parseInt(d.devotionals.lastDay||1);
       if(inDay>parseInt(LS.getItem('ag_devo_day')||'1')){LS.setItem('ag_devo_day',inDay);devoDay=inDay;}
     }
     const parts=[];
     if(entAdded)parts.push(entAdded+' journal '+(entAdded===1?'entry':'entries'));
+    if(reflAdded)parts.push(reflAdded+' '+(reflAdded===1?'reflection':'reflections'));
     if(favAdded)parts.push(favAdded+' '+(favAdded===1?'favourite':'favourites'));
     if(devMerged)parts.push(devMerged+' devotional '+(devMerged===1?'day':'days'));
     backupNote(parts.length?'Restored '+parts.join(', ')+'.'
@@ -725,6 +1048,21 @@ function backupRestore(file){
   };
   r.readAsText(file);
 }
+
+/* Responses to the daily journal prompts, kept against the devotional day they
+   belong to rather than in the Joy Journal. These are searching, sometimes
+   convicting pieces of writing; the Joy Journal is a record of gladness. */
+function reflLoad(){try{return JSON.parse(LS.getItem('ag_reflections')||'{}')}catch(e){return{}}}
+function reflSave(o){return lsWrite('ag_reflections',JSON.stringify(o))}
+function reflGet(day){const r=reflLoad()[String(day)];return r&&r.text?r:null;}
+function reflSet(day,text){const o=reflLoad();const t=(text||'').trim();
+  if(!t)delete o[String(day)];else o[String(day)]={text:t,updated:Date.now()};
+  return reflSave(o);}
+function reflRemove(day){const o=reflLoad();delete o[String(day)];reflSave(o);}
+function reflAll(){const o=reflLoad();
+  return Object.keys(o).map(k=>({day:+k,text:o[k].text,updated:o[k].updated||0}))
+    .sort((a,b)=>b.updated-a.updated);}
+function reflDate(ms){return ms?new Date(ms).toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'}):'';}
 
 /* Dictation, handed to the browser's own speech recognition where available. */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -781,6 +1119,12 @@ function joyExport(){
   out+='------------------------------------------\n\n';
   list.slice().sort((a,b)=>a.created-b.created).forEach(e=>{
     out+=joyDate(e.created)+' · '+joyTime(e.created)+(e.source?' · '+e.source:'')+'\n'+e.text+'\n\n';});
+  const rl=reflAll();
+  if(rl.length){
+    out+='------------------------------------------\n\nFROM MY DEVOTIONALS\n\n';
+    rl.slice().sort((a,b)=>a.day-b.day).forEach(r=>{
+      out+='Day '+r.day+' · '+reflDate(r.updated)+'\n'+r.text+'\n\n';});
+  }
   out+='------------------------------------------\n';
   out+=list.length+' '+(list.length===1?'moment':'moments')+' across '+days+' '+(days===1?'day':'days')+' of noticing.\n';
   const stamp=new Date().toISOString().slice(0,10);
@@ -855,8 +1199,20 @@ function renderJoy(){
       <div class="joynote" id="joynote"></div>
     </div>
     ${entries}
+    ${reflSection()}
   </div>`;
   return v;
+}
+/* Reflections live here too, so there is one place to look back, but kept
+   visually apart because searching and rejoicing are different kinds of writing. */
+function reflSection(){
+  const list=reflAll();
+  if(!list.length)return '';
+  return `<div class="reflsec"><div class="joysec">FROM MY DEVOTIONALS</div>
+    <div class="reflsub">Your responses to the daily journal prompts.</div></div>`+
+    list.map(r=>`<div class="reflcard" data-reflopen="${r.day}">
+      <div class="rc-h"><span>DAY ${r.day}</span><span>${reflDate(r.updated)}</span></div>
+      <p>${esc(r.text)}</p><div class="rc-go">Open this day &rsaquo;</div></div>`).join('');
 }
 
 /* ========= HOW ARE YOU FEELING ========= */
@@ -985,6 +1341,74 @@ function closeFeeling(){
 
 /* ========= DAILY DEVOTIONAL ========= */
 let devos=null, devoDay=parseInt(LS.getItem("ag_devo_day")||"1");
+
+/* Streaks run on calendar days, not devotional day numbers, since someone may
+   read several days in one sitting. Nothing here reports a run as lost. */
+let devoDates=getSet('ag_devo_dates');
+function dkey(d){return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate()+'';}
+function streakMarkToday(){const k=dkey(new Date());
+  if(devoDates.has(k))return;devoDates.add(k);saveSet('ag_devo_dates',devoDates);}
+function streakCurrent(){
+  if(!devoDates.size)return 0;
+  const d=new Date();
+  if(!devoDates.has(dkey(d)))d.setDate(d.getDate()-1);   // today still counts until it is over
+  if(!devoDates.has(dkey(d)))return 0;
+  let n=0;
+  while(devoDates.has(dkey(d))){n++;d.setDate(d.getDate()-1);}
+  return n;
+}
+function streakLongest(){
+  if(!devoDates.size)return 0;
+  const ks=[...devoDates].sort();let best=1,run=1;
+  for(let i=1;i<ks.length;i++){
+    const p=ks[i-1],d=new Date(+p.slice(0,4),+p.slice(4,6)-1,+p.slice(6,8));
+    d.setDate(d.getDate()+1);
+    run=(dkey(d)===ks[i])?run+1:1;
+    if(run>best)best=run;
+  }
+  return best;
+}
+function streakWords(cur,done){
+  if(!done)return 'Today is a good day to begin.';
+  if(!cur)return 'Welcome back. Today counts.';
+  if(cur===1)return 'You showed up today.';
+  if(cur<7)return cur+' days in a row.';
+  if(cur<30)return cur+' days in a row. Steady and unhurried.';
+  return cur+' days in a row. What a faithful habit.';
+}
+function progressCard(total){
+  const done=devoDone.size,cur=streakCurrent(),best=streakLongest();
+  const pct=total?Math.max(done?2:0,Math.round(done/total*100)):0;
+  return `<div class="progbox">
+    <div class="pb-top"><span>&#10022;</span>${streakWords(cur,done)}</div>
+    <div class="pb-rail"><div class="pb-fill" style="width:${pct}%"></div></div>
+    <div class="pb-foot"><span>${done} of ${total} completed</span>${best>1?`<span>Best run: ${best} days</span>`:''}</div>
+  </div>`;
+}
+function reflBlock(day){
+  const r=reflGet(day);
+  if(reflEditing===day){
+    return `<div class="reflwrap">
+      <textarea id="refldraft" rows="4" placeholder="Write your response…">${r?esc(r.text):''}</textarea>
+      <div class="joyrow">
+        <button class="joymic" id="reflmic" aria-label="Speak your response">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5"/></svg>
+        </button>
+        <button class="joyadd" id="reflsave" data-reflsave="${day}">SAVE MY RESPONSE</button>
+      </div>
+      <div class="joynote" id="reflnote"></div>
+      <button class="joylink" style="margin:6px 0 0" data-reflcancel>Cancel</button>
+    </div>`;
+  }
+  if(r)return `<div class="reflsaved">
+      <div class="rs-h">YOUR RESPONSE · ${reflDate(r.updated)}</div>
+      <p>${esc(r.text)}</p>
+      <div class="rs-row"><button class="rs-btn" data-refledit="${day}">Edit</button>
+      <button class="rs-btn ghost" data-reflrm="${day}">Remove</button></div>
+    </div>`;
+  return `<button class="reflstart" data-refledit="${day}">Write a response &rsaquo;</button>`;
+}
+let reflEditing=0;
 function renderDaily(){
   const v=el('view','daily');
   if(devos===null){
@@ -1002,6 +1426,7 @@ function renderDaily(){
      <button class="iconbtn" data-dshare style="color:#eef1f6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8 11l8-4M8 13l8 4"/></svg></button>
    </div>
    <div class="daily-scroll">
+     ${progressCard(total)}
      <div class="devo-cat">DAY ${d.day} · ${d.theme.toUpperCase()}</div>
      <div class="devo-title">${d.title}</div>
      <div class="devo-ref">${d.verse_reference}</div>
@@ -1009,7 +1434,8 @@ function renderDaily(){
      <div class="sec-label">Reflection</div><div class="sec-body">${d.reflection}</div>
      <div class="sec-label">Today's Application</div><div class="sec-body">${d.application}</div>
      <div class="softbox"><h4>PRAYER</h4><p>${d.prayer}</p></div>
-     <div class="journalbox"><div class="sec-label">Journal Prompt</div><div class="sec-body">${d.journal_prompt}</div></div>
+     <div class="journalbox"><div class="sec-label">Journal Prompt</div><div class="sec-body">${d.journal_prompt}</div>
+       ${reflBlock(d.day)}</div>
      <div class="sec-label">Related Scripture</div><div class="related">${d.related_verses.map(r=>`<span>${r}</span>`).join('')}</div>
    </div>
    <div class="actionbar">
@@ -1030,7 +1456,12 @@ function renderQuiet(){
   qt.verse=quietVerses[Math.floor(Math.random()*quietVerses.length)];
   const v=el('view','quiet');
   v.innerHTML=`<div class="qt"><div class="scroll">
-    <div class="qt-head"><div style="color:var(--gold-soft);font-size:24px">✝</div><h2>ABIDE IN HIM</h2><p>Set aside time to be still with God.</p></div>
+    <div class="qt-head"><div style="color:var(--gold-soft);font-size:24px">✝</div><h2>ABIDE IN HIM</h2><p>Set aside time to be still with God.</p>
+      <button class="prayerentry" data-propen>
+        <span class="pe-x">&#10013;</span>
+        <span class="pe-t"><b>A PRAYER FOR FREEDOM</b><em>Walk the CLEAR path with God</em></span>
+        <span class="pe-go">&rsaquo;</span>
+      </button></div>
     <div class="ring-wrap"><svg class="ring" width="230" height="230" viewBox="0 0 230 230"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6c56b"/><stop offset="1" stop-color="#b08d33"/></linearGradient></defs><circle class="ring-bg" cx="115" cy="115" r="104"/><circle class="ring-fg" id="ringfg" cx="115" cy="115" r="104" stroke-dasharray="653.45" stroke-dashoffset="0"/></svg><div class="ring-label"><div class="time" id="qtTime">15:00</div><div class="state" id="qtState">Ready</div></div></div>
     <div class="presets" id="presets">${[5,10,15,30,45,60].map(m=>`<button class="preset ${m===15?'active':''}" data-min="${m}">${m} min</button>`).join('')}</div>
     <div class="slider-wrap"><div class="row"><span>Custom length</span><span id="sliderVal">15 min</span></div><input type="range" id="qtSlider" min="1" max="60" value="15"></div>
@@ -1067,8 +1498,17 @@ function renderFavorites(){
 }
 function renderAbout(){
   const v=el('view','about');
-  v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>ABOUT</h1></div></div>
-   <div class="about"><svg width="96" height="96" viewBox="0 0 96 96"><rect x="4" y="4" width="88" height="88" rx="21" fill="#1e2a3f"/><path d="M56 22v52M40 38h32" stroke="#c9a856" stroke-width="9" stroke-linecap="round"/><path d="M40 74c-7 4-16 3-20-3 6-3 15-3 20 3z" fill="#7a8a4e"/></svg>
+  v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>SETTINGS</h1></div></div>
+   <div class="about">
+   <div class="bkpbox" style="text-align:left">
+     <h4>APPEARANCE</h4>
+     <p style="font-style:italic;font-size:13px">The same app in a different hue. Nothing else changes.</p>
+     ${THEMES.map(t=>`<button class="themerow ${t.id===themeId()?'on':''}" data-theme="${t.id}">
+        <span class="sw">${t.sw.map(c=>`<i style="background:${c}"></i>`).join('')}</span>
+        <span class="tl"><b>${t.label}</b><em>${t.note}</em></span>
+        ${t.id===themeId()?'<span class="tick">&#10003;</span>':''}
+      </button>`).join('')}
+   </div><svg width="96" height="96" viewBox="0 0 96 96"><rect x="4" y="4" width="88" height="88" rx="21" fill="#1e2a3f"/><path d="M56 22v52M40 38h32" stroke="#c9a856" stroke-width="9" stroke-linecap="round"/><path d="M40 74c-7 4-16 3-20-3 6-3 15-3 20 3z" fill="#7a8a4e"/></svg>
    <h3>ABUNDANT GRACE</h3><div class="tag">Be encouraged. Be strengthened. Be renewed.</div>
    <p>Abundant Grace shares Scripture-rooted post cards from The Abundant Life Ministry. Tap any card to open it and scroll for its deeper meaning, read a 365-day devotional, and use Abide in Him to be still with God.</p>
    <div class="bkpbox">
@@ -1129,9 +1569,32 @@ screen.addEventListener('click',e=>{
   const fav=e.target.closest('[data-fav]');if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);return;}
   const back=e.target.closest('[data-back]');if(back){closeDetail();return;}
   const feel=e.target.closest('[data-feel]');if(feel){openFeeling(feel.dataset.feel);return;}
+  if(e.target.closest('[data-propen]')){openPrayer();return;}
+  if(e.target.closest('[data-prclose]')){closePrayer();return;}
+  if(e.target.closest('[data-prbegin]')){pr.started=true;prMusic(pr.music);refreshPrayer();return;}
+  if(e.target.closest('[data-prmusic]')){pr.music=!pr.music;prMusic(pr.music);refreshPrayer();return;}
+  if(e.target.closest('[data-prback]')){if(pr.i>0){pr.i--;refreshPrayer();}return;}
+  if(e.target.closest('[data-prnext]')){
+    const inp=document.getElementById('prname');if(inp)pr.named=inp.value;
+    if(pr.i>=PRAYER.steps.length-1){pr.done=true;prStop();}else pr.i++;
+    refreshPrayer();return;}
+  if(e.target.closest('[data-prjournal]')){closePrayer();show('joy');return;}
   if(e.target.closest('[data-jopen]')){openJoyCard();return;}
   if(e.target.closest('[data-jclose]')){closeJoyCard();return;}
   if(e.target.closest('#joymic')){joyDictate('joydraft','joyaddbtn','joynote','joymic');return;}
+  if(e.target.closest('#reflmic')){joyDictate('refldraft','reflsave','reflnote','reflmic');return;}
+  const red=e.target.closest('[data-refledit]');
+  if(red){reflEditing=+red.dataset.refledit;show('daily');
+    setTimeout(()=>{const n=document.getElementById('reflnote');if(n)n.textContent=joyNoteDefault();},0);return;}
+  if(e.target.closest('[data-reflcancel]')){reflEditing=0;show('daily');return;}
+  const rsv=e.target.closest('[data-reflsave]');
+  if(rsv){const t=document.getElementById('refldraft');
+    if(t){if(joyListening){try{joyRec.stop()}catch(err){}}
+      if(reflSet(+rsv.dataset.reflsave,t.value)){reflEditing=0;toast('Response saved');show('daily');}
+      else toast('Your browser is blocking storage, so that could not be saved.');}
+    return;}
+  const rrm=e.target.closest('[data-reflrm]');
+  if(rrm){reflRemove(+rrm.dataset.reflrm);show('daily');return;}
   if(e.target.closest('#savormic')){joyDictate('savordraft','savoraddbtn','savornote','savormic');return;}
   if(e.target.closest('#savoraddbtn')){const t=document.getElementById('savordraft');
     const sv=screen.querySelector('[data-view="savor"]');
@@ -1144,24 +1607,36 @@ screen.addEventListener('click',e=>{
     if(sv)openSavor(sv.querySelector('[data-fabide]').dataset.fabide,false);return;}
   if(e.target.closest('[data-jexport]')){joyExport();return;}
   if(e.target.closest('[data-bkpsave]')){backupExport();return;}
+  const th=e.target.closest('[data-theme]');
+  if(th){themeApply(th.dataset.theme);show('about');return;}
   if(e.target.closest('#joyaddbtn')){const t=document.getElementById('joydraft');if(t&&t.value.trim()){if(joyListening){try{joyRec.stop()}catch(err){}}
     if(joyAdd(t.value)){toast('Added to your Joy Journal ✦');show('joy');}
     else toast('Your browser is blocking storage, so that could not be saved.');}return;}
 
   const jrm=e.target.closest('[data-jrm]');if(jrm){joyRemove(+jrm.dataset.jrm);show('joy');return;}
+  const rop=e.target.closest('[data-reflopen]');
+  if(rop){devoDay=+rop.dataset.reflopen;LS.setItem('ag_devo_day',devoDay);reflEditing=0;show('daily');return;}
   if(e.target.closest('[data-fback]')){if(screen.querySelector('[data-view="savor"]'))closeSavor();else closeFeeling();return;}
   const ab=e.target.closest('[data-fabide]');
   if(ab){const em=EMOTIONS.concat(GOOD).find(x=>x.id===ab.dataset.fabide);
     if(em&&em.hymn>=0&&em.hymn<HYMNS.length){qt.hymn=em.hymn;qt.ambient=true;}
     if(screen.querySelector('[data-view="savor"]'))closeSavor();else closeFeeling();
     show('quiet');return;}
+  const csh=e.target.closest('[data-cshare]');
+  if(csh){e.stopPropagation();const c=cards.find(x=>x.id===csh.dataset.cshare);
+    if(c)shareImage(c.key.q,c.key.r,c.cat,c.title,
+      `“${c.key.q}” — ${c.key.r}\n\n${c.title}: ${c.subtitle}\n— from Abundant Grace`);
+    return;}
   const zoom=e.target.closest('[data-zoom]');if(zoom){openZoom(zoom.dataset.zoom);return;}
-  const chip=e.target.closest('[data-cat]');if(chip){state.filter=chip.dataset.cat;show('home');return;}
+  const chip=e.target.closest('[data-cat]');if(chip){state.filter=chip.dataset.cat;themeApply(themeId());
+show('home');return;}
   const card=e.target.closest('[data-card]');if(card){openDetail(card.dataset.card);return;}
   // daily
   if(e.target.closest('[data-dprev]')){if(devoDay>1){devoDay--;LS.setItem('ag_devo_day',devoDay);show('daily');}return;}
   if(e.target.closest('[data-dnext]')){if(devos&&devoDay<devos.length){devoDay++;LS.setItem('ag_devo_day',devoDay);show('daily');}return;}
-  if(e.target.closest('[data-dcomplete]')){const k=String(devoDay);if(devoDone.has(k))devoDone.delete(k);else devoDone.add(k);saveSet('ag_devo_done',devoDone);show('daily');return;}
+  if(e.target.closest('[data-dcomplete]')){const k=String(devoDay);
+    if(devoDone.has(k))devoDone.delete(k);else{devoDone.add(k);streakMarkToday();}
+    saveSet('ag_devo_done',devoDone);show('daily');return;}
   if(e.target.closest('[data-dsave]')){const k=String(devoDay);if(devoSaved.has(k)){devoSaved.delete(k);toast('Removed');}else{devoSaved.add(k);toast('Saved ♥');}saveSet('ag_devo_saved',devoSaved);show('daily');return;}
   if(e.target.closest('[data-dshare]')){shareDevo();return;}
   // quiet
@@ -1186,6 +1661,9 @@ screen.addEventListener('change',e=>{
     backupRestore(e.target.files[0]);e.target.value='';}
 });
 screen.addEventListener('input',e=>{
+  if(e.target.id==='prname'){pr.named=e.target.value;
+    const b=screen.querySelector('[data-prnext]');
+    if(b){b.disabled=!e.target.value.trim();b.classList.toggle('off',!e.target.value.trim());}}
   if(e.target.id==='qtSlider'){if(qt.running)resetQt();setMin(+e.target.value);}
   if(e.target.id==='joydraft'){const b=document.getElementById('joyaddbtn');if(b)b.disabled=!e.target.value.trim();}
   if(e.target.id==='savordraft'){const b=document.getElementById('savoraddbtn');if(b)b.disabled=!e.target.value.trim();}
@@ -1194,10 +1672,11 @@ function toggleFav(id){if(favs.has(id)){favs.delete(id);toast('Removed from favo
   const d=screen.querySelector('[data-view="detail"]');
   if(d){d.querySelectorAll('[data-fav="'+id+'"]').forEach(b=>b.innerHTML=heart(favs.has(id)));const c=screen.querySelector('.view:not([data-view="detail"]) [data-card="'+id+'"]');if(c)c.classList.toggle('faved',favs.has(id));}
   else show(state.tab);}
-function shareDevo(){const d=devos.find(x=>x.day===devoDay);if(!d)return;const txt=`Day ${d.day}: ${d.title}\n“${d.verse_text}” — ${d.verse_reference}\n\n${d.reflection}\n\n— from Abundant Grace`;
-  if(navigator.share){navigator.share({title:`Abundant Grace — Day ${d.day}`,text:txt}).catch(()=>{});}
-  else if(navigator.clipboard){navigator.clipboard.writeText(txt);toast('Copied to clipboard');}else toast('Share not supported');}
+function shareDevo(){const d=devos.find(x=>x.day===devoDay);if(!d)return;
+  const caption=`“${d.verse_text}” — ${d.verse_reference}\n\nDay ${d.day}: ${d.title}\n— from Abundant Grace`;
+  shareImage(d.verse_text,d.verse_reference,'Day '+d.day,d.title,caption);}
 
+themeApply(themeId());
 show('home');
 </script>
 </body>
