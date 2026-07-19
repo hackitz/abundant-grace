@@ -52,9 +52,8 @@
   .feelstrip h4{margin:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--navy)}
   .feelstrip p{margin:3px 14px 0;text-align:center;font-style:italic;color:var(--ink-soft);font-size:13px}
   .feelgrouplbl{padding:12px 18px 0;font-size:10px;letter-spacing:1.6px;font-weight:600;color:var(--ink-soft)}
-  .feelrow{display:flex;gap:10px;overflow-x:auto;padding:7px 14px 2px;scrollbar-width:none}
-  .feelrow::-webkit-scrollbar{display:none}
-  .feel{flex:0 0 auto;border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 2px;font-family:inherit}
+  .feelrow{display:flex;flex-wrap:wrap;gap:10px;padding:7px 14px 2px;justify-content:center}
+  .feel{flex:0 0 calc((100% - 20px)/3);border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 2px;font-family:inherit}
   .feel .dot{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     color:#fff;font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;transition:transform .15s}
   .feel:active .dot{transform:scale(.92)}
@@ -93,6 +92,11 @@
   .abidebtn span{display:block;font-size:13px;color:rgba(255,255,255,.72);margin-top:3px}
   .alsorow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
   .alsorow::-webkit-scrollbar{display:none}
+  @media (hover:hover){
+    .chips::-webkit-scrollbar,.hymnrow::-webkit-scrollbar{height:6px}
+    .chips::-webkit-scrollbar-thumb,.hymnrow::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+    .chips,.hymnrow{scrollbar-width:thin}
+  }
   .alsocard{flex:0 0 140px;background:var(--paper);border-radius:12px;overflow:hidden;cursor:pointer}
   .alsocard img{width:100%;aspect-ratio:1;object-fit:cover;object-position:top;display:block}
   .alsocard .t{padding:8px;font-size:13px;line-height:1.3;color:var(--navy)}
@@ -155,6 +159,15 @@
   .joyempty .m{color:var(--gold-soft);font-size:26px}
   .joyempty h4{margin:10px 0 0;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--navy)}
   .joyempty p{margin:6px 20px 0;font-size:14px;line-height:1.55;color:var(--ink-soft)}
+  .bkpbox{margin:22px 0 18px;text-align:left;background:var(--cream-2);border:1px solid var(--line);
+    border-radius:16px;padding:16px 18px}
+  .bkpbox h4{margin:0;font-size:13px;letter-spacing:1.5px;font-weight:600;color:var(--navy)}
+  .bkpbox p{margin:8px 0 0;font-size:14px;line-height:1.5;color:var(--ink)}
+  .bkprow{display:flex;gap:10px;margin-top:14px}
+  .bkpbtn{flex:1;padding:13px;border:none;border-radius:12px;background:var(--gold);color:#fff;
+    font-family:inherit;font-size:12px;letter-spacing:1.2px;font-weight:600;cursor:pointer;text-align:center}
+  .bkpbtn.ghost{background:var(--cream);color:var(--gold);border:1px solid var(--gold);line-height:1.15}
+  .bkpnote{margin-top:10px;font-size:13px;line-height:1.45;color:var(--ink-soft)}
   .joysrc{display:inline-block;margin-top:7px;padding:3px 9px;border-radius:20px;background:var(--cream-2);
     color:var(--ink-soft);font-size:10px;letter-spacing:1.2px}
   .savorbox{border-color:var(--gold-soft)}
@@ -481,14 +494,16 @@ const EMOTIONS=[
 
 /* Good feelings. These are savored and written down rather than worked through. */
 const GOOD=[
+ /* Joy is relational here: the Brain Journey card defines the joy centre as
+    "glad-to-be-together joy", and Six Big Emotions defines despair as its loss. */
  {id:"joy",name:"Joy",short:"Joy",color:"#E8AC2A",
-  message:"Something good has happened and my heart is light.",
-  helps:"Joy is God's gift and His strength in us. It is not the absence of trouble but the presence of God in the middle of it.",
-  purpose:"Strengthen, lift, and remind us that God is near.",
-  savorPrompt:"What happened that brought you joy?",
-  practice:"Celebrate small blessings instead of rushing past them.",hymn:0,
-  verse:{q:"The joy of the Lord is your strength.",r:"Nehemiah 8:10"},
-  prayer:"Father, thank You for this joy. Help me hold it long enough to truly receive it, and let it strengthen me for whatever comes next. Amen."},
+  message:"Someone is glad to be with me, and I am glad to be with them.",
+  helps:"Joy is relational. It is glad-to-be-together joy: the delight of being with God, and with people who are glad to be with you. Processing life from a place of joy is what keeps you connected to God and others.",
+  purpose:"Connect, strengthen, and remind us that we belong.",
+  savorPrompt:"Who were you glad to be with, and what happened?",
+  practice:"Laugh and play with people you love.",hymn:0,
+  verse:{q:"The Lord your God is with you… He will take great delight in you and rejoice over you with singing.",r:"Zephaniah 3:17"},
+  prayer:"Father, thank You that You are glad to be with me. Thank You for the people who carry that gladness to me. Help me stay in this joy long enough for my heart to learn it, and to bring joy to others as You have to me. Amen."},
  {id:"gratitude",name:"Gratitude",short:"Gratitude",color:"#86A845",
   message:"I have been given something I did not earn.",
   helps:"Gratitude turns our attention from what is missing to what has been given. It is the quickest way back to noticing God's hand.",
@@ -534,7 +549,11 @@ const GOOD=[
 /* ========= STORAGE ========= */
 const LS=window.localStorage;
 function getSet(k){try{return new Set(JSON.parse(LS.getItem(k)||"[]"))}catch(e){return new Set()}}
-function saveSet(k,s){LS.setItem(k,JSON.stringify([...s]))}
+function saveSet(k,s){return lsWrite(k,JSON.stringify([...s]))}
+/* iOS private browsing throws on write, so a failed save must never pass silently. */
+function lsWrite(k,v){try{LS.setItem(k,v);return true}catch(e){storageBroken=true;return false}}
+let storageBroken=false;
+function storageOk(){try{LS.setItem('ag_t','1');LS.removeItem('ag_t');return true}catch(e){return false}}
 let favs=getSet("ag_favs");
 let devoDone=getSet("ag_devo_done");
 let devoSaved=getSet("ag_devo_saved");
@@ -630,11 +649,82 @@ const JOY={
 
 /* Journal entries live in this browser, newest first. */
 function joyLoad(){try{return JSON.parse(LS.getItem('ag_joy')||'[]')}catch(e){return[]}}
-function joySave(l){LS.setItem('ag_joy',JSON.stringify(l))}
-function joyAdd(text,source){const t=text.trim();if(!t)return;const l=joyLoad();const now=Date.now();
-  l.unshift({id:now,text:t,created:now,source:source||''});joySave(l);}
+function joySave(l){return lsWrite('ag_joy',JSON.stringify(l))}
+function joyAdd(text,source){const t=text.trim();if(!t)return false;const l=joyLoad();const now=Date.now();
+  l.unshift({id:now,text:t,created:now,source:source||''});return joySave(l);}
 function joyRemove(id){joySave(joyLoad().filter(e=>e.id!==id));}
 function joyDays(){return new Set(joyLoad().map(e=>new Date(e.created).toDateString())).size;}
+
+/* ========= BACKUP & RESTORE =========
+   Everything a person builds up lives in this browser only, so this moves it
+   to a new phone. Restoring MERGES: it never deletes what is already here. */
+const BACKUP_FORMAT=1;
+function backupBuild(){
+  return {
+    app:"Abundant Grace",format:BACKUP_FORMAT,
+    exported:Date.now(),
+    exportedLabel:new Date().toLocaleString(),
+    favorites:[...getSet('ag_favs')],
+    joyEntries:joyLoad(),
+    devotionals:{
+      lastDay:parseInt(LS.getItem('ag_devo_day')||'1'),
+      completed:[...getSet('ag_devo_done')],
+      saved:[...getSet('ag_devo_saved')]
+    }
+  };
+}
+function backupExport(){
+  const stamp=new Date().toISOString().slice(0,10);
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(backupBuild(),null,2)],{type:'application/json'}));
+  a.download='abundant-grace-backup-'+stamp+'.json';
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
+  backupNote('Backup saved. Keep the file somewhere safe, such as email or Drive.');
+}
+function backupNote(msg){const n=document.getElementById('bkpnote');if(n)n.textContent=msg;}
+function backupRestore(file){
+  const r=new FileReader();
+  r.onerror=()=>backupNote('That file could not be opened.');
+  r.onload=()=>{
+    let d;
+    try{d=JSON.parse(r.result)}catch(e){return backupNote('That does not look like an Abundant Grace backup.');}
+    if(!d||(!d.joyEntries&&!d.favorites))return backupNote('That does not look like an Abundant Grace backup.');
+    let favAdded=0,entAdded=0,devMerged=0;
+    if(Array.isArray(d.favorites)){
+      const cur=getSet('ag_favs');const before=cur.size;
+      d.favorites.forEach(x=>cur.add(x));
+      if(cur.size!==before){favAdded=cur.size-before;saveSet('ag_favs',cur);favs=cur;}
+    }
+    if(Array.isArray(d.joyEntries)){
+      const cur=joyLoad();const seen=new Set(cur.map(e=>e.id));const before=cur.length;
+      d.joyEntries.forEach(e=>{
+        if(!e||!e.id||!e.text||seen.has(e.id))return;
+        seen.add(e.id);cur.push({id:e.id,text:e.text,created:e.created||e.id,source:e.source||''});});
+      if(cur.length!==before){entAdded=cur.length-before;
+        joySave(cur.sort((a,b)=>b.created-a.created));}
+    }
+    if(d.devotionals){
+      [['completed','ag_devo_done'],['saved','ag_devo_saved']].forEach(([k,key])=>{
+        if(!Array.isArray(d.devotionals[k]))return;
+        const cur=getSet(key);const before=cur.size;
+        d.devotionals[k].forEach(x=>cur.add(String(x)));
+        if(cur.size!==before){devMerged+=cur.size-before;saveSet(key,cur);
+          if(key==='ag_devo_done')devoDone=cur;else devoSaved=cur;}
+      });
+      const inDay=parseInt(d.devotionals.lastDay||1);
+      if(inDay>parseInt(LS.getItem('ag_devo_day')||'1')){LS.setItem('ag_devo_day',inDay);devoDay=inDay;}
+    }
+    const parts=[];
+    if(entAdded)parts.push(entAdded+' journal '+(entAdded===1?'entry':'entries'));
+    if(favAdded)parts.push(favAdded+' '+(favAdded===1?'favourite':'favourites'));
+    if(devMerged)parts.push(devMerged+' devotional '+(devMerged===1?'day':'days'));
+    backupNote(parts.length?'Restored '+parts.join(', ')+'.'
+      :'Everything in that backup was already here. Nothing changed.');
+    if(parts.length)toast('Restored ✦');
+  };
+  r.readAsText(file);
+}
 
 /* Dictation, handed to the browser's own speech recognition where available. */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -742,7 +832,7 @@ function renderJoy(){
   const sub=list.length
     ? `${list.length} ${list.length===1?'moment':'moments'} · ${days} ${days===1?'day':'days'} of noticing`
     : 'Moments that remind you God is near.';
-  const entries=list.length? `<div class="joysecrow"><span class="joysec">LOOKING BACK</span><button class="joyexp" data-jexport>Export &rsaquo;</button></div>`+list.map(e=>`
+  const entries=list.length? `<div class="joysecrow"><span class="joysec">LOOKING BACK</span><button class="joyexp" data-jexport>Save as text &rsaquo;</button></div>`+list.map(e=>`
       <div class="joyentry"><div class="je-head"><span class="d">${joyDate(e.created)}</span><span class="t">${joyTime(e.created)}</span></div>
       ${e.source?`<span class="joysrc">${esc(e.source).toUpperCase()}</span>`:''}
       <p>${esc(e.text)}</p><button class="je-rm" data-jrm="${e.id}">Remove</button></div>`).join('')
@@ -981,7 +1071,17 @@ function renderAbout(){
    <div class="about"><svg width="96" height="96" viewBox="0 0 96 96"><rect x="4" y="4" width="88" height="88" rx="21" fill="#1e2a3f"/><path d="M56 22v52M40 38h32" stroke="#c9a856" stroke-width="9" stroke-linecap="round"/><path d="M40 74c-7 4-16 3-20-3 6-3 15-3 20 3z" fill="#7a8a4e"/></svg>
    <h3>ABUNDANT GRACE</h3><div class="tag">Be encouraged. Be strengthened. Be renewed.</div>
    <p>Abundant Grace shares Scripture-rooted post cards from The Abundant Life Ministry. Tap any card to open it and scroll for its deeper meaning, read a 365-day devotional, and use Abide in Him to be still with God.</p>
-   <p style="font-style:italic;color:var(--ink-soft);font-size:14px">Renewing minds. Transforming lives.</p></div>`;
+   <div class="bkpbox">
+     <h4>BACKUP &amp; RESTORE</h4>
+     <p>Your favourites, Joy Journal, and devotional progress live in this browser only. Save a backup file to keep them safe, then restore it on a new phone.</p>
+     <div class="bkprow">
+       <button class="bkpbtn" data-bkpsave>SAVE A BACKUP</button>
+       <label class="bkpbtn ghost" for="bkpfile">RESTORE</label>
+       <input type="file" id="bkpfile" accept="application/json,.json" hidden>
+     </div>
+     <div class="bkpnote" id="bkpnote">Restoring only adds what is missing. It never deletes what is already here.</div>
+   </div>
+   <p style="font-style:italic;color:var(--ink-soft);font-size:14px;text-align:center">Renewing minds. Transforming lives.</p></div>`;
   return v;
 }
 
@@ -1043,7 +1143,11 @@ screen.addEventListener('click',e=>{
   const sa=e.target.closest('[data-sagain]');if(sa){const sv=screen.querySelector('[data-view="savor"]');
     if(sv)openSavor(sv.querySelector('[data-fabide]').dataset.fabide,false);return;}
   if(e.target.closest('[data-jexport]')){joyExport();return;}
-  if(e.target.closest('#joyaddbtn')){const t=document.getElementById('joydraft');if(t&&t.value.trim()){if(joyListening){try{joyRec.stop()}catch(err){}}joyAdd(t.value);toast('Added to your Joy Journal ✦');show('joy');}return;}
+  if(e.target.closest('[data-bkpsave]')){backupExport();return;}
+  if(e.target.closest('#joyaddbtn')){const t=document.getElementById('joydraft');if(t&&t.value.trim()){if(joyListening){try{joyRec.stop()}catch(err){}}
+    if(joyAdd(t.value)){toast('Added to your Joy Journal ✦');show('joy');}
+    else toast('Your browser is blocking storage, so that could not be saved.');}return;}
+
   const jrm=e.target.closest('[data-jrm]');if(jrm){joyRemove(+jrm.dataset.jrm);show('joy');return;}
   if(e.target.closest('[data-fback]')){if(screen.querySelector('[data-view="savor"]'))closeSavor();else closeFeeling();return;}
   const ab=e.target.closest('[data-fabide]');
@@ -1066,6 +1170,20 @@ screen.addEventListener('click',e=>{
   if(e.target.closest('#qtReset')){resetQt();return;}
   if(e.target.closest('#qtAmb')){qt.ambient=!qt.ambient;document.getElementById('qtAmb').classList.toggle('on',qt.ambient);if(qt.ambient&&qt.running)playHymn();else stopHymn();return;}
   const hy=e.target.closest('[data-hymn]');if(hy){qt.hymn=+hy.dataset.hymn;document.querySelectorAll('#hymnrow .hymn').forEach(b=>b.classList.toggle('active',+b.dataset.hymn===qt.hymn));if(!qt.ambient){qt.ambient=true;document.getElementById('qtAmb').classList.add('on');}if(qt.running&&qt.ambient)playHymn();return;}
+});
+/* A mouse wheel only scrolls vertically, which leaves horizontal rows
+   unreachable on a computer. Translate the wheel for those rows. */
+screen.addEventListener('wheel',e=>{
+  const row=e.target.closest('.chips,.hymnrow,.alsorow');
+  if(!row||row.scrollWidth<=row.clientWidth)return;
+  if(Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;
+  const before=row.scrollLeft;
+  row.scrollLeft+=e.deltaY;
+  if(row.scrollLeft!==before)e.preventDefault();
+},{passive:false});
+screen.addEventListener('change',e=>{
+  if(e.target.id==='bkpfile'&&e.target.files&&e.target.files[0]){
+    backupRestore(e.target.files[0]);e.target.value='';}
 });
 screen.addEventListener('input',e=>{
   if(e.target.id==='qtSlider'){if(qt.running)resetQt();setMin(+e.target.value);}
