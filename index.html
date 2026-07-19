@@ -217,6 +217,34 @@
   .reflcard p{margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--ink);white-space:pre-wrap;
     display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
   .rc-go{margin-top:9px;font-size:12px;color:var(--gold)}
+  .voicenotice{position:absolute;inset:0;z-index:80;display:none;align-items:center;justify-content:center;
+    background:rgba(18,20,28,.55);padding:24px}
+  .voicenotice.show{display:flex}
+  .vn-card{background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:22px;max-width:320px}
+  .vn-mark{text-align:center;color:var(--gold);font-size:20px}
+  .vn-card h3{margin:8px 0 0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:20px;color:var(--navy)}
+  .vn-card p{margin:12px 0 0;font-size:15px;line-height:1.6;color:var(--ink)}
+  .vn-check{display:flex;align-items:center;gap:10px;margin-top:16px;cursor:pointer}
+  .vn-check input{width:18px;height:18px;accent-color:var(--gold)}
+  .vn-check span{font-size:14px;color:var(--ink-soft)}
+  .vn-primary,.vn-ghost{display:block;width:100%;margin-top:12px;padding:14px;border-radius:12px;
+    font-family:inherit;font-size:13px;letter-spacing:1.4px;font-weight:600;cursor:pointer}
+  .vn-primary{border:none;background:var(--gold);color:#fff}
+  .vn-ghost{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+  .readbar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--gold);color:#fff;font-size:13px}
+  .readbar svg{width:16px;height:16px}
+  .readbar span{flex:1;letter-spacing:1px}
+  .readbar button{border:none;background:transparent;color:#fff;font-family:inherit;font-size:12px;
+    letter-spacing:1.2px;font-weight:600;cursor:pointer;padding:4px 8px}
+  .voicerow{display:flex;align-items:center;gap:8px;margin-top:10px;padding:10px 12px;
+    border:1px solid var(--line);border-radius:12px}
+  .voicerow.on{background:var(--paper);border-color:var(--gold)}
+  .vr-pick{flex:1;border:none;background:transparent;text-align:left;cursor:pointer;font-family:inherit;padding:0}
+  .vr-pick b{display:block;font-size:15px;font-weight:600;color:var(--navy)}
+  .vr-pick em{display:block;font-size:12px;font-style:normal;color:var(--ink-soft);margin-top:2px}
+  .vr-hear{border:none;background:transparent;color:var(--gold);font-family:inherit;font-size:13px;cursor:pointer;padding:4px 8px}
+  .vr-tick{color:var(--gold);font-size:17px;font-weight:700}
   .themerow{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:12px;cursor:pointer;
     background:transparent;border:1px solid var(--line);border-radius:12px;font-family:inherit;text-align:left}
   .themerow.on{background:var(--paper);border-color:var(--gold)}
@@ -444,7 +472,18 @@
     <button class="navitem" data-tab="favorites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg><span>Saved</span></button>
     <button class="navitem" data-tab="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Settings</span></button>
   </nav>
-  <div class="zoomov" id="zoomov"><img id="zoomimg" src="" alt=""><button class="close" id="zoomclose">✕</button><div class="hint">Pinch, scroll, or double-tap to zoom</div></div>
+  <div class="voicenotice" id="voicenotice">
+  <div class="vn-card">
+    <div class="vn-mark">&#10022;</div>
+    <h3>About the reading voice</h3>
+    <p>The voice comes from your device, not from Abundant Grace, so how good it sounds depends on which voices you have installed.</p>
+    <p>If it sounds flat or robotic, a better voice can often be chosen or downloaded free in your device's settings. You can pick a different voice, and hear it first, under Settings &rsaquo; Reading voice.</p>
+    <label class="vn-check"><input type="checkbox" id="vnAgain"><span>Don't show this again</span></label>
+    <button class="vn-primary" data-vnlisten>LISTEN NOW</button>
+    <button class="vn-ghost" data-vnsettings>CHOOSE A VOICE</button>
+  </div>
+</div>
+<div class="zoomov" id="zoomov"><img id="zoomimg" src="" alt=""><button class="close" id="zoomclose">✕</button><div class="hint">Pinch, scroll, or double-tap to zoom</div></div>
   <div class="toast" id="toast"></div>
 </div>
 <script>
@@ -771,6 +810,73 @@ function joyAdd(text,source){const t=text.trim();if(!t)return false;const l=joyL
   l.unshift({id:now,text:t,created:now,source:source||''});return joySave(l);}
 function joyRemove(id){joySave(joyLoad().filter(e=>e.id!==id));}
 function joyDays(){return new Set(joyLoad().map(e=>new Date(e.created).toDateString())).size;}
+
+/* ========= READ ALOUD =========
+   Uses the browser's own speech voices. The app ships none and cannot install
+   any; Settings can only offer what this device already has. */
+const SS=window.speechSynthesis;
+let narr={on:false,voices:[],voice:null,queue:[]};
+function narrSupported(){return !!SS;}
+function narrLoadVoices(){
+  if(!SS)return [];
+  const want=(navigator.language||'en').slice(0,2);
+  narr.voices=SS.getVoices().filter(v=>v.lang.slice(0,2)===want||v.lang.slice(0,2)==='en');
+  return narr.voices;
+}
+/* Browsers do not expose gender, so this is a best guess from the voice name,
+   which is why Settings lets the person hear one before choosing. */
+function narrLooksMale(v){
+  const n=(v.name||'').toLowerCase();
+  if(n.includes('female'))return false;
+  if(n.includes('male'))return true;
+  return /\b(daniel|alex|fred|tom|george|james|arthur|oliver|rishi|aaron|albert|bruce|junior|ralph|gordon|lee)\b/.test(n);
+}
+function narrVoiceId(){return LS.getItem('ag_voice')||'';}
+function narrPick(){
+  const list=narr.voices.length?narr.voices:narrLoadVoices();
+  const saved=narrVoiceId();
+  return list.find(v=>v.voiceURI===saved)||list.find(narrLooksMale)||list[0]||null;
+}
+function narrSpeak(parts){
+  if(!SS){toast('This browser cannot read aloud');return;}
+  narrStop();
+  const v=narrPick();
+  narr.queue=parts.map(t=>t.trim()).filter(Boolean);
+  narr.on=true;
+  narr.queue.forEach((t,i)=>{
+    const u=new SpeechSynthesisUtterance(t);
+    if(v)u.voice=v;
+    u.rate=0.94;u.pitch=1;
+    if(i===narr.queue.length-1)u.onend=()=>{narr.on=false;refreshDaily();};
+    SS.speak(u);
+  });
+  refreshDaily();
+}
+function narrStop(){if(SS)SS.cancel();narr.on=false;}
+function narrRead(d){narrSpeak([d.title+'.',d.verse_text+' '+d.verse_reference+'.',d.reflection,
+  "Today's application. "+d.application,'Let us pray. '+d.prayer]);}
+function narrPreview(uri){
+  if(!SS)return;
+  SS.cancel();
+  const v=(narr.voices.length?narr.voices:narrLoadVoices()).find(x=>x.voiceURI===uri);
+  const u=new SpeechSynthesisUtterance('The Lord bless you and keep you.');
+  if(v)u.voice=v; u.rate=0.94;
+  SS.speak(u);
+}
+function refreshDaily(){if(state.tab==='daily')show('daily');}
+function narrNoticeDone(){return LS.getItem('ag_voice_notice')==='1';}
+function narrDismissNotice(){lsWrite('ag_voice_notice','1');}
+/* Explained on the first listen rather than at launch, so it arrives when it is
+   useful instead of as a caveat before anyone has heard anything. */
+function narrNotice(){
+  const w=document.getElementById('voicenotice');
+  if(w)w.classList.add('show');
+}
+function narrNoticeClose(){
+  const w=document.getElementById('voicenotice');
+  if(w)w.classList.remove('show');
+}
+if(SS){narrLoadVoices();SS.onvoiceschanged=()=>narrLoadVoices();}
 
 /* ========= GUIDED PRAYER SESSION =========
    The CLEAR card as the map, the Father God prayer as the words.
@@ -1425,6 +1531,8 @@ function renderDaily(){
      <button class="iconbtn" data-dsave style="color:#eef1f6">${saved?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>'}</button>
      <button class="iconbtn" data-dshare style="color:#eef1f6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8 11l8-4M8 13l8 4"/></svg></button>
    </div>
+   ${narr.on?`<div class="readbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 8a5 5 0 0 1 0 8"/></svg>
+     <span>Reading aloud</span><button data-dstop>STOP</button></div>`:''}
    <div class="daily-scroll">
      ${progressCard(total)}
      <div class="devo-cat">DAY ${d.day} · ${d.theme.toUpperCase()}</div>
@@ -1501,6 +1609,21 @@ function renderAbout(){
   v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>SETTINGS</h1></div></div>
    <div class="about">
    <div class="bkpbox" style="text-align:left">
+     <h4>READING VOICE</h4>
+     <p>Used when a devotional is read aloud. Voices come from your device, not from this app — Abundant Grace can only offer what is already installed.</p>
+     ${(()=>{const l=narrLoadVoices();
+        if(!narrSupported())return '<p style="font-style:italic">This browser cannot read aloud.</p>';
+        if(!l.length)return '<p style="font-style:italic">No voices found on this device yet.</p>';
+        return l.slice(0,6).map(v=>`<div class="voicerow ${v.voiceURI===narrVoiceId()?'on':''}">
+          <button class="vr-pick" data-vpick="${esc(v.voiceURI)}">
+            <b>${narrLooksMale(v)?'Male voice':'Voice'}</b><em>${esc(v.name)} · ${esc(v.lang)}</em></button>
+          <button class="vr-hear" data-vhear="${esc(v.voiceURI)}">Hear it</button>
+          ${v.voiceURI===narrVoiceId()?'<span class="vr-tick">&#10003;</span>':''}
+        </div>`).join('')+
+        '<p style="font-style:italic;font-size:12px">Male and female are a best guess: browsers do not label voices, so listen before choosing.</p>';
+      })()}
+   </div>
+   <div class="bkpbox" style="text-align:left">
      <h4>APPEARANCE</h4>
      <p style="font-style:italic;font-size:13px">The same app in a different hue. Nothing else changes.</p>
      ${THEMES.map(t=>`<button class="themerow ${t.id===themeId()?'on':''}" data-theme="${t.id}">
@@ -1529,6 +1652,7 @@ function renderAbout(){
 function el(cls,view){const d=document.createElement('div');d.className=cls;d.dataset.view=view;return d;}
 function show(tab){
   if(state.tab==='quiet'&&tab!=='quiet')stopHymn();
+  if(state.tab==='daily'&&tab!=='daily')narrStop();
   state.tab=tab;screen.innerHTML='';
   let v;
   if(tab==='home')v=renderHome();
@@ -1564,6 +1688,19 @@ zoomov.addEventListener('touchmove',e=>{if(e.touches.length===2){e.preventDefaul
 zoomov.addEventListener('touchend',()=>{zpd=0;if(zs===1){zx=0;zy=0;applyZoom();}});
 
 /* ========= EVENTS ========= */
+document.getElementById('voicenotice').addEventListener('click',e=>{
+  const again=document.getElementById('vnAgain');
+  if(e.target.closest('[data-vnlisten]')){
+    if(again&&again.checked)narrDismissNotice();
+    narrNoticeClose();
+    const d=devos&&devos.find(x=>x.day===devoDay);
+    if(d)narrRead(d);
+    return;}
+  if(e.target.closest('[data-vnsettings]')){
+    if(again&&again.checked)narrDismissNotice();
+    narrNoticeClose();show('about');return;}
+  if(e.target.id==='voicenotice')narrNoticeClose();
+});
 document.getElementById('bottomnav').addEventListener('click',e=>{const b=e.target.closest('.navitem');if(b)show(b.dataset.tab);});
 screen.addEventListener('click',e=>{
   const fav=e.target.closest('[data-fav]');if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);return;}
@@ -1632,13 +1769,25 @@ screen.addEventListener('click',e=>{
 show('home');return;}
   const card=e.target.closest('[data-card]');if(card){openDetail(card.dataset.card);return;}
   // daily
-  if(e.target.closest('[data-dprev]')){if(devoDay>1){devoDay--;LS.setItem('ag_devo_day',devoDay);show('daily');}return;}
-  if(e.target.closest('[data-dnext]')){if(devos&&devoDay<devos.length){devoDay++;LS.setItem('ag_devo_day',devoDay);show('daily');}return;}
+  if(e.target.closest('[data-dprev]')){narrStop();if(devoDay>1){devoDay--;LS.setItem('ag_devo_day',devoDay);show('daily');}return;}
+  if(e.target.closest('[data-dnext]')){narrStop();if(devos&&devoDay<devos.length){devoDay++;LS.setItem('ag_devo_day',devoDay);show('daily');}return;}
   if(e.target.closest('[data-dcomplete]')){const k=String(devoDay);
     if(devoDone.has(k))devoDone.delete(k);else{devoDone.add(k);streakMarkToday();}
     saveSet('ag_devo_done',devoDone);show('daily');return;}
   if(e.target.closest('[data-dsave]')){const k=String(devoDay);if(devoSaved.has(k)){devoSaved.delete(k);toast('Removed');}else{devoSaved.add(k);toast('Saved ♥');}saveSet('ag_devo_saved',devoSaved);show('daily');return;}
   if(e.target.closest('[data-dshare]')){shareDevo();return;}
+  if(e.target.closest('[data-dlisten]')){
+    const d=devos&&devos.find(x=>x.day===devoDay);
+    if(!d)return;
+    if(narr.on){narrStop();refreshDaily();}
+    else if(!narrNoticeDone())narrNotice();
+    else narrRead(d);
+    return;}
+  if(e.target.closest('[data-dstop]')){narrStop();refreshDaily();return;}
+  const vp=e.target.closest('[data-vpick]');
+  if(vp){lsWrite('ag_voice',vp.dataset.vpick);show('about');return;}
+  const vh=e.target.closest('[data-vhear]');
+  if(vh){narrPreview(vh.dataset.vhear);return;}
   // quiet
   const pre=e.target.closest('[data-min]');if(pre){if(qt.running)resetQt();setMin(+pre.dataset.min);return;}
   if(e.target.closest('#qtStart')){startQt();return;}
