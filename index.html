@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#1e2a3f">
-<title>Abundant Grace</title>
+<title>Life Abundantly</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Dancing+Script:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -476,7 +476,7 @@
   <div class="vn-card">
     <div class="vn-mark">&#10022;</div>
     <h3>About the reading voice</h3>
-    <p>The voice comes from your device, not from Abundant Grace, so how good it sounds depends on which voices you have installed.</p>
+    <p>The voice comes from your device, not from Life Abundantly, so how good it sounds depends on which voices you have installed.</p>
     <p>If it sounds flat or robotic, a better voice can often be chosen or downloaded free in your device's settings. You can pick a different voice, and hear it first, under Settings &rsaquo; Reading voice.</p>
     <label class="vn-check"><input type="checkbox" id="vnAgain"><span>Don't show this again</span></label>
     <button class="vn-primary" data-vnlisten>LISTEN NOW</button>
@@ -740,7 +740,7 @@ function heart(f){return f?'<svg viewBox="0 0 24 24" fill="currentColor"><path d
 function renderHome(){
   const list=cards.filter(c=>state.filter==="All"||c.cat===state.filter);
   const v=el('view active','home');
-  v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>ABUNDANT GRACE</h1></div></div>
+  v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>LIFE ABUNDANTLY</h1></div></div>
   <div class="scroll"><div class="lead-line">Tap a post card, then scroll to discover its deeper meaning.</div>
   <div class="feelstrip">
     <h4>How are you feeling?</h4>
@@ -1028,7 +1028,7 @@ function shareCanvas(verse,reference,eyebrow,title){
     let px=cx-w/2;
     for(const ch of txt){x.fillText(ch,px,y);px+=x.measureText(ch).width+sp;}
   };
-  track('ABUNDANT GRACE','600 34px '+serif,NAVY,268,7.5);
+  track('LIFE ABUNDANTLY','600 34px '+serif,NAVY,268,7.5);
   if(eyebrow)track(eyebrow.toUpperCase(),'400 26px '+serif,GOLD,318,4.7);
   // verse block, centred as a whole
   const TOP=380,BOT=1130,textw=W-260;
@@ -1069,12 +1069,12 @@ function shareImage(verse,reference,eyebrow,title,caption){
     const cv=shareCanvas(verse,reference,eyebrow,title);
     cv.toBlob(b=>{
       if(!b)return toast('Could not create the image');
-      const file=new File([b],'abundant-grace.png',{type:'image/png'});
+      const file=new File([b],'life-abundantly.png',{type:'image/png'});
       if(navigator.canShare&&navigator.canShare({files:[file]})){
         navigator.share({files:[file],text:caption||''}).catch(()=>{});
       }else{
         const a=document.createElement('a');
-        a.href=URL.createObjectURL(b);a.download='abundant-grace.png';
+        a.href=URL.createObjectURL(b);a.download='life-abundantly.png';
         document.body.appendChild(a);a.click();
         setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
         toast('Image saved');
@@ -1091,7 +1091,7 @@ function shareImage(verse,reference,eyebrow,title,caption){
 const BACKUP_FORMAT=1;
 function backupBuild(){
   return {
-    app:"Abundant Grace",format:BACKUP_FORMAT,
+    app:"Life Abundantly",format:BACKUP_FORMAT,
     exported:Date.now(),
     exportedLabel:new Date().toLocaleString(),
     favorites:[...getSet('ag_favs')],
@@ -1110,7 +1110,7 @@ function backupExport(){
   const stamp=new Date().toISOString().slice(0,10);
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(backupBuild(),null,2)],{type:'application/json'}));
-  a.download='abundant-grace-backup-'+stamp+'.json';
+  a.download='life-abundantly-backup-'+stamp+'.json';
   document.body.appendChild(a);a.click();
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
   backupNote('Backup saved. Keep the file somewhere safe, such as email or Drive.');
@@ -1121,8 +1121,8 @@ function backupRestore(file){
   r.onerror=()=>backupNote('That file could not be opened.');
   r.onload=()=>{
     let d;
-    try{d=JSON.parse(r.result)}catch(e){return backupNote('That does not look like an Abundant Grace backup.');}
-    if(!d||(!d.joyEntries&&!d.favorites))return backupNote('That does not look like an Abundant Grace backup.');
+    try{d=JSON.parse(r.result)}catch(e){return backupNote('That does not look like a Life Abundantly backup.');}
+    if(!d||(!d.joyEntries&&!d.favorites))return backupNote('That does not look like a Life Abundantly backup.');
     let favAdded=0,entAdded=0,devMerged=0,reflAdded=0;
     if(Array.isArray(d.favorites)){
       const cur=getSet('ag_favs');const before=cur.size;
@@ -1235,7 +1235,7 @@ function joyExport(){
   const list=joyLoad();
   if(!list.length){toast('Write something first');return;}
   const days=joyDays();
-  let out='MY JOY JOURNAL\nAbundant Grace · The Abundant Life Ministry\n';
+  let out='MY JOY JOURNAL\nLife Abundantly · The Abundant Life Ministry\n';
   out+='Exported '+new Date().toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'})+'\n\n';
   out+='"'+JOY.verse.q+'"  — '+JOY.verse.r+'\n\n';
   out+='------------------------------------------\n\n';
@@ -1626,7 +1626,7 @@ function renderAbout(){
    <div class="about">
    <div class="bkpbox" style="text-align:left">
      <h4>READING VOICE</h4>
-     <p>Used when a devotional is read aloud. Voices come from your device, not from this app — Abundant Grace can only offer what is already installed.</p>
+     <p>Used when a devotional is read aloud. Voices come from your device, not from this app — Life Abundantly can only offer what is already installed.</p>
      ${(()=>{const l=narrLoadVoices();
         if(!narrSupported())return '<p style="font-style:italic">This browser cannot read aloud.</p>';
         if(!l.length)return '<p style="font-style:italic">No voices found on this device yet.</p>';
@@ -1649,7 +1649,7 @@ function renderAbout(){
       </button>`).join('')}
    </div><svg width="96" height="96" viewBox="0 0 96 96"><rect x="4" y="4" width="88" height="88" rx="21" fill="#1e2a3f"/><path d="M56 22v52M40 38h32" stroke="#c9a856" stroke-width="9" stroke-linecap="round"/><path d="M40 74c-7 4-16 3-20-3 6-3 15-3 20 3z" fill="#7a8a4e"/></svg>
    <h3>ABUNDANT GRACE</h3><div class="tag">Be encouraged. Be strengthened. Be renewed.</div>
-   <p>Abundant Grace shares Scripture-rooted post cards from The Abundant Life Ministry. Tap any card to open it and scroll for its deeper meaning, read a 365-day devotional, and use Abide in Him to be still with God.</p>
+   <p>Life Abundantly shares Scripture-rooted post cards from The Abundant Life Ministry. Tap any card to open it and scroll for its deeper meaning, read a 365-day devotional, and use Abide in Him to be still with God.</p>
    <div class="bkpbox">
      <h4>BACKUP &amp; RESTORE</h4>
      <p>Your favourites, Joy Journal, and devotional progress live in this browser only. Save a backup file to keep them safe, then restore it on a new phone.</p>
@@ -1778,7 +1778,7 @@ screen.addEventListener('click',e=>{
   const csh=e.target.closest('[data-cshare]');
   if(csh){e.stopPropagation();const c=cards.find(x=>x.id===csh.dataset.cshare);
     if(c)shareImage(c.key.q,c.key.r,c.cat,c.title,
-      `“${c.key.q}” — ${c.key.r}\n\n${c.title}: ${c.subtitle}\n— from Abundant Grace`);
+      `“${c.key.q}” — ${c.key.r}\n\n${c.title}: ${c.subtitle}\n— from Life Abundantly`);
     return;}
   const zoom=e.target.closest('[data-zoom]');if(zoom){openZoom(zoom.dataset.zoom);return;}
   const chip=e.target.closest('[data-cat]');if(chip){state.filter=chip.dataset.cat;themeApply(themeId());
@@ -1838,7 +1838,7 @@ function toggleFav(id){if(favs.has(id)){favs.delete(id);toast('Removed from favo
   if(d){d.querySelectorAll('[data-fav="'+id+'"]').forEach(b=>b.innerHTML=heart(favs.has(id)));const c=screen.querySelector('.view:not([data-view="detail"]) [data-card="'+id+'"]');if(c)c.classList.toggle('faved',favs.has(id));}
   else show(state.tab);}
 function shareDevo(){const d=devos.find(x=>x.day===devoDay);if(!d)return;
-  const caption=`“${d.verse_text}” — ${d.verse_reference}\n\nDay ${d.day}: ${d.title}\n— from Abundant Grace`;
+  const caption=`“${d.verse_text}” — ${d.verse_reference}\n\nDay ${d.day}: ${d.title}\n— from Life Abundantly`;
   shareImage(d.verse_text,d.verse_reference,'Day '+d.day,d.title,caption);}
 
 themeApply(themeId());
