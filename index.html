@@ -217,6 +217,19 @@
   .reflcard p{margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--ink);white-space:pre-wrap;
     display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
   .rc-go{margin-top:9px;font-size:12px;color:var(--gold)}
+  .logo-cross.secret{cursor:pointer}
+  .quoteov{position:absolute;inset:0;z-index:85;display:none;align-items:center;justify-content:center;
+    background:rgba(18,20,28,.55);padding:26px}
+  .quoteov.show{display:flex}
+  .q-card{background:var(--cream);border:1px solid var(--gold-soft);border-radius:20px;
+    padding:30px 26px;max-width:320px;text-align:center}
+  .q-cross{color:var(--gold);font-size:26px}
+  .q-invite{margin-top:12px;color:var(--gold);font-style:italic;font-size:15px;letter-spacing:1px}
+  .q-rule{width:56px;height:1px;background:var(--gold-soft);margin:16px auto 0}
+  .q-text{margin:18px 0 0;color:var(--navy);font-size:21px;line-height:1.55;font-style:italic}
+  .q-another,.q-close{display:block;margin:0 auto;border:none;background:transparent;font-family:inherit;cursor:pointer}
+  .q-another{margin-top:24px;color:var(--gold);font-size:14px;padding:7px 14px}
+  .q-close{margin-top:4px;color:var(--ink-soft);font-size:13px;padding:7px 14px}
   .voicenotice{position:absolute;inset:0;z-index:80;display:none;align-items:center;justify-content:center;
     background:rgba(18,20,28,.55);padding:24px}
   .voicenotice.show{display:flex}
@@ -472,7 +485,17 @@
     <button class="navitem" data-tab="favorites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg><span>Saved</span></button>
     <button class="navitem" data-tab="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Settings</span></button>
   </nav>
-  <div class="voicenotice" id="voicenotice">
+  <div class="quoteov" id="quoteov">
+  <div class="q-card">
+    <div class="q-cross">&#10013;</div>
+    <div class="q-invite">Seek and you will find me</div>
+    <div class="q-rule"></div>
+    <p class="q-text" id="quotetext"></p>
+    <button class="q-another" data-qanother>Another</button>
+    <button class="q-close" data-qclose>Close</button>
+  </div>
+</div>
+<div class="voicenotice" id="voicenotice">
   <div class="vn-card">
     <div class="vn-mark">&#10022;</div>
     <h3>About the reading voice</h3>
@@ -733,14 +756,14 @@ function themeApply(id){
 const screen=document.getElementById('screen');
 const toastEl=document.getElementById('toast');
 function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastEl._t);toastEl._t=setTimeout(()=>toastEl.classList.remove('show'),1900);}
-function cross(c){c=c||'#1e2a3f';return `<svg class="logo-cross" viewBox="0 0 24 30" fill="none"><path d="M12 2v26M6 9h12" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/><path d="M9 24c-2 1-5 1-6-1 2-1 5-1 6 1z" fill="#7a8a4e"/></svg>`;}
+function cross(c,secret){c=c||'#1e2a3f';return `<svg class="logo-cross${secret?' secret':''}"${secret?' data-secret':''} viewBox="0 0 24 30" fill="none"><path d="M12 2v26M6 9h12" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/><path d="M9 24c-2 1-5 1-6-1 2-1 5-1 6 1z" fill="#7a8a4e"/></svg>`;}
 function heart(f){return f?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.6-9.3-9C1 7.5 3 4.5 6.2 4.5c2 0 3.2 1.2 3.8 2.3.6-1.1 1.8-2.3 3.8-2.3C17 4.5 19 7.5 21.3 11 19 15.4 12 20 12 20z"/></svg>';}
 
 /* ========= HOME (post cards) ========= */
 function renderHome(){
   const list=cards.filter(c=>state.filter==="All"||c.cat===state.filter);
   const v=el('view active','home');
-  v.innerHTML=`<div class="appbar"><div class="brand">${cross()}<h1>LIFE ABUNDANTLY</h1></div></div>
+  v.innerHTML=`<div class="appbar"><div class="brand">${cross(null,true)}<h1>LIFE ABUNDANTLY</h1></div></div>
   <div class="scroll"><div class="lead-line">Tap a post card, then scroll to discover its deeper meaning.</div>
   <div class="feelstrip">
     <h4>How are you feeling?</h4>
@@ -826,6 +849,126 @@ function joyAdd(text,source){const t=text.trim();if(!t)return false;const l=joyL
   l.unshift({id:now,text:t,created:now,source:source||''});return joySave(l);}
 function joyRemove(id){joySave(joyLoad().filter(e=>e.id!==id));}
 function joyDays(){return new Set(joyLoad().map(e=>new Date(e.created).toDateString())).size;}
+
+/* ========= THE CROSS EASTER EGG =========
+   Tap the cross beside the wordmark. Nothing announces it, which is the point. */
+const QUOTE_INVITATION="Seek and you will find me";
+const QUOTES=[
+ "God is never late; He is always preparing.",
+ "Faith grows strongest in unseen seasons.",
+ "Grace reaches where perfection never can.",
+ "God's plans are greater than your fears.",
+ "Prayer changes us before it changes circumstances.",
+ "Hope begins where worry ends.",
+ "Walk by faith, not by headlines.",
+ "Peace is found in God's presence.",
+ "Trust God with what you cannot control.",
+ "Every sunrise is another reminder of God's mercy.",
+ "God specializes in impossible stories.",
+ "The strongest foundation is built on Christ.",
+ "God's love never runs out.",
+ "A thankful heart sees God's fingerprints everywhere.",
+ "Faith is courage that trusts God's promises.",
+ "Your value was settled at the cross.",
+ "God's strength shines brightest through weakness.",
+ "Love others as Christ first loved you.",
+ "God can redeem every broken chapter.",
+ "Joy is rooted deeper than circumstances.",
+ "Christ calms storms before He removes them.",
+ "Let God's truth speak louder than your fears.",
+ "Nothing surprises the God who knows tomorrow.",
+ "God's peace is stronger than today's anxiety.",
+ "Every trial carries an opportunity to trust.",
+ "Forgiveness sets both hearts free.",
+ "The cross proves love always has the final word.",
+ "Keep your eyes on Jesus, not the waves.",
+ "God's grace is enough for today.",
+ "Faith doesn't eliminate questions; it anchors answers.",
+ "Every prayer is heard by Heaven.",
+ "God sees every unseen act of kindness.",
+ "Humility makes room for God's greatness.",
+ "You are never forgotten by God.",
+ "The Shepherd never loses His sheep.",
+ "God's promises outlast every problem.",
+ "Faith is choosing trust over certainty.",
+ "Rest is found in surrender.",
+ "Christ is the light that darkness cannot overcome.",
+ "Obedience often opens unexpected doors.",
+ "Mercy triumphs over judgment.",
+ "God's timing is worth the wait.",
+ "Let faith be louder than fear.",
+ "Every blessing begins with God's goodness.",
+ "God's love writes better endings.",
+ "Your purpose is greater than your past.",
+ "Prayer is the language of hope.",
+ "Heaven celebrates every repentant heart.",
+ "Jesus meets us exactly where we are.",
+ "Grace always invites another beginning.",
+ "God's faithfulness never expires.",
+ "Peace grows where trust is planted.",
+ "Faith sees beyond today's struggle.",
+ "God works even in silent seasons.",
+ "Love reflects the heart of Christ.",
+ "Nothing is wasted in God's hands.",
+ "Your story isn't over while God is writing.",
+ "Christ is enough for every need.",
+ "Choose kindness because Christ chose you.",
+ "God's mercy is new every morning.",
+ "Faith turns obstacles into opportunities.",
+ "Hope survives because Christ lives.",
+ "God can restore what life has broken.",
+ "A praying heart is never powerless.",
+ "Trust opens the door to peace.",
+ "Jesus is the anchor in every storm.",
+ "God's wisdom outlasts human understanding.",
+ "The smallest faith can move the biggest mountain.",
+ "Every heartbeat is a gift from God.",
+ "The Lord strengthens weary souls.",
+ "God's love never depends on your performance.",
+ "Let your life point others to Christ.",
+ "Every season has purpose in God's plan.",
+ "Faith is stronger than fear's loudest voice.",
+ "God's grace meets you every day.",
+ "Christ offers peace the world cannot give.",
+ "God's light always finds the darkest places.",
+ "Blessed are those who keep trusting.",
+ "Prayer opens doors worry never could.",
+ "Jesus is still changing lives today.",
+ "God's presence is the greatest blessing.",
+ "Faith keeps moving when feelings stand still.",
+ "Every burden becomes lighter with Christ.",
+ "God's promises never return empty.",
+ "The greatest victory began with an empty tomb.",
+ "Grace is God's love in action.",
+ "God never abandons His children.",
+ "Trust today; God already holds tomorrow.",
+ "Christ turns ordinary lives into extraordinary testimonies.",
+ "God's peace guards every believing heart.",
+ "Love is strongest when it looks like Jesus.",
+ "God is writing beauty into your journey.",
+ "Faith begins where fear surrenders.",
+ "The Bible is God's compass for every season.",
+ "Christ's love reaches farther than your failures.",
+ "Hope shines brightest in the darkest night.",
+ "God's kingdom grows through faithful hearts.",
+ "Every act of love echoes eternity.",
+ "Jesus is the answer that never changes.",
+ "Walk with God today, and you'll never walk alone."
+];
+let lastQuote=-1;
+function randomQuote(){
+  if(QUOTES.length<2)return QUOTES[0]||'';
+  let i=Math.floor(Math.random()*QUOTES.length);
+  while(i===lastQuote)i=Math.floor(Math.random()*QUOTES.length);
+  lastQuote=i;return QUOTES[i];
+}
+function showQuote(){
+  const w=document.getElementById('quoteov');
+  const q=document.getElementById('quotetext');
+  if(q)q.textContent=randomQuote();
+  if(w)w.classList.add('show');
+}
+function hideQuote(){const w=document.getElementById('quoteov');if(w)w.classList.remove('show');}
 
 /* ========= READ ALOUD =========
    Uses the browser's own speech voices. The app ships none and cannot install
@@ -1704,6 +1847,10 @@ zoomov.addEventListener('touchmove',e=>{if(e.touches.length===2){e.preventDefaul
 zoomov.addEventListener('touchend',()=>{zpd=0;if(zs===1){zx=0;zy=0;applyZoom();}});
 
 /* ========= EVENTS ========= */
+document.getElementById('quoteov').addEventListener('click',e=>{
+  if(e.target.closest('[data-qanother]')){const q=document.getElementById('quotetext');if(q)q.textContent=randomQuote();return;}
+  if(e.target.closest('[data-qclose]')||e.target.id==='quoteov')hideQuote();
+});
 document.getElementById('voicenotice').addEventListener('click',e=>{
   const again=document.getElementById('vnAgain');
   if(e.target.closest('[data-vnlisten]')){
@@ -1721,6 +1868,7 @@ document.getElementById('bottomnav').addEventListener('click',e=>{const b=e.targ
 screen.addEventListener('click',e=>{
   const fav=e.target.closest('[data-fav]');if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);return;}
   const back=e.target.closest('[data-back]');if(back){closeDetail();return;}
+  if(e.target.closest('[data-secret]')){showQuote();return;}
   const feel=e.target.closest('[data-feel]');if(feel){openFeeling(feel.dataset.feel);return;}
   if(e.target.closest('[data-propen]')){openPrayer();return;}
   if(e.target.closest('[data-prclose]')){closePrayer();return;}
