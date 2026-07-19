@@ -1687,8 +1687,11 @@ function renderDaily(){
   const done=devoDone.has(String(d.day)), saved=devoSaved.has(String(d.day));
   v.innerHTML=`
    <div class="daily-head"><div class="info"><div class="lbl">DAILY DEVOTIONAL</div><div class="sub">Day ${d.day} of ${total} · ${devoDone.size} completed</div></div>
-     <button class="iconbtn" data-dsave style="color:#eef1f6">${saved?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>'}</button>
-     <button class="iconbtn" data-dshare style="color:#eef1f6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8 11l8-4M8 13l8 4"/></svg></button>
+     <button class="iconbtn" data-dsave style="color:var(--on-dark)">${saved?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>'}</button>
+     <button class="iconbtn" data-dlisten style="color:var(--on-dark)">${narr.on
+       ?'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>'
+       :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 8a5 5 0 0 1 0 8"/></svg>'}</button>
+     <button class="iconbtn" data-dshare style="color:var(--on-dark)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8 11l8-4M8 13l8 4"/></svg></button>
    </div>
    ${narr.on?`<div class="readbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 8a5 5 0 0 1 0 8"/></svg>
      <span>Reading aloud</span><button data-dstop>STOP</button></div>`:''}
@@ -1785,7 +1788,7 @@ function renderAbout(){
    <div class="bkpbox" style="text-align:left">
      <h4>APPEARANCE</h4>
      <p style="font-style:italic;font-size:13px">The same app in a different hue. Nothing else changes.</p>
-     ${THEMES.map(t=>`<button class="themerow ${t.id===themeId()?'on':''}" data-theme="${t.id}">
+     ${THEMES.map(t=>`<button class="themerow ${t.id===themeId()?'on':''}" data-settheme="${t.id}">
         <span class="sw">${t.sw.map(c=>`<i style="background:${c}"></i>`).join('')}</span>
         <span class="tl"><b>${t.label}</b><em>${t.note}</em></span>
         ${t.id===themeId()?'<span class="tick">&#10003;</span>':''}
@@ -1916,8 +1919,8 @@ screen.addEventListener('click',e=>{
     if(sv)openSavor(sv.querySelector('[data-fabide]').dataset.fabide,false);return;}
   if(e.target.closest('[data-jexport]')){joyExport();return;}
   if(e.target.closest('[data-bkpsave]')){backupExport();return;}
-  const th=e.target.closest('[data-theme]');
-  if(th){themeApply(th.dataset.theme);show('about');return;}
+  const th=e.target.closest('[data-settheme]');
+  if(th){themeApply(th.dataset.settheme);show('about');return;}
   if(e.target.closest('#joyaddbtn')){const t=document.getElementById('joydraft');if(t&&t.value.trim()){if(joyListening){try{joyRec.stop()}catch(err){}}
     if(joyAdd(t.value)){toast('Added to your Joy Journal ✦');show('joy');}
     else toast('Your browser is blocking storage, so that could not be saved.');}return;}
