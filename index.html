@@ -51,7 +51,8 @@
   .feelstrip{margin:10px 16px 4px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 0 15px}
   .feelstrip h4{margin:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--navy)}
   .feelstrip p{margin:3px 14px 0;text-align:center;font-style:italic;color:var(--ink-soft);font-size:13px}
-  .feelrow{display:flex;gap:10px;overflow-x:auto;padding:12px 14px 2px;scrollbar-width:none}
+  .feelgrouplbl{padding:12px 18px 0;font-size:10px;letter-spacing:1.6px;font-weight:600;color:var(--ink-soft)}
+  .feelrow{display:flex;gap:10px;overflow-x:auto;padding:7px 14px 2px;scrollbar-width:none}
   .feelrow::-webkit-scrollbar{display:none}
   .feel{flex:0 0 auto;border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 2px;font-family:inherit}
   .feel .dot{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
@@ -154,6 +155,15 @@
   .joyempty .m{color:var(--gold-soft);font-size:26px}
   .joyempty h4{margin:10px 0 0;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--navy)}
   .joyempty p{margin:6px 20px 0;font-size:14px;line-height:1.55;color:var(--ink-soft)}
+  .joysrc{display:inline-block;margin-top:7px;padding:3px 9px;border-radius:20px;background:var(--cream-2);
+    color:var(--ink-soft);font-size:10px;letter-spacing:1.2px}
+  .savorbox{border-color:var(--gold-soft)}
+  .savorhint{margin:5px 0 0;font-size:13px;line-height:1.45;color:var(--ink-soft)}
+  .savedbox{text-align:center}
+  .savedbox .m{color:var(--gold);font-size:24px}
+  .savedbox h4{margin:8px 0 0;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--navy)}
+  .savedbox p{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--ink-soft)}
+  .savedbox .joylink{margin-bottom:0}
   .chips{display:flex;gap:9px;overflow-x:auto;padding:10px 16px 6px}
   .chips::-webkit-scrollbar{display:none}
   .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--paper);color:var(--navy-2);padding:7px 16px;border-radius:20px;font-size:15px;font-family:inherit;cursor:pointer;transition:.15s;white-space:nowrap}
@@ -469,6 +479,58 @@ const EMOTIONS=[
   prayer:"Father, something in me recoils at what I have seen. Give me wisdom to know what is truly harmful, courage to turn from it, and a clean heart that loves what You love. Amen."}
 ];
 
+/* Good feelings. These are savored and written down rather than worked through. */
+const GOOD=[
+ {id:"joy",name:"Joy",short:"Joy",color:"#E8AC2A",
+  message:"Something good has happened and my heart is light.",
+  helps:"Joy is God's gift and His strength in us. It is not the absence of trouble but the presence of God in the middle of it.",
+  purpose:"Strengthen, lift, and remind us that God is near.",
+  savorPrompt:"What happened that brought you joy?",
+  practice:"Celebrate small blessings instead of rushing past them.",hymn:0,
+  verse:{q:"The joy of the Lord is your strength.",r:"Nehemiah 8:10"},
+  prayer:"Father, thank You for this joy. Help me hold it long enough to truly receive it, and let it strengthen me for whatever comes next. Amen."},
+ {id:"gratitude",name:"Gratitude",short:"Gratitude",color:"#86A845",
+  message:"I have been given something I did not earn.",
+  helps:"Gratitude turns our attention from what is missing to what has been given. It is the quickest way back to noticing God's hand.",
+  purpose:"Notice, receive, and give thanks.",
+  savorPrompt:"What are you thankful for right now?",
+  practice:"Practice gratitude every day.",hymn:4,
+  verse:{q:"Give thanks in all circumstances; for this is God's will for you in Christ Jesus.",r:"1 Thessalonians 5:18"},
+  prayer:"Lord, thank You. Thank You for what I have received, and for the countless things I have not even noticed. Keep my eyes open to Your goodness. Amen."},
+ {id:"peace",name:"Peace",short:"Peace",color:"#6FA8C7",
+  message:"My heart is settled and unhurried.",
+  helps:"Peace is not merely calm. It is shalom: wholeness, safety, and rest, because God is holding what you cannot.",
+  purpose:"Rest, restore, and remind us we are safe with Him.",
+  savorPrompt:"What brought you this peace?",
+  practice:"Sit quietly in God's presence without needing to accomplish anything.",hymn:3,
+  verse:{q:"Peace I leave with you; my peace I give you.",r:"John 14:27"},
+  prayer:"Prince of Peace, thank You for this quiet. Let it settle deep, and teach my heart to remember the way back here. Amen."},
+ {id:"hope",name:"Hope",short:"Hope",color:"#5FB89D",
+  message:"I can see God's goodness ahead of me.",
+  helps:"Hope is confident expectation. It is not wishing; it is leaning on the character of a God who keeps His promises.",
+  purpose:"Lift our eyes, steady our hearts, and carry us forward.",
+  savorPrompt:"What is stirring hope in you today?",
+  practice:"Recall moments when you experienced God's faithfulness.",hymn:1,
+  verse:{q:"May the God of hope fill you with all joy and peace as you trust in him.",r:"Romans 15:13"},
+  prayer:"God of hope, thank You for lifting my eyes. Anchor this hope in who You are rather than in how things look, and let it hold me steady. Amen."},
+ {id:"loved",name:"Loved",short:"Loved",color:"#CE6E8A",
+  message:"I feel known, wanted, and safe.",
+  helps:"Loving connection with God and with others is what our hearts were built for. Every moment of it is worth savoring and remembering.",
+  purpose:"Deepen connection, secure the heart, and heal what isolation wounded.",
+  savorPrompt:"Who showed you love, and what did they do?",
+  practice:"Share joy with others by encouraging and celebrating them.",hymn:0,
+  verse:{q:"See what great love the Father has lavished on us, that we should be called children of God.",r:"1 John 3:1"},
+  prayer:"Father, thank You for loving me, and for the people who carry Your love to me. Let this settle into the places that still doubt I belong. Amen."},
+ {id:"awe",name:"Awe",short:"Awe",color:"#8E7DC4",
+  message:"I have glimpsed how great God is.",
+  helps:"Awe puts us back in right proportion. Seeing God's greatness makes our worries smaller and our worship deeper.",
+  purpose:"Humble us, lift our eyes, and stir worship.",
+  savorPrompt:"What did you see or experience that stirred this?",
+  practice:"Savor beauty in creation.",hymn:2,
+  verse:{q:"The heavens declare the glory of God; the skies proclaim the work of his hands.",r:"Psalm 19:1"},
+  prayer:"Lord, You are greater than I can hold. Thank You for letting me glimpse it. Let this wonder become worship. Amen."}
+];
+
 /* ========= STORAGE ========= */
 const LS=window.localStorage;
 function getSet(k){try{return new Set(JSON.parse(LS.getItem(k)||"[]"))}catch(e){return new Set()}}
@@ -492,7 +554,10 @@ function renderHome(){
   <div class="feelstrip">
     <h4>How are you feeling?</h4>
     <p>Every emotion God gave you has a purpose. Tap one.</p>
+    <div class="feelgrouplbl">WHEN IT'S HARD</div>
     <div class="feelrow">${EMOTIONS.map(e=>`<button class="feel" data-feel="${e.id}"><span class="dot" style="background:${e.color}">${e.name[0]}</span><span class="nm">${e.short}</span></button>`).join('')}</div>
+    <div class="feelgrouplbl">WHEN IT'S GOOD</div>
+    <div class="feelrow">${GOOD.map(e=>`<button class="feel" data-feel="${e.id}"><span class="dot" style="background:${e.color}">${e.name[0]}</span><span class="nm">${e.short}</span></button>`).join('')}</div>
   </div>
   <button class="joybanner" data-jopen>
     <div class="jb-top"><span class="jb-mark">&#10022;</span><span class="jb-t">CULTIVATING JOY</span><span class="jb-go">&rsaquo;</span></div>
@@ -541,6 +606,7 @@ const JOY={
   "Cultivating joy is intentionally creating repeated experiences of gratitude, delight, and loving connection with God and with others.",
   "As we savor these moments, our hearts and brains become increasingly wired for peace, hope, and secure attachment."],
  heart:"Cultivating joy is intentionally slowing down to notice, savor, and remember the goodness of God, until your heart naturally rests in His presence.",
+ heartShort:"Slow down to notice, savor, and remember the goodness of God, until your heart naturally rests in His presence.",
  verse:{q:"You make known to me the path of life; in your presence there is fullness of joy.",r:"Psalm 16:11"},
  practices:[
   "Practice gratitude every day.",
@@ -565,24 +631,31 @@ const JOY={
 /* Journal entries live in this browser, newest first. */
 function joyLoad(){try{return JSON.parse(LS.getItem('ag_joy')||'[]')}catch(e){return[]}}
 function joySave(l){LS.setItem('ag_joy',JSON.stringify(l))}
-function joyAdd(text){const t=text.trim();if(!t)return;const l=joyLoad();const now=Date.now();
-  l.unshift({id:now,text:t,created:now});joySave(l);}
+function joyAdd(text,source){const t=text.trim();if(!t)return;const l=joyLoad();const now=Date.now();
+  l.unshift({id:now,text:t,created:now,source:source||''});joySave(l);}
 function joyRemove(id){joySave(joyLoad().filter(e=>e.id!==id));}
 function joyDays(){return new Set(joyLoad().map(e=>new Date(e.created).toDateString())).size;}
 
 /* Dictation, handed to the browser's own speech recognition where available. */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-let joyRec=null,joyListening=false;
+let joyRec=null,joyListening=false,joyTarget={draft:'joydraft',add:'joyaddbtn',note:'joynote',mic:'joymic'};
 function joyMicSupported(){return !!SR;}
+function joyNoteDefault(){
+  return joyMicSupported()
+    ? 'Tap the microphone to speak your entry instead of typing.'
+    : 'This browser cannot listen, so please type your entry.';
+}
 function joySetMic(on){
   joyListening=on;
-  const b=document.getElementById('joymic');
+  const b=document.getElementById(joyTarget.mic);
   if(b){b.classList.toggle('listening',on);b.setAttribute('aria-label',on?'Stop listening':'Speak your entry');}
-  const n=document.getElementById('joynote');
+  const n=document.getElementById(joyTarget.note);
   if(n&&on)n.textContent='Listening… speak now.';
 }
-function joyDictate(){
-  if(!SR){const n=document.getElementById('joynote');if(n)n.textContent='This browser cannot listen, so please type your entry instead.';return;}
+function joyDictate(draftId,addId,noteId,micId){
+  joyTarget={draft:draftId||'joydraft',add:addId||'joyaddbtn',note:noteId||'joynote',mic:micId||'joymic'};
+  const n0=document.getElementById(joyTarget.note);
+  if(!SR){if(n0)n0.textContent='This browser cannot listen, so please type your entry instead.';return;}
   if(joyListening){try{joyRec.stop()}catch(e){}return;}
   try{
     joyRec=new SR();
@@ -591,25 +664,20 @@ function joyDictate(){
     joyRec.continuous=false;
     joyRec.onresult=ev=>{
       const said=[...ev.results].map(r=>r[0].transcript).join(' ').trim();
-      const t=document.getElementById('joydraft');
+      const t=document.getElementById(joyTarget.draft);
       if(t&&said){t.value=t.value.trim()?t.value.trim()+' '+said:said;
-        const b=document.getElementById('joyaddbtn');if(b)b.disabled=!t.value.trim();}
+        const b=document.getElementById(joyTarget.add);if(b)b.disabled=!t.value.trim();}
     };
     joyRec.onerror=ev=>{joySetMic(false);
-      const n=document.getElementById('joynote');
+      const n=document.getElementById(joyTarget.note);
       if(n)n.textContent=(ev.error==='not-allowed'||ev.error==='service-not-allowed')
         ?'Microphone access was blocked. You can allow it in your browser settings, or type instead.'
         :'Could not hear that. Please try again, or type your entry.';};
     joyRec.onend=()=>{joySetMic(false);
-      const n=document.getElementById('joynote');
+      const n=document.getElementById(joyTarget.note);
       if(n&&n.textContent==='Listening… speak now.')n.textContent=joyNoteDefault();};
     joyRec.start();joySetMic(true);
   }catch(e){joySetMic(false);}
-}
-function joyNoteDefault(){
-  return joyMicSupported()
-    ? 'Tap the microphone to speak your entry instead of typing.'
-    : 'This browser cannot listen, so please type your entry.';
 }
 
 /* Export the whole journal as a text file. */
@@ -622,7 +690,7 @@ function joyExport(){
   out+='"'+JOY.verse.q+'"  — '+JOY.verse.r+'\n\n';
   out+='------------------------------------------\n\n';
   list.slice().sort((a,b)=>a.created-b.created).forEach(e=>{
-    out+=joyDate(e.created)+' · '+joyTime(e.created)+'\n'+e.text+'\n\n';});
+    out+=joyDate(e.created)+' · '+joyTime(e.created)+(e.source?' · '+e.source:'')+'\n'+e.text+'\n\n';});
   out+='------------------------------------------\n';
   out+=list.length+' '+(list.length===1?'moment':'moments')+' across '+days+' '+(days===1?'day':'days')+' of noticing.\n';
   const stamp=new Date().toISOString().slice(0,10);
@@ -676,6 +744,7 @@ function renderJoy(){
     : 'Moments that remind you God is near.';
   const entries=list.length? `<div class="joysecrow"><span class="joysec">LOOKING BACK</span><button class="joyexp" data-jexport>Export &rsaquo;</button></div>`+list.map(e=>`
       <div class="joyentry"><div class="je-head"><span class="d">${joyDate(e.created)}</span><span class="t">${joyTime(e.created)}</span></div>
+      ${e.source?`<span class="joysrc">${esc(e.source).toUpperCase()}</span>`:''}
       <p>${esc(e.text)}</p><button class="je-rm" data-jrm="${e.id}">Remove</button></div>`).join('')
     : `<div class="joyempty"><div class="m">&#10022;</div><h4>Your journal is empty for now.</h4>
        <p>Start with one small thing you are grateful for today. Joy grows by being noticed and remembered.</p></div>`;
@@ -748,7 +817,69 @@ function renderFeeling(e){
    </div>`;
   return v;
 }
+/* Where a good feeling leads: savor it, then write it into the Joy Journal. */
+function renderSavor(e,saved){
+  const v=el('view','savor');
+  const write=saved?`
+     <div class="savedbox">
+       <div class="m">&#10022;</div>
+       <h4>Saved to your Joy Journal.</h4>
+       <p>Moments like this are worth returning to. Read it again on a harder day.</p>
+       <button class="joybtn" style="margin-top:14px" data-sjournal><b>OPEN MY JOY JOURNAL</b><span>See everything you have noticed</span></button>
+       <button class="joylink" style="margin-top:10px" data-sagain>Add another</button>
+     </div>`
+   :`<div class="joyprompt">${e.savorPrompt}</div>
+     <p class="savorhint">Writing it down is how a good moment becomes a memory you can return to.</p>
+     <textarea id="savordraft" rows="3" placeholder="Write it here…"></textarea>
+     <div class="joyrow">
+       <button class="joymic" id="savormic" aria-label="Speak your entry">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5"/></svg>
+       </button>
+       <button class="joyadd" id="savoraddbtn" disabled>ADD TO MY JOY JOURNAL</button>
+     </div>
+     <div class="joynote" id="savornote"></div>`;
+  v.innerHTML=`
+   <div class="feelhead" style="background:${e.color}">
+     <button class="feelback" data-fback>&lsaquo;&nbsp; Back</button>
+     <div class="lbl">YOU ARE FEELING</div>
+     <div class="nm">${e.name.toUpperCase()}</div>
+     <div class="msg">“${e.message}”</div>
+   </div>
+   <div class="feelscroll">
+     <div class="feelbox soft"><h4>THIS IS WORTH SAVORING</h4>
+       <p>${e.helps}</p>
+       <div class="purpose" style="border-color:${e.color}"><div class="p-l" style="color:${e.color}">PURPOSE</div><div class="p-b">${e.purpose}</div></div>
+     </div>
+     <div class="keyverse" style="margin-top:16px"><div class="q">“${e.verse.q}”</div><div class="r">${e.verse.r.toUpperCase()}</div></div>
+     <div class="feel-h">Hold On To This</div>
+     <div class="joybox savorbox">${write}</div>
+     <div class="feelbox soft" style="margin-top:20px"><h4>ONE WAY TO CULTIVATE THIS</h4>
+       <div class="joyitem" style="padding:0"><span>&#10022;</span><p>${e.practice}</p></div></div>
+     <div class="feel-h">A Prayer</div>
+     <div class="feelbox soft"><p style="font-style:italic">${e.prayer}</p></div>
+     <button class="abidebtn" data-fabide="${e.id}"><b>STAY HERE A WHILE</b><span>Open Abide in Him</span></button>
+     <div class="feelfoot">${JOY.heartShort}</div>
+   </div>`;
+  return v;
+}
+function openSavor(id,saved){
+  const e=GOOD.find(x=>x.id===id);if(!e)return;
+  const old=screen.querySelector('[data-view="savor"]');
+  if(old){old.remove();}else{const cur=topView();if(cur)cur.classList.add('behind');}
+  const s=renderSavor(e,!!saved);
+  screen.appendChild(s);
+  if(old)s.classList.add('active');else requestAnimationFrame(()=>s.classList.add('active'));
+  const n=document.getElementById('savornote');if(n)n.textContent=joyNoteDefault();
+}
+function closeSavor(){
+  const s=screen.querySelector('[data-view="savor"]');
+  const base=topView('savor');
+  if(s){s.classList.remove('active');setTimeout(()=>s.remove(),340);}
+  if(base)base.classList.remove('behind');
+}
+
 function openFeeling(id){
+  if(GOOD.some(x=>x.id===id)){openSavor(id,false);return;}
   const e=EMOTIONS.find(x=>x.id===id);if(!e)return;
   const cur=screen.querySelector('.view');if(cur)cur.classList.add('behind');
   const f=renderFeeling(e);screen.appendChild(f);requestAnimationFrame(()=>f.classList.add('active'));
@@ -900,15 +1031,26 @@ screen.addEventListener('click',e=>{
   const feel=e.target.closest('[data-feel]');if(feel){openFeeling(feel.dataset.feel);return;}
   if(e.target.closest('[data-jopen]')){openJoyCard();return;}
   if(e.target.closest('[data-jclose]')){closeJoyCard();return;}
-  if(e.target.closest('#joymic')){joyDictate();return;}
+  if(e.target.closest('#joymic')){joyDictate('joydraft','joyaddbtn','joynote','joymic');return;}
+  if(e.target.closest('#savormic')){joyDictate('savordraft','savoraddbtn','savornote','savormic');return;}
+  if(e.target.closest('#savoraddbtn')){const t=document.getElementById('savordraft');
+    const sv=screen.querySelector('[data-view="savor"]');
+    if(t&&t.value.trim()&&sv){if(joyListening){try{joyRec.stop()}catch(err){}}
+      const id=sv.querySelector('[data-fabide]').dataset.fabide;
+      joyAdd(t.value,(GOOD.find(x=>x.id===id)||{}).name||'');
+      toast('Added to your Joy Journal ✦');openSavor(id,true);}return;}
+  const sj=e.target.closest('[data-sjournal]');if(sj){closeSavor();show('joy');return;}
+  const sa=e.target.closest('[data-sagain]');if(sa){const sv=screen.querySelector('[data-view="savor"]');
+    if(sv)openSavor(sv.querySelector('[data-fabide]').dataset.fabide,false);return;}
   if(e.target.closest('[data-jexport]')){joyExport();return;}
   if(e.target.closest('#joyaddbtn')){const t=document.getElementById('joydraft');if(t&&t.value.trim()){if(joyListening){try{joyRec.stop()}catch(err){}}joyAdd(t.value);toast('Added to your Joy Journal ✦');show('joy');}return;}
   const jrm=e.target.closest('[data-jrm]');if(jrm){joyRemove(+jrm.dataset.jrm);show('joy');return;}
-  if(e.target.closest('[data-fback]')){closeFeeling();return;}
+  if(e.target.closest('[data-fback]')){if(screen.querySelector('[data-view="savor"]'))closeSavor();else closeFeeling();return;}
   const ab=e.target.closest('[data-fabide]');
-  if(ab){const em=EMOTIONS.find(x=>x.id===ab.dataset.fabide);
+  if(ab){const em=EMOTIONS.concat(GOOD).find(x=>x.id===ab.dataset.fabide);
     if(em&&em.hymn>=0&&em.hymn<HYMNS.length){qt.hymn=em.hymn;qt.ambient=true;}
-    closeFeeling();show('quiet');return;}
+    if(screen.querySelector('[data-view="savor"]'))closeSavor();else closeFeeling();
+    show('quiet');return;}
   const zoom=e.target.closest('[data-zoom]');if(zoom){openZoom(zoom.dataset.zoom);return;}
   const chip=e.target.closest('[data-cat]');if(chip){state.filter=chip.dataset.cat;show('home');return;}
   const card=e.target.closest('[data-card]');if(card){openDetail(card.dataset.card);return;}
@@ -928,6 +1070,7 @@ screen.addEventListener('click',e=>{
 screen.addEventListener('input',e=>{
   if(e.target.id==='qtSlider'){if(qt.running)resetQt();setMin(+e.target.value);}
   if(e.target.id==='joydraft'){const b=document.getElementById('joyaddbtn');if(b)b.disabled=!e.target.value.trim();}
+  if(e.target.id==='savordraft'){const b=document.getElementById('savoraddbtn');if(b)b.disabled=!e.target.value.trim();}
 });
 function toggleFav(id){if(favs.has(id)){favs.delete(id);toast('Removed from favorites');}else{favs.add(id);toast('Saved to favorites ♥');}saveSet('ag_favs',favs);
   const d=screen.querySelector('[data-view="detail"]');
