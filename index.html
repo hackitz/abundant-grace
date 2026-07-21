@@ -1243,6 +1243,7 @@ function backupBuild(){
     reflections:reflLoad(),
     devotionals:{
       lastDay:parseInt(LS.getItem('ag_devo_day')||'1'),
+      shownDate:LS.getItem('ag_devo_shown')||'',
       completed:[...getSet('ag_devo_done')],
       saved:[...getSet('ag_devo_saved')],
       activeDates:[...getSet('ag_devo_dates')]
@@ -1301,6 +1302,8 @@ function backupRestore(file){
       });
       const inDay=parseInt(d.devotionals.lastDay||1);
       if(inDay>parseInt(LS.getItem('ag_devo_day')||'1')){LS.setItem('ag_devo_day',inDay);devoDay=inDay;}
+      const inShown=d.devotionals.shownDate||'';
+      if(inShown>(LS.getItem('ag_devo_shown')||''))lsWrite('ag_devo_shown',inShown);
     }
     const parts=[];
     if(entAdded)parts.push(entAdded+' journal '+(entAdded===1?'entry':'entries'));
@@ -1682,6 +1685,14 @@ function renderDaily(){
     return v;
   }
   const total=devos.length;
+  // A daily reading should move on by itself: advance to the next devotional the
+  // first time it is opened each calendar day. Never skips content, never resets.
+  (function(){
+    const today=dkey(new Date());
+    const shown=LS.getItem('ag_devo_shown');
+    if(shown===null){lsWrite('ag_devo_shown',today);}
+    else if(shown!==today){ if(devoDay<total){devoDay++;lsWrite('ag_devo_day',devoDay);} lsWrite('ag_devo_shown',today); }
+  })();
   if(devoDay>total)devoDay=total; if(devoDay<1)devoDay=1;
   const d=devos.find(x=>x.day===devoDay)||devos[0];
   const done=devoDone.has(String(d.day)), saved=devoSaved.has(String(d.day));
